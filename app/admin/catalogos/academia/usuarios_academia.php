@@ -68,7 +68,7 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
                         <td>202851268@ucc.mx</td>
                         <td>224-456-7891</td>
                         <td>Aseguramiento de Calidad</td>
-                        <td>
+                        <td class="text-center">
                             <a href="#" class="btn btn-link btn-sm" data-toggle="modal" data-target="#editModal"
                                data-nombre="Maria del Carmen Aguirre Torres"
                                data-correo="202851268@ucc.mx"
@@ -81,7 +81,7 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
                         <td>202456219@ucc.mx</td>
                         <td>294-456-778</td>
                         <td> Jefe de Área Académica</td>
-                        <td>
+                        <td class="text-center">
                             <a href="#" class="btn btn-link btn-sm" data-toggle="modal" data-target="#editModal"
                                data-nombre="Ramon Palet Naranjo"
                                data-correo="202456219@ucc.mx"
@@ -94,7 +94,7 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
                         <td>206345875@ucc.mx</td>
                         <td>283-456-7891</td>
                         <td>Vinculación Académica</td>
-                        <td>
+                        <td class="text-center">
                             <a href="#" class="btn btn-link btn-sm" data-toggle="modal" data-target="#editModal"
                                data-nombre="Erick Onofre Ruiz"
                                data-correo="206345875@ucc.mx"
