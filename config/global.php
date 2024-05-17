@@ -22,6 +22,7 @@ function getSidebar($ruta = ''){
            aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-book-open"></i>
             <span>Catálogos</span>
+
         </a>
         <div class="dropdown-menu" aria-labelledby="pagesDropdown">                        
             <a class="dropdown-item" href="#">Usuarios Academia</a>
