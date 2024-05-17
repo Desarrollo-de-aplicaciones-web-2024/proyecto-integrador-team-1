@@ -73,7 +73,15 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
                         <td>Grupo Más</td>
                         <td>Ing. Guillermo Gomez Fernández</td>
                         <td class="text-center">
-                            <a href="#" class="btn btn-link btn-sm" data-toggle="modal" data-target="#editModal" data-nombre="Ximena Ruiz de la Peña" data-correo="202160177@ucc.mx" data-fecha="2024-04-01" data-etapa="Reporte mensual 2" data-empresa="Grupo Más" data-supervisor="Ing. Guillermo Gomez Fernández"><img src="../../../../img/edit-30x30.png"></a>
+                            <a href="#" class="btn btn-link btn-sm"
+                               data-toggle="modal"
+                               data-target="#editModal"
+                               data-nombre="Ximena Ruiz de la Peña"
+                               data-correo="202160177@ucc.mx"
+                               data-fecha="2024-04-01"
+                               data-etapa="Reporte mensual 2"
+                               data-empresa="Grupo Más"
+                               data-supervisor="Ing. Guillermo Gomez Fernández"><img src="../../../../img/edit-30x30.png" alt="Imagen Editar"></a>
                         </td>
                     </tr>
                     <tr>
@@ -84,7 +92,15 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
                         <td>UV Microna</td>
                         <td>Dr. Jaime Martínez Castillo</td>
                         <td class="text-center">
-                            <a href="#" class="btn btn-link btn-sm" data-toggle="modal" data-target="#editModal" data-nombre="Bruno Rangel Zuñiga" data-correo="201960861@ucc.mx" data-fecha="2023-08-11" data-etapa="Finalizado" data-empresa="UV Microna" data-supervisor="Dr. Jaime Martínez Castillo"><img src="../../../../img/edit-30x30.png"></a>
+                            <a href="#" class="btn btn-link btn-sm"
+                               data-toggle="modal"
+                               data-target="#editModal"
+                               data-nombre="Bruno Rangel Zuñiga"
+                               data-correo="201960861@ucc.mx"
+                               data-fecha="2023-08-11"
+                               data-etapa="Finalizado"
+                               data-empresa="UV Microna"
+                               data-supervisor="Dr. Jaime Martínez Castillo"><img src="../../../../img/edit-30x30.png" alt="Imagen Editar"></a>
                         </td>
                     </tr>
                     <tr>
@@ -95,7 +111,34 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
                         <td>Grupo Más</td>
                         <td>Ing. Guillermo Gomez Fernández</td>
                         <td  class="text-center">
-                            <a href="#" class="btn btn-link btn-sm" data-toggle="modal" data-target="#editModal" data-nombre="Ximena Ruiz de la Peña" data-correo="202160177@ucc.mx" data-fecha="2024-04-01" data-etapa="Reporte mensual 2" data-empresa="Grupo Más" data-supervisor="Ing. Guillermo Gomez Fernández"><img src="../../../../img/edit-30x30.png"></a>
+                            <a href="#" class="btn btn-link btn-sm"
+                               data-toggle="modal"
+                               data-target="#editModal"
+                               data-nombre="Elisa Villa Caballero"
+                               data-correo="202160467@ucc.mx"
+                               data-fecha="2024-04-01"
+                               data-etapa="Reporte mensual 2"
+                               data-empresa="Grupo Más"
+                               data-supervisor="Ing. Guillermo Gomez Fernández"><img src="../../../../img/edit-30x30.png" alt="Imagen Editar"></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Abimael Ochoa Hernández</td>
+                        <td>202160177@ucc.mx</td>
+                        <td>01/04/2024</td>
+                        <td>Reporte mensual 2</td>
+                        <td>Grupo Más</td>
+                        <td>Ing. Guillermo Gomez Fernández</td>
+                        <td  class="text-center">
+                            <a href="#" class="btn btn-link btn-sm"
+                               data-toggle="modal"
+                               data-target="#editModal"
+                               data-nombre="Abimael Ocho Hernández"
+                               data-correo="202160171@ucc.mx"
+                               data-fecha="2024-04-01"
+                               data-etapa="Reporte mensual 2"
+                               data-empresa="Grupo Más"
+                               data-supervisor="Ing. Guillermo Gomez Fernández"><img src="../../../../img/edit-30x30.png" alt="Imagen Editar"></a>
                         </td>
                     </tr>
                     </tbody>
