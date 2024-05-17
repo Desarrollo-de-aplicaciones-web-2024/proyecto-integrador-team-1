@@ -54,7 +54,10 @@ function getNavbar($ruta = ''){
     $html = <<<EOD
 <nav class="navbar navbar-expand navbar-dark  custom-bg static-top">
 
-    <a class="navbar-brand mr-1" href="{$ruta}index.php">UCC</a>
+    <a class="navbar-brand mr-1" href="{$ruta}index.php"></a>
+    <!-- Cambio de imagen-->
+    <img src="/img/escudoo.svg" alt="Escudo" width="150" height="80" style="background-color: white;">
+
 
     <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
         <i class="fas fa-bars"></i>
