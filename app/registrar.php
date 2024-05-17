@@ -11,15 +11,15 @@
 
     <title>Universidad Cristóbal Colón</title>
 
-    <!-- Custom fonts for this template-->
+
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 
-    <!-- Custom styles for this template-->
+
     <link href="../css/sb-admin.css" rel="stylesheet">
     <link href="../img/favicon.ico" rel="shortcut icon" type="image/png"/>
     <style>
         .bg-dark {
-            background-color: #0062cc !important; /* Fondo azul */
+            background-color: #0062cc !important;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -27,13 +27,13 @@
         }
         .card-login {
             width: 100%;
-            max-width: 600px; /* Ampliar el ancho máximo */
+            max-width: 600px;
             margin: auto;
         }
         .card-header {
             text-align: center;
-            font-size: 1.75rem; /* Aumentar el tamaño de la fuente */
-            background-color: #0056b3; /* Fondo azul oscuro para el encabezado */
+            font-size: 1.75rem;
+            background-color: #0056b3;
             color: white;
         }
         .card-body {
@@ -43,22 +43,22 @@
             border-radius: 0.25rem;
         }
         .btn-primary {
-            background-color: #0056b3; /* Azul oscuro para el botón primario */
+            background-color: #0056b3;
             border: none;
         }
         .btn-primary:hover {
-            background-color: #004a99; /* Azul más oscuro en hover */
+            background-color: #004a99;
         }
         .text-center a {
-            color: #0056b3; /* Azul para los enlaces */
+            color: #0056b3;
         }
         .text-center a:hover {
-            color: #004a99; /* Azul más oscuro en hover */
+            color: #004a99;
         }
         .card-login img {
             display: block;
             margin: 0 auto 1rem;
-            width: 150px; /* Ampliar el ancho de la imagen */
+            width: 150px;
             height: auto;
         }
         .form-label-group {
