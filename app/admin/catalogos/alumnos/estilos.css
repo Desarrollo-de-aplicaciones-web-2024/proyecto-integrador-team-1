@@ -1,10 +1,2 @@
 /* Estilos adicionales */
-.center-image {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 
-.center-image img {
-    display: block;
-}

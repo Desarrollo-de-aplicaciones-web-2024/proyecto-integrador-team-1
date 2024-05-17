@@ -73,21 +73,32 @@ define('RUTA_INCLUDE', '../../../'); // ajustar a necesidad
                     <li>Recuerda tu periodo de prácticas comienza al momento de que los documentos sean validados por el aseguramiento de calidad.</li>
                 </ul>
             </div>
-            <b><h4>Archivos por subir</b><br></h4>
-            <div class="list-group">
-                <div class="list-group-item d-flex align-items-center">
-                    <div class="circle-pendiente"></div>
-                    <p class="mb-0">Solicitud para realización de prácticas profesionales</p>
-                </div>
-                <div class="list-group-item d-flex align-items-center">
-                    <div class="circle-aprobado"></div>
-                    <p class="mb-0">Plan de trabajo de prácticas profesionales</p>
-                </div>
-                <div class="list-group-item d-flex align-items-center">
-                    <div class="circle-rechazado"></div>
-                    <p class="mb-0">Carta de Aceptación</p>
-                </div>
+            <div class="container">
+                <h4><b>Archivos por subir</b></h4>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th class="align-middle">Archivo</th>
+                        <th class="align-middle text-center">Estatus</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class="align-middle">Solicitud para realización de prácticas profesionales</td>
+                        <td class="align-middle text-center"><div class="circle-pendiente"></div></td>
+                    </tr>
+                    <tr>
+                        <td class="align-middle">Plan de trabajo de prácticas profesionales</td>
+                        <td class="align-middle text-center"><div class="circle-aprobado"></div></td>
+                    </tr>
+                    <tr>
+                        <td class="align-middle">Carta de Aceptación</td>
+                        <td class="align-middle text-center"><div class="circle-rechazado"></div></td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
+
             <div class="row my-3 justify-content-center">
                 <div class="col-auto">
                     <button type="button" class="btn btn-primary">Descargar archivos</button>
@@ -97,7 +108,7 @@ define('RUTA_INCLUDE', '../../../'); // ajustar a necesidad
                 </div>
             </div>
 
-            <div class="d-flex flex-column" style="height: 10vh;">
+            <div class="d-flex flex-column" style="height: 15vh;">
                 <div class="flex-grow-1"></div>
                 <div class="row my-3">
                     <div class="col text-right">

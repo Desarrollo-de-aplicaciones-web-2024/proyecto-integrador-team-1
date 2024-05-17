@@ -11,22 +11,73 @@
 
     <title>Universidad Cristóbal Colón</title>
 
-    <!-- Custom fonts for this template-->
+
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 
-    <!-- Custom styles for this template-->
+
     <link href="../css/sb-admin.css" rel="stylesheet">
     <link href="../img/favicon.ico" rel="shortcut icon" type="image/png"/>
-
+    <style>
+        .bg-dark {
+            background-color: #0062cc !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .card-login {
+            width: 100%;
+            max-width: 600px;
+            margin: auto;
+        }
+        .card-header {
+            text-align: center;
+            font-size: 1.75rem;
+            background-color: #0056b3;
+            color: white;
+        }
+        .card-body {
+            padding: 2rem;
+        }
+        .form-group input {
+            border-radius: 0.25rem;
+        }
+        .btn-primary {
+            background-color: #0056b3;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #004a99;
+        }
+        .text-center a {
+            color: #0056b3;
+        }
+        .text-center a:hover {
+            color: #004a99;
+        }
+        .card-login img {
+            display: block;
+            margin: 0 auto 1rem;
+            width: 150px;
+            height: auto;
+        }
+        .form-label-group {
+            margin-bottom: 1rem;
+        }
+        .text-center h4 {
+            margin-bottom: 1rem;
+        }
+    </style>
 </head>
 
 <body class="bg-dark">
 
 <div class="container">
     <div class="card card-login mx-auto mt-5">
-        <div class="card-header">Universidad Cristóbal colón</div>
+        <div class="card-header">Universidad Cristóbal Colón</div>
         <div class="card-body">
             <div class="text-center mb-4">
+                <img src="../img/escudoo.svg" alt="Escudo de la Universidad Cristóbal Colón">
                 <h4>Registro</h4>
             </div>
             <form>
