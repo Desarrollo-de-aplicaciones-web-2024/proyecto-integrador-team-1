@@ -8,7 +8,7 @@ function getSidebar($ruta = ''){
     <li class="nav-item">
         <a class="nav-link" href="{$ruta}documentos-iniciales.php">
             <i class="fa fa-archive"></i>
-            <span>Documentos Inciales</span>
+            <span> Documentos Inciales</span>
         </a>
     </li>
     <li class="nav-item">
