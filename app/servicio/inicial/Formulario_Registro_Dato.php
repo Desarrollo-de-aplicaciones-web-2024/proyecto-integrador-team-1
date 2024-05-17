@@ -52,7 +52,7 @@ define('RUTA_INCLUDE', '../../../'); //ajustar a necesidad
                     <button type="button" class="btn btn-success">Guardar</button>
                 </div>
                 <div class="col text-right">
-                    <button type="button" class="btn btn-link">Cancelar</button>
+                    <button type="button" class="btn btn-danger">Cancelar</button>
                 </div>
             </div>
 
@@ -134,7 +134,7 @@ define('RUTA_INCLUDE', '../../../'); //ajustar a necesidad
                     <button type="button" class="btn btn-success">Guardar</button>
                 </div>
                 <div class="col text-right">
-                    <button type="button" class="btn btn-link">Cancelar</button>
+                    <button type="button" class="btn btn-danger">Cancelar</button>
                 </div>
             </div>
         <!-- /.container -->
