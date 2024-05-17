@@ -73,7 +73,7 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
                                data-nombre="Maria del Carmen Aguirre Torres"
                                data-correo="202851268@ucc.mx"
                                data-telefono="224-456-7891"
-                               data-cargo="Aseguramiento de Calidad">Editar</a>
+                               data-cargo="Aseguramiento de Calidad"><img src="../../../../img/edit-30x30.png"></a>
                         </td>
                     </tr>
                     <tr>
@@ -86,7 +86,7 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
                                data-nombre="Ramon Palet Naranjo"
                                data-correo="202456219@ucc.mx"
                                data-telefono="294-456-778"
-                               data-cargo="Jefe de Área Académica">Editar</a>
+                               data-cargo="Jefe de Área Académica"><img src="../../../../img/edit-30x30.png"></a>
                         </td>
                     </tr>
                     <tr>
@@ -99,7 +99,7 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
                                data-nombre="Erick Onofre Ruiz"
                                data-correo="206345875@ucc.mx"
                                data-telefono="283-456-7891"
-                               data-cargo="Vinculación Académica">Editar</a>
+                               data-cargo="Vinculación Académica"><img src="../../../../img/edit-30x30.png"></a>
                         </td>
                     </tr>
                     </tbody>
