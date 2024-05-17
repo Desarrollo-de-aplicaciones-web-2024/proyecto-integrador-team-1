@@ -32,8 +32,8 @@ define('RUTA_INCLUDE', '../../../'); //ajustar a necesidad
 
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item">Datos personales</li>
-                    <li class="breadcrumb-item active" aria-current="page">En este apartado ingresa tus datos</li>
+                    <li class="breadcrumb-item">Registro de datos</li>
+                    <li class="breadcrumb-item active" aria-current="page">En este apartado ingresa tus datos del usuario</li>
                 </ol>
             </nav>
 
@@ -52,7 +52,7 @@ define('RUTA_INCLUDE', '../../../'); //ajustar a necesidad
                     <button type="button" class="btn btn-success">Guardar</button>
                 </div>
                 <div class="col text-right">
-                    <button type="button" class="btn btn-link">Cancelar</button>
+                    <button type="button" class="btn btn-danger">Cancelar</button>
                 </div>
             </div>
 
@@ -134,7 +134,7 @@ define('RUTA_INCLUDE', '../../../'); //ajustar a necesidad
                     <button type="button" class="btn btn-success">Guardar</button>
                 </div>
                 <div class="col text-right">
-                    <button type="button" class="btn btn-link">Cancelar</button>
+                    <button type="button" class="btn btn-danger">Cancelar</button>
                 </div>
             </div>
         <!-- /.container -->

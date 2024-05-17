@@ -6,9 +6,9 @@ function getSidebar($ruta = ''){
 <!-- Sidebar -->
 <ul class="sidebar navbar-nav">
     <li class="nav-item">
-        <a class="nav-link" href="{$ruta}index.php">
-            <i class="fas fa-calculator"></i>
-            <span>Opción 1</span>
+        <a class="nav-link" href="{$ruta}documentos-iniciales.php">
+            <i class="fa fa-archive"></i>
+            <span> Documentos Inciales</span>
         </a>
     </li>
     <li class="nav-item">
@@ -20,21 +20,17 @@ function getSidebar($ruta = ''){
     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown"
            aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-fw fa-folder"></i>
+            <i class="fas fa-book-open"></i>
             <span>Catálogos</span>
+
         </a>
         <div class="dropdown-menu" aria-labelledby="pagesDropdown">                        
-            <a class="dropdown-item" href="#">Opción 1</a>
-            <a class="dropdown-item" href="#">Opción 2</a>            
-            <a class="dropdown-item" href="#">Opción 3</a>
+            <a class="dropdown-item" href="#">Usuarios Academia</a>
+            <a class="dropdown-item" href="#">Usuarios Alumnos</a>            
             <div class="dropdown-divider"></div>        
-            <a class="dropdown-item" href="#">Opción 4</a>            
-            <a class="dropdown-item" href="#">Opción 5</a>
-            <div class="dropdown-divider"></div>            
-            <a class="dropdown-item" href="#">Opción 6</a>
-            <a class="dropdown-item" href="#">Opción 7</a>
-            <a class="dropdown-item" href="#">Opción 8</a>            
-        </div> 
+            <a class="dropdown-item" href="#">Empresas</a>            
+            <a class="dropdown-item" href="#">Vacantes</a>         
+        </div>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="{$ruta}charts.php">
@@ -56,9 +52,12 @@ EOD;
 
 function getNavbar($ruta = ''){
     $html = <<<EOD
-<nav class="navbar navbar-expand navbar-dark bg-dark static-top">
+<nav class="navbar navbar-expand navbar-dark  custom-bg static-top">
 
-    <a class="navbar-brand mr-1" href="{$ruta}index.php">UCC</a>
+    <a class="navbar-brand mr-1" href="{$ruta}index.php"></a>
+    <!-- Cambio de imagen-->
+    <img src="/img/escudoo.svg" alt="Escudo" width="150" height="80" style="background-color: white;">
+
 
     <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
         <i class="fas fa-bars"></i>
