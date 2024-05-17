@@ -5,7 +5,7 @@ function getSidebar($ruta = ''){
     $html = <<<EOD
 <!-- Sidebar -->
 <ul class="sidebar navbar-nav">
-    <!--<li class="nav-item">
+    <li class="nav-item">
         <a class="nav-link" href="{$ruta}index.php">
             <i class="fas fa-calculator"></i>
             <span>Opción 1</span>
@@ -16,11 +16,11 @@ function getSidebar($ruta = ''){
             <i class="fas fa-truck"></i>
             <span>Opción 2</span>
         </a>
-    </li>-->
+    </li>
     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown"
            aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-book-open"></i>
+            <i class="fas fa-fw fa-book-open"></i>
             <span>Catálogos</span>
         </a>
         <div class="dropdown-menu" aria-labelledby="pagesDropdown">                        
@@ -53,7 +53,7 @@ function getNavbar($ruta = ''){
     $html = <<<EOD
 <nav class="navbar navbar-expand navbar-dark  custom-bg static-top">
 
-    <a class="navbar-brand mr-1" href="{$ruta}index.php"><img src="{$ruta}../img/logoUCC.ico" alt="Logo Universidad Cristobal Colon"></a>
+    <a class="navbar-brand mr-1" href="{$ruta}index.php">UCC</a>
 
     <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
         <i class="fas fa-bars"></i>
