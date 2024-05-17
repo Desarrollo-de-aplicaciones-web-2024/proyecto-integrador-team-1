@@ -72,8 +72,8 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
                         <td>Reporte mensual 2</td>
                         <td>Grupo Más</td>
                         <td>Ing. Guillermo Gomez Fernández</td>
-                        <td>
-                            <a href="#" class="btn btn-link btn-sm" data-toggle="modal" data-target="#editModal" data-nombre="Ximena Ruiz de la Peña" data-correo="202160177@ucc.mx" data-fecha="2024-04-01" data-etapa="Reporte mensual 2" data-empresa="Grupo Más" data-supervisor="Ing. Guillermo Gomez Fernández">Editar</a>
+                        <td class="text-center">
+                            <a href="#" class="btn btn-link btn-sm" data-toggle="modal" data-target="#editModal" data-nombre="Ximena Ruiz de la Peña" data-correo="202160177@ucc.mx" data-fecha="2024-04-01" data-etapa="Reporte mensual 2" data-empresa="Grupo Más" data-supervisor="Ing. Guillermo Gomez Fernández"><img src="../../../../img/edit-30x30.png"></a>
                         </td>
                     </tr>
                     <tr>
@@ -83,19 +83,19 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
                         <td>Finalizado</td>
                         <td>UV Microna</td>
                         <td>Dr. Jaime Martínez Castillo</td>
-                        <td>
-                            <a href="#" class="btn btn-link btn-sm" data-toggle="modal" data-target="#editModal" data-nombre="Bruno Rangel Zuñiga" data-correo="201960861@ucc.mx" data-fecha="2023-08-11" data-etapa="Finalizado" data-empresa="UV Microna" data-supervisor="Dr. Jaime Martínez Castillo">Editar</a>
+                        <td class="text-center">
+                            <a href="#" class="btn btn-link btn-sm" data-toggle="modal" data-target="#editModal" data-nombre="Bruno Rangel Zuñiga" data-correo="201960861@ucc.mx" data-fecha="2023-08-11" data-etapa="Finalizado" data-empresa="UV Microna" data-supervisor="Dr. Jaime Martínez Castillo"><img src="../../../../img/edit-30x30.png"></a>
                         </td>
                     </tr>
                     <tr>
                         <td>Elisa Villa Caballero</td>
-                        <td>202160177@ucc.mx</td>
+                        <td>202160467@ucc.mx</td>
                         <td>01/04/2024</td>
                         <td>Reporte mensual 2</td>
                         <td>Grupo Más</td>
                         <td>Ing. Guillermo Gomez Fernández</td>
-                        <td>
-                            <a href="#" class="btn btn-link btn-sm" data-toggle="modal" data-target="#editModal" data-nombre="Ximena Ruiz de la Peña" data-correo="202160177@ucc.mx" data-fecha="2024-04-01" data-etapa="Reporte mensual 2" data-empresa="Grupo Más" data-supervisor="Ing. Guillermo Gomez Fernández">Editar</a>
+                        <td  class="text-center">
+                            <a href="#" class="btn btn-link btn-sm" data-toggle="modal" data-target="#editModal" data-nombre="Ximena Ruiz de la Peña" data-correo="202160177@ucc.mx" data-fecha="2024-04-01" data-etapa="Reporte mensual 2" data-empresa="Grupo Más" data-supervisor="Ing. Guillermo Gomez Fernández"><img src="../../../../img/edit-30x30.png"></a>
                         </td>
                     </tr>
                     </tbody>
