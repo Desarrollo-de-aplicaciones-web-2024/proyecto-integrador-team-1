@@ -33,13 +33,23 @@ define('RUTA_INCLUDE', '../../'); //ajustar a necesidad
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">Academia</li>
-                    <li class="breadcrumb-item active" aria-current="page">Seguimiento de prácticas</li>
+                    <li class="breadcrumb-item active" aria-current="page">Consultas y reportes</li>
                 </ol>
             </nav>
 
             <div class="row my-3">
-                <div class="col text-right">
-                    <button type="button" class="btn btn-primary"><i class="fas fa-plus"></i> Generar reporte</button>
+                <div class="col">
+                    <form id="consulta-form" class="form-inline">
+                        <div class="form-group mb-2">
+                            <label for="alumno-id" class="sr-only">ID del Alumno</label>
+                            <input type="text" class="form-control" id="alumno-id" placeholder="ID del Alumno">
+                        </div>
+                        <div class="form-group mx-sm-3 mb-2">
+                            <label for="empresa-id" class="sr-only">ID de la Empresa</label>
+                            <input type="text" class="form-control" id="empresa-id" placeholder="ID de la Empresa">
+                        </div>
+                        <button type="submit" class="btn btn-primary mb-2">Consultar</button>
+                    </form>
                 </div>
             </div>
 
@@ -57,60 +67,55 @@ define('RUTA_INCLUDE', '../../'); //ajustar a necesidad
                 <table class="table table-bordered dataTable">
                     <thead>
                     <tr>
+                        <th>ID</th>
                         <th>Alumno</th>
                         <th>Carrera</th>
                         <th>Semestre</th>
                         <th>Inicio</th>
                         <th>Fin</th>
                         <th>Horas</th>
+                        <th>ID Empresa</th>
                         <th>Empresa</th>
                         <th>Departamento</th>
                         <th>Supervisor</th>
                     </tr>
                     </thead>
-                    <tfoot>
-                    <tr>
-                        <th>Alumno</th>
-                        <th>Carrera</th>
-                        <th>Semestre</th>
-                        <th>Inicio</th>
-                        <th>Fin</th>
-                        <th>Horas</th>
-                        <th>Empresa</th>
-                        <th>Departamento</th>
-                        <th>Supervisor</th>
-                    </tr>
-                    </tfoot>
                     <tbody>
                     <tr>
+                        <td>6</td>
                         <td>Bruno Rangel Zuñiga</td>
                         <td>Ing. en Sistemas Computacionales</td>
                         <td>6to</td>
                         <td>16/05/2024</td>
                         <td>16/08/2024</td>
                         <td>240</td>
+                        <td>54</td>
                         <td>Microna</td>
                         <td>TI</td>
                         <td>Dr. Jaime Martínez Castillo</td>
                     </tr>
                     <tr>
+                        <td>8</td>
                         <td>Guillermo Mendez</td>
                         <td>Ing. en Sistemas Computacionales</td>
                         <td>6to</td>
                         <td>16/05/2024</td>
                         <td>16/08/2024</td>
                         <td>2</td>
+                        <td>8</td>
                         <td>PEMEX</td>
                         <td>Jefatura</td>
                         <td>Dr. Jaime Martínez Castillo</td>
                     </tr>
                     <tr>
+                        <td>9</td>
                         <td>Abimael Ochoa</td>
                         <td>Ing. en Sistemas Computacionales</td>
                         <td>6to</td>
                         <td>16/05/2024</td>
                         <td>16/08/2024</td>
                         <td>5</td>
+                        <td>4</td>
                         <td>TAMSA</td>
                         <td>Desarrollo</td>
                         <td>Dr. Jaime Martínez Castillo</td>
@@ -120,6 +125,12 @@ define('RUTA_INCLUDE', '../../'); //ajustar a necesidad
             </div>
 
         </div>
+        <div class="row my-3">
+            <div class="col text-center">
+                <button type="button" class="btn btn-primary"><i class="fas fa-plus"></i> Generar reporte</button>
+            </div>
+        </div>
+
         <!-- /.container-fluid -->
 
         <?php getFooter() ?>
