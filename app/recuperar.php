@@ -11,13 +11,57 @@
 
     <title>Universidad Cristóbal Colón</title>
 
-    <!-- Custom fonts for this template-->
+
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 
-    <!-- Custom styles for this template-->
+
     <link href="../css/sb-admin.css" rel="stylesheet">
     <link href="../img/favicon.ico" rel="shortcut icon" type="image/png"/>
-
+    <style>
+        .bg-dark {
+            background-color: #0062cc !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .card-login {
+            width: 100%;
+            max-width: 500px;
+            margin: auto;
+        }
+        .card-header {
+            text-align: center;
+            font-size: 1.5rem;
+            background-color: #0056b3;
+            color: white;
+        }
+        .card-body {
+            padding: 2rem;
+        }
+        .form-group input {
+            border-radius: 0.25rem;
+        }
+        .btn-primary {
+            background-color: #0056b3;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #004494;
+        }
+        .text-center a {
+            color: #0056b3;
+        }
+        .text-center a:hover {
+            color: #004494;
+        }
+        .card-login img {
+            display: block;
+            margin: 0 auto 1rem;
+            width: 100px;
+            height: auto;
+        }
+    </style>
 </head>
 
 <body class="bg-dark">
@@ -27,6 +71,7 @@
         <div class="card-header">Recuperar contraseña</div>
         <div class="card-body">
             <div class="text-center mb-4">
+                <img src="../img/escudoo.svg" alt="Escudo de la Universidad Cristóbal Colón">
                 <h4>¿Olvidó su contraseña?</h4>
                 <p>Se enviará un correo electrónico con instrucciones para recuperar el acceso a su cuenta.</p>
             </div>
