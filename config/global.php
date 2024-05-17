@@ -24,17 +24,12 @@ function getSidebar($ruta = ''){
             <span>Catálogos</span>
         </a>
         <div class="dropdown-menu" aria-labelledby="pagesDropdown">                        
-            <a class="dropdown-item" href="#">Opción 1</a>
-            <a class="dropdown-item" href="#">Opción 2</a>            
-            <a class="dropdown-item" href="#">Opción 3</a>
+            <a class="dropdown-item" href="#">Usuarios Academia</a>
+            <a class="dropdown-item" href="#">Usuarios Alumnos</a>            
             <div class="dropdown-divider"></div>        
-            <a class="dropdown-item" href="#">Opción 4</a>            
-            <a class="dropdown-item" href="#">Opción 5</a>
-            <div class="dropdown-divider"></div>            
-            <a class="dropdown-item" href="#">Opción 6</a>
-            <a class="dropdown-item" href="#">Opción 7</a>
-            <a class="dropdown-item" href="#">Opción 8</a>            
-        </div> 
+            <a class="dropdown-item" href="#">Empresas</a>            
+            <a class="dropdown-item" href="#">Vacantes</a>         
+        </div>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="{$ruta}charts.php">
