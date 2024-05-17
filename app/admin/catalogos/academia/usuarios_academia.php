@@ -55,7 +55,7 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
                 <table class="table table-bordered dataTable">
                     <thead>
                     <tr>
-                        <th>Nombre Completo</th>
+                        <th>Nombre Comple</th>
                         <th>Correo Electrónico</th>
                         <th>Número de Teléfono</th>
                         <th>Puesto</th>
