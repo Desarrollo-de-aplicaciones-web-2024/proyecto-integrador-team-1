@@ -51,7 +51,7 @@ EOD;
 
 function getNavbar($ruta = ''){
     $html = <<<EOD
-<nav class="navbar navbar-expand navbar-dark custom-bg static-top">
+<nav class="navbar navbar-expand navbar-dark  custom-bg static-top">
 
     <a class="navbar-brand mr-1" href="{$ruta}index.php">UCC</a>
 
