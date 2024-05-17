@@ -33,7 +33,7 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">Catálogos</li>
-                    <li class="breadcrumb-item active" aria-current="page">Usuario Academia</li>
+                    <li class="breadcrumb-item active" aria-current="page">Usuarios Academia</li>
                 </ol>
             </nav>
 
@@ -47,46 +47,62 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
             -->
             <div class="row my-3">
                 <div class="col text-right">
-                    <button type="button" class="btn btn-primary"><i class="fas fa-plus"></i> Agregar Usuario</button>
+                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addModal"><i class="fas fa-plus"></i> Agregar Usuario</button>
                 </div>
             </div>
 
             <div class="table-responsive mb-3">
-                <table class="table table-bordered dataTable">
+                <table class="table table-bordered table-striped dataTable">
                     <thead>
                     <tr>
                         <th>Nombre Completo</th>
                         <th>Correo Electrónico</th>
                         <th>Número de Teléfono</th>
-                        <th>Puesto</th>
+                        <th>Cargo</th>
                         <th>Acciones</th>
                     </tr>
                     </thead>
-                    <tfoot>
-                    <th>Nombre Completo</th>
-                    <th>Correo Electrónico</th>
-                    <th>Número de Teléfono</th>
-                    <th>Puesto</th>
-                    <th>Acciones</th>
-                    </tfoot>
                     <tbody>
                     <tr>
-                        <td>Maria del Carmen Torres Aguirre</td>
+                        <td>Maria del Carmen Aguirre Torres</td>
                         <td>202851268@ucc.mx</td>
-                        <td>123-456-7891</td>
+                        <td>224-456-7891</td>
                         <td>Aseguramiento de Calidad</td>
-                        <td><a href="#" class="btn btn-link btn-sm btn-sm">Editar</a> <a href="#" class="btn btn-link btn-sm">Eliminar</a></td>
+                        <td>
+                            <a href="#" class="btn btn-link btn-sm" data-toggle="modal" data-target="#editModal"
+                               data-nombre="Maria del Carmen Aguirre Torres"
+                               data-correo="202851268@ucc.mx"
+                               data-telefono="224-456-7891"
+                               data-cargo="Aseguramiento de Calidad">Editar</a>
+                        </td>
                     </tr>
-
-                    </tbody>
                     <tr>
-                        <td>Elisa Villa</td>
-                        <td>202160467@ucc.mx</td>
-                        <td>123-456-7891</td>
-                        <td>Alumno</td>
-                        <td><a href="#" class="btn btn-link btn-sm btn-sm">Editar</a> <a href="#" class="btn btn-link btn-sm">Eliminar</a></td>
+                        <td>Ramon Palet Naranjo</td>
+                        <td>202456219@ucc.mx</td>
+                        <td>294-456-778</td>
+                        <td> Jefe de Área Académica</td>
+                        <td>
+                            <a href="#" class="btn btn-link btn-sm" data-toggle="modal" data-target="#editModal"
+                               data-nombre="Ramon Palet Naranjo"
+                               data-correo="202456219@ucc.mx"
+                               data-telefono="294-456-778"
+                               data-cargo="Jefe de Área Académica">Editar</a>
+                        </td>
                     </tr>
-
+                    <tr>
+                        <td>Erick Onofre Ruiz</td>
+                        <td>206345875@ucc.mx</td>
+                        <td>283-456-7891</td>
+                        <td>Vinculación Académica</td>
+                        <td>
+                            <a href="#" class="btn btn-link btn-sm" data-toggle="modal" data-target="#editModal"
+                               data-nombre="Erick Onofre Ruiz"
+                               data-correo="206345875@ucc.mx"
+                               data-telefono="283-456-7891"
+                               data-cargo="Vinculación Académica">Editar</a>
+                        </td>
+                    </tr>
+                    </tbody>
                 </table>
             </div>
 
@@ -107,7 +123,101 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
 </a>
 
 <?php getModalLogout() ?>
+<!-- Modal Editar -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Editar Usuario</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="editForm">
+                    <div class="form-group">
+                        <label for="editNombre">Nombre</label>
+                        <input type="text" class="form-control" id="editNombre" name="nombre">
+                    </div>
+                    <div class="form-group">
+                        <label for="editCorreo">Correo</label>
+                        <input type="email" class="form-control" id="editCorreo" name="correo">
+                    </div>
+                    <div class="form-group">
+                        <label for="editTelefono">Número de Teléfono</label>
+                        <input type="text" class="form-control" id="editTelefono" name="telefono">
+                    </div>
+                    <div class="form-group">
+                        <label for="editCargo">Cargo</label>
+                        <input type="text" class="form-control" id="editCargo" name="cargo">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                    <button type="button" class="btn btn-danger" id="deleteUser">Eliminar Usuario</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
+<!-- Incluir jQuery y Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script>
+    $('#editModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var nombre = button.data('nombre');
+        var correo = button.data('correo');
+        var telefono = button.data('telefono');
+        var cargo = button.data('cargo');
+
+        var modal = $(this);
+        modal.find('.modal-body #editNombre').val(nombre);
+        modal.find('.modal-body #editCorreo').val(correo);
+        modal.find('.modal-body #editTelefono').val(telefono);
+        modal.find('.modal-body #editCargo').val(cargo);
+    });
+
+    $('#deleteUser').click(function () {
+        // Aquí agregarías la lógica para eliminar al usuario
+        alert('Usuario eliminado');
+        $('#editModal').modal('hide');
+    });
+</script>
+<!-- Modal Agregar -->
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addModalLabel">Agregar Usuario</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="addForm">
+                    <div class="form-group">
+                        <label for="addNombre">Nombre</label>
+                        <input type="text" class="form-control" id="addNombre" name="nombre">
+                    </div>
+                    <div class="form-group">
+                        <label for="addCorreo">Correo</label>
+                        <input type="email" class="form-control" id="addCorreo" name="correo">
+                    </div>
+                    <div class="form-group">
+                        <label for="addTelefono">Número de Teléfono</label>
+                        <input type="text" class="form-control" id="addTelefono" name="telefono">
+                    </div>
+                    <div class="form-group">
+                        <label for="addCargo">Cargo</label>
+                        <input type="text" class="form-control" id="addCargo" name="cargo">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Agregar Usuario</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 <?php getBottomIncudes( RUTA_INCLUDE ) ?>
 </body>
 

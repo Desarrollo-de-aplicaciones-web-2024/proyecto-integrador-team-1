@@ -29,7 +29,7 @@ function getSidebar($ruta = ''){
             <div class="dropdown-divider"></div>        
             <a class="dropdown-item" href="#">Empresas</a>            
             <a class="dropdown-item" href="#">Vacantes</a>         
-        </div> 
+        </div>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="{$ruta}charts.php">
@@ -51,7 +51,7 @@ EOD;
 
 function getNavbar($ruta = ''){
     $html = <<<EOD
-<nav class="navbar navbar-expand navbar-dark custom-bg static-top">
+<nav class="navbar navbar-expand navbar-dark  custom-bg static-top">
 
     <a class="navbar-brand mr-1" href="{$ruta}index.php">UCC</a>
 
