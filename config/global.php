@@ -6,9 +6,9 @@ function getSidebar($ruta = ''){
 <!-- Sidebar -->
 <ul class="sidebar navbar-nav">
     <li class="nav-item">
-        <a class="nav-link" href="{$ruta}index.php">
-            <i class="fas fa-calculator"></i>
-            <span>Opción 1</span>
+        <a class="nav-link" href="{$ruta}documentos-iniciales.php">
+            <i class="fa fa-archive"></i>
+            <span> Documentos Inciales</span>
         </a>
     </li>
     <li class="nav-item">
@@ -20,7 +20,7 @@ function getSidebar($ruta = ''){
     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown"
            aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-fw fa-book-open"></i>
+            <i class="fas fa-book-open"></i>
             <span>Catálogos</span>
         </a>
         <div class="dropdown-menu" aria-labelledby="pagesDropdown">                        
