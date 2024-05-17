@@ -88,7 +88,7 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
                         </td>
                     </tr>
                     <tr>
-                        <td>Ximena Ruiz de la Peña</td>
+                        <td>Elisa Villa Caballero</td>
                         <td>202160177@ucc.mx</td>
                         <td>01/04/2024</td>
                         <td>Reporte mensual 2</td>
