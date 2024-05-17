@@ -99,7 +99,6 @@ define('RUTA_INCLUDE', '../../../'); // ajustar a necesidad
                 </table>
             </div>
 
-
             <div class="row my-3 justify-content-center">
                 <div class="col-auto">
                     <button type="button" class="btn btn-primary">Descargar archivos</button>
