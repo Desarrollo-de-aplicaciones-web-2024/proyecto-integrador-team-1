@@ -50,7 +50,6 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
                     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addModal"><i class="fas fa-plus"></i> Agregar Usuario</button>
                 </div>
             </div>
-
             <div class="table-responsive mb-3">
                 <table class="table table-bordered table-striped dataTable">
                     <thead>
