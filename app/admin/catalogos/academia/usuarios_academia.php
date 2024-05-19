@@ -27,7 +27,6 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
     <?php getSidebar() ?>
 
     <div id="content-wrapper">
-
         <div class="container-fluid">
 
             <nav aria-label="breadcrumb">
