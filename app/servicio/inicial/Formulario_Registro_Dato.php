@@ -32,8 +32,8 @@ define('RUTA_INCLUDE', '../../../'); //ajustar a necesidad
 
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item">Datos personales</li>
-                    <li class="breadcrumb-item active" aria-current="page">En este apartado ingresa tus datos</li>
+                    <li class="breadcrumb-item">Registro de datos</li>
+                    <li class="breadcrumb-item active" aria-current="page">En este apartado ingresa tus datos del usuario</li>
                 </ol>
             </nav>
 

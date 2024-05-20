@@ -24,7 +24,7 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
 
 <div id="wrapper">
 
-    <?php getSidebar() ?>
+    <?php getSidebar(RUTA_INCLUDE) ?>
 
     <div id="content-wrapper">
 
@@ -55,47 +55,90 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
                 <table class="table table-bordered table-striped dataTable">
                     <thead>
                     <tr>
+                        <th>Matrícula</th>
                         <th>Nombre</th>
                         <th>Correo</th>
-                        <th>Fecha de inicio</th>
-                        <th>Etapa</th>
-                        <th>Empresa</th>
-                        <th>Supervisor</th>
+                        <th>Licenciatura</th>
+                        <th>Semestre</th>
+                        <th>Teléfono</th>
                         <th>Acciones</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
+                        <td>202160177</td>
                         <td>Ximena Ruiz de la Peña</td>
                         <td>202160177@ucc.mx</td>
-                        <td>01/04/2024</td>
-                        <td>Reporte mensual 2</td>
-                        <td>Grupo Más</td>
-                        <td>Ing. Guillermo Gomez Fernández</td>
+                        <td>Ing. En Sistemas Computacionales</td>
+                        <td>6to</td>
+                        <td>2294309616</td>
                         <td class="text-center">
-                            <a href="#" class="btn btn-link btn-sm" data-toggle="modal" data-target="#editModal" data-nombre="Ximena Ruiz de la Peña" data-correo="202160177@ucc.mx" data-fecha="2024-04-01" data-etapa="Reporte mensual 2" data-empresa="Grupo Más" data-supervisor="Ing. Guillermo Gomez Fernández"><img src="../../../../img/edit-30x30.png"></a>
+                            <a href="#" class="btn btn-link btn-sm"
+                               data-toggle="modal"
+                               data-target="#editModal"
+                               data-matricula="202160177"
+                               data-nombre="Ximena Ruiz de la Peña"
+                               data-correo="202160177@ucc.mx"
+                               data-licenciatura="Ing. En Sistemas Computacionales"
+                               data-semestre="6to"
+                               data-telefono="2294309616"><img src="../../../../img/edit-30x30.png" alt="Imagen Editar"></a>
                         </td>
                     </tr>
                     <tr>
+                        <td>201960861</td>
                         <td>Bruno Rangel Zuñiga</td>
                         <td>201960861@ucc.mx</td>
-                        <td>11/08/2023</td>
-                        <td>Finalizado</td>
-                        <td>UV Microna</td>
-                        <td>Dr. Jaime Martínez Castillo</td>
+                        <td>Ing. En Sistemas Computacionales</td>
+                        <td>6to</td>
+                        <td>2299133607</td>
                         <td class="text-center">
-                            <a href="#" class="btn btn-link btn-sm" data-toggle="modal" data-target="#editModal" data-nombre="Bruno Rangel Zuñiga" data-correo="201960861@ucc.mx" data-fecha="2023-08-11" data-etapa="Finalizado" data-empresa="UV Microna" data-supervisor="Dr. Jaime Martínez Castillo"><img src="../../../../img/edit-30x30.png"></a>
+                            <a href="#" class="btn btn-link btn-sm"
+                               data-toggle="modal"
+                               data-target="#editModal"
+                               data-matricula="201960861"
+                               data-nombre="Bruno Rangel Zuñiga"
+                               data-correo="201960861@ucc.mx"
+                               data-licenciatura="Ing. En Sistemas Computacionales"
+                               data-semestre="6to"
+                               data-telefono="2299133607"><img src="../../../../img/edit-30x30.png" alt="Imagen Editar"></a>
                         </td>
                     </tr>
                     <tr>
+                        <td>202160467</td>
                         <td>Elisa Villa Caballero</td>
                         <td>202160467@ucc.mx</td>
-                        <td>01/04/2024</td>
-                        <td>Reporte mensual 2</td>
-                        <td>Grupo Más</td>
-                        <td>Ing. Guillermo Gomez Fernández</td>
-                        <td  class="text-center">
-                            <a href="#" class="btn btn-link btn-sm" data-toggle="modal" data-target="#editModal" data-nombre="Ximena Ruiz de la Peña" data-correo="202160177@ucc.mx" data-fecha="2024-04-01" data-etapa="Reporte mensual 2" data-empresa="Grupo Más" data-supervisor="Ing. Guillermo Gomez Fernández"><img src="../../../../img/edit-30x30.png"></a>
+                        <td>Ing. En Sistemas Computacionales</td>
+                        <td>6to</td>
+                        <td>2831231627</td>
+                        <td class="text-center">
+                            <a href="#" class="btn btn-link btn-sm"
+                               data-toggle="modal"
+                               data-target="#editModal"
+                               data-matricula="202160467"
+                               data-nombre="Elisa Villa Caballero"
+                               data-correo="202160467@ucc.mx"
+                               data-licenciatura="Ing. En Sistemas Computacionales"
+                               data-semestre="6to"
+                               data-telefono="2831231627"><img src="../../../../img/edit-30x30.png" alt="Imagen Editar"></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>202160171</td>
+                        <td>Abimael Ochoa Hernández</td>
+                        <td>202160171@ucc.mx</td>
+                        <td>Ing. En Sistemas Computacionales</td>
+                        <td>6to</td>
+                        <td>2297732121</td>
+                        <td class="text-center">
+                            <a href="#" class="btn btn-link btn-sm"
+                               data-toggle="modal"
+                               data-target="#editModal"
+                               data-matricula="202160171"
+                               data-nombre="Abimael Ochoa Hernández"
+                               data-correo="202160171@ucc.mx"
+                               data-licenciatura="Ing. En Sistemas Computacionales"
+                               data-semestre="6to"
+                               data-telefono="2297732121"><img src="../../../../img/edit-30x30.png" alt="Imagen Editar"></a>
                         </td>
                     </tr>
                     </tbody>
@@ -111,7 +154,8 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form id="editForm">
+                                <form id="editForm" method="post" action="editUser.php">
+                                    <input type="hidden" id="editMatricula" name="matricula">
                                     <div class="form-group">
                                         <label for="editNombre">Nombre</label>
                                         <input type="text" class="form-control" id="editNombre" name="nombre">
@@ -121,23 +165,19 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
                                         <input type="email" class="form-control" id="editCorreo" name="correo">
                                     </div>
                                     <div class="form-group">
-                                        <label for="editFecha">Fecha de Inicio</label>
-                                        <input type="date" class="form-control" id="editFecha" name="fecha">
+                                        <label for="editLicenciatura">Licenciatura</label>
+                                        <input type="text" class="form-control" id="editLicenciatura" name="licenciatura">
                                     </div>
                                     <div class="form-group">
-                                        <label for="editEtapa">Etapa</label>
-                                        <input type="text" class="form-control" id="editEtapa" name="etapa">
+                                        <label for="editSemestre">Semestre</label>
+                                        <input type="text" class="form-control" id="editSemestre" name="semestre">
                                     </div>
                                     <div class="form-group">
-                                        <label for="editEmpresa">Empresa</label>
-                                        <input type="text" class="form-control" id="editEmpresa" name="empresa">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="editSupervisor">Supervisor</label>
-                                        <input type="text" class="form-control" id="editSupervisor" name="supervisor">
+                                        <label for="editTelefono">Teléfono</label>
+                                        <input type="text" class="form-control" id="editTelefono" name="telefono">
                                     </div>
                                     <button type="submit" class="btn btn-primary">Guardar cambios</button>
-                                    <button type="button" class="btn btn-danger" id="deleteUser">Eliminar Usuario</button>
+                                    <button type="button" class="btn btn-danger" id="deleteUser" data-matricula="">Eliminar Usuario</button>
                                 </form>
                             </div>
                         </div>
@@ -155,7 +195,7 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form id="addForm">
+                                <form id="addForm" method="post" action="addUser.php">
                                     <div class="form-group">
                                         <label for="addNombre">Nombre</label>
                                         <input type="text" class="form-control" id="addNombre" name="nombre">
@@ -165,20 +205,16 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
                                         <input type="email" class="form-control" id="addCorreo" name="correo">
                                     </div>
                                     <div class="form-group">
-                                        <label for="addFecha">Fecha de Inicio</label>
-                                        <input type="date" class="form-control" id="addFecha" name="fecha">
+                                        <label for="addLicenciatura">Licenciatura</label>
+                                        <input type="text" class="form-control" id="addLicenciatura" name="licenciatura">
                                     </div>
                                     <div class="form-group">
-                                        <label for="addEtapa">Etapa</label>
-                                        <input type="text" class="form-control" id="addEtapa" name="etapa">
+                                        <label for="addSemestre">Semestre</label>
+                                        <input type="text" class="form-control" id="addSemestre" name="semestre">
                                     </div>
                                     <div class="form-group">
-                                        <label for="addEmpresa">Empresa</label>
-                                        <input type="text" class="form-control" id="addEmpresa" name="empresa">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="addSupervisor">Supervisor</label>
-                                        <input type="text" class="form-control" id="addSupervisor" name="supervisor">
+                                        <label for="addTelefono">Teléfono</label>
+                                        <input type="text" class="form-control" id="addTelefono" name="telefono">
                                     </div>
                                     <button type="submit" class="btn btn-primary">Agregar Usuario</button>
                                 </form>
@@ -186,8 +222,7 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
                         </div>
                     </div>
                 </div>
-
-        </div>
+            </div>
         <!-- /.container-fluid -->
 
         <?php getFooter() ?>
@@ -205,37 +240,42 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
 
 <?php getModalLogout() ?>
 
-<!-- Incluir jQuery y Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $('#editModal').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget);
-            var nombre = button.data('nombre');
-            var correo = button.data('correo');
-            var fecha = button.data('fecha');
-            var etapa = button.data('etapa');
-            var empresa = button.data('empresa');
-            var supervisor = button.data('supervisor');
+    <!-- Incluir jQuery y Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#editModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                var matricula = button.data('matricula');
+                var nombre = button.data('nombre');
+                var correo = button.data('correo');
+                var licenciatura = button.data('licenciatura');
+                var semestre = button.data('semestre');
+                var telefono = button.data('telefono');
 
-            var modal = $(this);
-            modal.find('.modal-body #editNombre').val(nombre);
-            modal.find('.modal-body #editCorreo').val(correo);
-            modal.find('.modal-body #editFecha').val(fecha);
-            modal.find('.modal-body #editEtapa').val(etapa);
-            modal.find('.modal-body #editEmpresa').val(empresa);
-            modal.find('.modal-body #editSupervisor').val(supervisor);
-        });
+                var modal = $(this);
+                modal.find('.modal-body #editMatricula').val(matricula);
+                modal.find('.modal-body #editNombre').val(nombre);
+                modal.find('.modal-body #editCorreo').val(correo);
+                modal.find('.modal-body #editLicenciatura').val(licenciatura);
+                modal.find('.modal-body #editSemestre').val(semestre);
+                modal.find('.modal-body #editTelefono').val(telefono);
+                modal.find('.modal-footer #deleteUser').data('matricula', matricula);
+            });
 
-        $('#deleteUser').click(function () {
-            // Aquí agregarías la lógica para eliminar al usuario
-            alert('Usuario eliminado');
-            $('#editModal').modal('hide');
+            $('#deleteUser').click(function () {
+                var matricula = $(this).data('matricula');
+                if(confirm('¿Estás seguro de que deseas eliminar este usuario?')) {
+                    $.post('deleteUser.php', { matricula: matricula }, function(result) {
+                        alert('Usuario eliminado');
+                        location.reload();
+                    });
+                }
+            });
         });
-    });
-</script>
+    </script>
 <?php getBottomIncudes( RUTA_INCLUDE ) ?>
 
 </body>
