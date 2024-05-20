@@ -78,7 +78,7 @@ define('RUTA_INCLUDE', '../../../'); // ajustar a necesidad
                 <table class="table table-bordered">
                     <thead>
                     <tr>
-                        <th class="align-middle">Archivo</th>
+                        <th class="align-middle">Archivos</th>
                         <th class="align-middle text-center">Estatus</th>
                     </tr>
                     </thead>

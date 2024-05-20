@@ -19,7 +19,7 @@
     <link href="../img/favicon.ico" rel="shortcut icon" type="image/png"/>
     <style>
         .bg-dark {
-            background-color: #0062cc !important; /* Cambiado a azul */
+            background-color: #0062cc !important;
             display: flex;
             justify-content: center;
             align-items: center;

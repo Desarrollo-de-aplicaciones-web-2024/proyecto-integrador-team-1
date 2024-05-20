@@ -11,15 +11,15 @@
 
     <title>Universidad Cristóbal Colón</title>
 
-    <!-- Custom fonts for this template-->
+
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 
-    <!-- Custom styles for this template-->
+
     <link href="../css/sb-admin.css" rel="stylesheet">
     <link href="../img/favicon.ico" rel="shortcut icon" type="image/png"/>
     <style>
         .bg-dark {
-            background-color: #0062cc !important; /* Fondo azul */
+            background-color: #0062cc !important;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -27,7 +27,7 @@
         }
         .card-login {
             width: 100%;
-            max-width: 500px; /* Pantalla más grande */
+            max-width: 500px;
             margin: auto;
         }
         .card-header {
