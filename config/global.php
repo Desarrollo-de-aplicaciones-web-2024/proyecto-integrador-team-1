@@ -56,7 +56,7 @@ function getNavbar($ruta = ''){
 
     <a class="navbar-brand mr-1" href="{$ruta}index.php"></a>
     <!-- Cambio de imagen-->
-    <img src="/img/escudoo.svg" alt="Escudo" width="150" height="80" style="background-color: white;">
+    <img src="/img/foto_ucc.png" alt="Escudo" width="200" height="75" style="">
 
 
     <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">

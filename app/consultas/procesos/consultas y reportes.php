@@ -16,6 +16,16 @@ define('RUTA_INCLUDE', '../../../'); //ajustar a necesidad
     <title><?php echo PAGE_TITLE ?></title>
 
     <?php getTopIncludes(RUTA_INCLUDE) ?>
+    <style>
+        th, td {
+            text-align: center;
+        }
+
+        th {
+            background-color: #016CA1;
+            color: white;
+        }
+    </style>
 </head>
 
 <body id="page-top">
@@ -54,16 +64,6 @@ define('RUTA_INCLUDE', '../../../'); //ajustar a necesidad
             </div>
 
             <div class="table-responsive mb-3">
-                <style>
-                    th, td {
-                        text-align: center;
-                    }
-
-                    th {
-                        background-color: #016CA1;
-                        color: white;
-                    }
-                </style>
                 <table class="table table-bordered dataTable">
                     <thead>
                     <tr>
@@ -78,6 +78,7 @@ define('RUTA_INCLUDE', '../../../'); //ajustar a necesidad
                         <th>Empresa</th>
                         <th>Departamento</th>
                         <th>Supervisor</th>
+                        <th>Acción</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -93,6 +94,7 @@ define('RUTA_INCLUDE', '../../../'); //ajustar a necesidad
                         <td>Microna</td>
                         <td>TI</td>
                         <td>Dr. Jaime Martínez Castillo</td>
+                        <td><button class="btn btn-secondary select-row" type="button">Seleccionar</button></td>
                     </tr>
                     <tr>
                         <td>8</td>
@@ -106,6 +108,7 @@ define('RUTA_INCLUDE', '../../../'); //ajustar a necesidad
                         <td>PEMEX</td>
                         <td>Jefatura</td>
                         <td>Dr. Jaime Martínez Castillo</td>
+                        <td><button class="btn btn-secondary select-row" type="button">Seleccionar</button></td>
                     </tr>
                     <tr>
                         <td>9</td>
@@ -119,6 +122,7 @@ define('RUTA_INCLUDE', '../../../'); //ajustar a necesidad
                         <td>TAMSA</td>
                         <td>Desarrollo</td>
                         <td>Dr. Jaime Martínez Castillo</td>
+                        <td><button class="btn btn-secondary select-row" type="button">Seleccionar</button></td>
                     </tr>
                     </tbody>
                 </table>
@@ -127,9 +131,16 @@ define('RUTA_INCLUDE', '../../../'); //ajustar a necesidad
         </div>
         <div class="row my-3">
             <div class="col text-center">
-                <button type="button" class="btn btn-primary"><i class="fas fa-plus"></i> Generar reporte</button>
+                <button id="generate-report" type="button" class="btn btn-primary"><i class="fas fa-plus"></i> Generar reporte</button>
             </div>
         </div>
+
+        <!-- Formulario oculto para generar el reporte -->
+        <form id="report-form" action="generar_reporte.php" method="post" style="display: none;">
+            <input type="hidden" name="id_alumno" id="report-id-alumno">
+            <input type="hidden" name="id_empresa" id="report-id-empresa">
+            <!-- Añadir otros campos ocultos si es necesario -->
+        </form>
 
         <!-- /.container-fluid -->
 
@@ -149,6 +160,28 @@ define('RUTA_INCLUDE', '../../../'); //ajustar a necesidad
 <?php getModalLogout() ?>
 
 <?php getBottomIncudes(RUTA_INCLUDE) ?>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const buttons = document.querySelectorAll('.select-row');
+        buttons.forEach(button => {
+            button.addEventListener('click', function() {
+                const row = button.closest('tr');
+                const idAlumno = row.cells[0].textContent;
+                const idEmpresa = row.cells[7].textContent;
+
+                // Almacenar los datos seleccionados en el formulario oculto
+                document.getElementById('report-id-alumno').value = idAlumno;
+                document.getElementById('report-id-empresa').value = idEmpresa;
+            });
+        });
+
+        document.getElementById('generate-report').addEventListener('click', function() {
+            document.getElementById('report-form').submit();
+        });
+    });
+</script>
+
 </body>
 
 </html>
