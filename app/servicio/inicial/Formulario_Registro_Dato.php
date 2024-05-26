@@ -32,13 +32,14 @@ define('RUTA_INCLUDE', '../../../'); //ajustar a necesidad
 
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item">Datos personales</li>
-                    <li class="breadcrumb-item active" aria-current="page">En este apartado ingresa tus datos</li>
+                    <li class="breadcrumb-item">Registro </li>
+                    <li class="breadcrumb-item active" aria-current="page">Registro de datos para realizar prácticas profesionales
+                    </li>
                 </ol>
             </nav>
 
             <div class="alert alert-danger" role="alert">
-                <i class="fas fa-exclamation-triangle"></i> Uno de los formularios está vacío
+                <i class="fas fa-exclamation-triangle"></i> Uno de los campos está vacío
             </div>
 
 
@@ -49,94 +50,59 @@ define('RUTA_INCLUDE', '../../../'); //ajustar a necesidad
         <div class="container">
             <div class="row mb-5">
                 <div class="col">
-                    <button type="button" class="btn btn-success">Guardar</button>
+                    <button onclick="window.location.href='plan_trabajo.php'" class="btn btn-success">Guardar</button>
                 </div>
                 <div class="col text-right">
                     <button type="button" class="btn btn-danger">Cancelar</button>
                 </div>
             </div>
 
-            <form>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="inputNombre">Nombre(s)</label>
-                        <input type="text" class="form-control" id="inputNombre">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="inputPassword4">Apellidos</label>
-                        <input type="text" class="form-control" id="inputPassword4">
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="inputEmail4">Email</label>
-                        <input type="email" class="form-control" id="inputEmail4">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="inputPassword4">Matricula</label>
-                        <input type="text" class="form-control" id="inputPassword4">
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="inputNombre">Carrera</label>
-                        <input type="text" class="form-control" id="inputNombre">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="inputPassword4">Semestre</label>
-                        <input type="text" class="form-control" id="inputPassword4">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputAddress">Número Telefonico</label>
-                    <input type="text" class="form-control" id="inputAddress" placeholder="229 923 2950">
-                </div>
-            </form>
-
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item">Datos de la empresa</li>
-                    <li class="breadcrumb-item active" aria-current="page">En este apartado ingresa los datos de la empresa</li>
-                </ol>
-            </nav>
 
                 <div class="form-group">
-                    <label for="inputAddress2">Nombre de la empresa</label>
+                    <label for="inputAddress2">Empresa:    </label>
+
+                <select class="form-select" aria-label="Default select example">
+                <option selected>Nombre de la empresa</option>
+                <option value="1">Empresa 1</option>
+                <option value="2">Empresa 2</option>
+                <option value="3">Empresa 3</option>
+                </select>
+                </div>
+                <div class="form-group">
+                    <label for="inputAddress2">Nombre del supervisor directo</label>
                     <input type="text" class="form-control" id="inputAddress2">
                 </div>
                 <div class="form-group">
-                    <label for="inputAddress2">Nombre del encargado</label>
-                    <input type="text" class="form-control" id="inputAddress2">
-                </div>
-            <div class="form-group">
-                <label for="inputAddress2">Dirección de la empresa</label>
+                <label for="inputAddress2">Puesto del supervisor directo</label>
                 <input type="text" class="form-control" id="inputAddress2">
-            </div>
+                 </div>
             <div class="form-group">
-                <label for="inputEmail4">Email</label>
+                <label for="inputEmail4">Email:</label>
                 <input type="email" class="form-control" id="inputEmail4">
             </div>
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="inputNombre">Codigo postal</label>
-                    <input type="text" class="form-control" id="inputNombre">
-                </div>
-                <div class="form-group col-md-6">
-                    <label for="inputPassword4">Número telefónico</label>
-                    <input type="text" class="form-control" id="inputPassword4">
-                </div>
+
+            <div class="form-group">
+                <label for="inputAddress2">Duración de las prácticas:    </label>
+
+                <select class="form-select" aria-label="Default select example">
+                    <option selected> # meses</option>
+                    <option value="1">3 meses</option>
+                    <option value="2">4 meses</option>
+                    <option value="3">5 meses</option>
+                    <option value="3">6 meses</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail4">Departamento:</label>
+                <input type="text" class="form-control" id="inputEmail4">
+            </div>
+            <div class="form-group">
+                <label for="inputEmail4">Puesto tentativo a desempeñar:</label>
+                <input type="text" class="form-control" id="inputEmail4">
             </div>
             </form>
         </div>
-        <div class="container">
-            <div class="row mb-5">
-                <div class="col">
-                    <button type="button" class="btn btn-success">Guardar</button>
-                </div>
-                <div class="col text-right">
-                    <button type="button" class="btn btn-danger">Cancelar</button>
-                </div>
-            </div>
+
         <!-- /.container -->
 
         <?php getFooter() ?>

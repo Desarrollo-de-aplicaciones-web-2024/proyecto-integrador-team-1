@@ -22,6 +22,7 @@ function getSidebar($ruta = ''){
            aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-book-open"></i>
             <span>Catálogos</span>
+
         </a>
         <div class="dropdown-menu" aria-labelledby="pagesDropdown">                        
             <a class="dropdown-item" href="#">Usuarios Academia</a>
@@ -53,7 +54,10 @@ function getNavbar($ruta = ''){
     $html = <<<EOD
 <nav class="navbar navbar-expand navbar-dark  custom-bg static-top">
 
-    <a class="navbar-brand mr-1" href="{$ruta}index.php">UCC</a>
+    <a class="navbar-brand mr-1" href="{$ruta}index.php"></a>
+    <!-- Cambio de imagen-->
+    <img src="/img/foto_ucc.png" alt="Escudo" width="200" height="75" style="">
+
 
     <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
         <i class="fas fa-bars"></i>
