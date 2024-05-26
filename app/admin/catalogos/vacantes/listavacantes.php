@@ -32,29 +32,8 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
     </style>
     <script>
 
-        $(document).ready(function() {
-            $('.dropdown-item').click(function() {
-                console.log("Clic detectado en una opción de menú desplegable.");
 
-                var selectedOption = $(this).text();
-                console.log("Opción seleccionada: " + selectedOption);
-
-                var contentToAdd = "";
-
-                if (selectedOption === 'Empresas públicas') {
-                    contentToAdd = '<div class="additional-info">' +
-                        '  <p>Contenido para empresas públicas...</p>' +
-                        '<p><b>Empresa</b>:Procuradoría General del Estado <br><b>vacantes</b>: 1 <br><b>Tipo</b>: Técnico en mantenimiento'
-                        '</div>';
-                } else if (selectedOption === 'Empresas privadas') {
-                    contentToAdd = '<div class="additional-info">' +
-                        '  <p>Contenido para empresas privadas...</p>' +
-                        '  <p><b>Empresa</b>:Bimbo <br><b>vacantes</b>: 2 <br><b>Tipo</b>: Administrador de redes</p>' +
-                        '</div>';
-                }
-
-                $('#content').html(contentToAdd);
-            });
+        });
         });
     </script>
 </head>
@@ -65,28 +44,63 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
 
 <div id="wrapper">
 
+    <?php getSidebar() ?>
+
     <div id="content-wrapper">
 
         <div class="container-fluid">
+            <section class="jumbotron text-center">
+                <div class="container">
+                    <h1 class="jumbotron-heading">Vacantes de empresas</h1>
+                    <p class="lead text-muted">Aquí encontrarás una lista de las distintas vacantes disponibles en diferentes empresas</br><b>NOTA:</b> la información desplegada puede cambiar en sin previo aviso..</p>
+                </div>
+            </section>
 
-            <!-- Page Content -->
-            <h1>Vacantes de empresas</h1>
-            <hr>
-            <p>Descubre aquí la lista de las vacantes de las distintas empresas en donde podrás hacer tus prácticas profesionales.<br>Recuerda que puedes escoger entre empresas públicas o privadas<br><b>NOTA</b>:Ten en cuenta que algunas vacantes pueden cambiar sin previo aviso.</b></p>
+            <div class="album py-5 bg-light">
+                <div class="container">
 
-            <!-- Dropdown Menu -->
-            <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Seleccionar Rubro
-                </button>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="#">Empresas públicas</a>
-                    <a class="dropdown-item" href="#">Empresas privadas</a>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="card mb-4 shadow-sm">
+                                <img src="https://via.placeholder.com/300" class="card-img-top" alt="Placeholder image">
+                                <div class="card-body">
+                                    <p class="card-text"><b>Empresa:</b> Grupo Bimbo</br><b>Giro:</b> Panificadora a nivel nacional</br><b>Vacante:</b> Adminsitración de redes</p>
+                                    <small class="text-muted">9 mins</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Nueva tarjeta 1 -->
+
+                        <div class="col-md-4">
+                            <div class="card mb-4 shadow-sm">
+                                <img src="ruta/a/la/imagen2.jpg" class="card-img-top" alt="Descripción de la imagen">
+                                <div class="card-body">
+                                    <p class="card-text"><b>Empresa:</b> Grupo Tony</br><b>Giro:</b> Papelería y oficina</br><b>Vacante:</b> Administrador de BD</p>
+                                    <small class="text-muted">12 mins</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Fin de la nueva tarjeta 1 -->
+
+                        <!-- Nueva tarjeta 2 -->
+
+                        <div class="col-md-4">
+                            <div class="card mb-4 shadow-sm">
+                                <img src="ruta/a/la/imagen3.jpg" class="card-img-top" alt="Descripción de la imagen">
+                                <div class="card-body">
+                                    <p class="card-text"><b>Empresa:</b> Grupo Chedraui</br><b>Giro:</b> Supermercado</br><b>Vacante: </b>Gestor de comunicaciones</p>
+                                    <small class="text-muted">15 mins</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Fin de la nueva tarjeta 2 -->
+
+                    </div>
                 </div>
             </div>
-
-            <!-- Contenido -->
-            <div id="content"></div>
 
         </div>
         <!-- /.container-fluid -->
