@@ -24,7 +24,7 @@ define('RUTA_INCLUDE', '../'); //ajustar a necesidad
             width: 20px;
             height: 20px;
             border-radius: 50%;
-            background-color: #007bff;
+            background-color: red;
             display: inline-block;
             margin-right: 10px;
         }
@@ -55,7 +55,7 @@ define('RUTA_INCLUDE', '../'); //ajustar a necesidad
                     <ul class="mb-0">
                         <li>Las firmas, datos del alumno y demás involucrados se observen claramente.</li>
                         <li>No subir archivos manchados o maltratados.</li>
-                        <li>Recuerda tu periodo de prácticas comienza al momento de que los documentos sean validados por el aseguramiento de calidad.</li>
+                        <li>Recuerda cumplir con todos los documento necesarios para poder completar tu periodo de practicas</li>
                     </ul>
                 </div>
 
@@ -64,15 +64,15 @@ define('RUTA_INCLUDE', '../'); //ajustar a necesidad
                 <div class="list-group">
                     <div class="list-group-item d-flex align-items-center">
                         <div class="circle"></div>
-                        <p class="mb-0">Solicitud para realización de prácticas profesionales</p>
+                        <p class="mb-0">Reseña practicas profesionales</p>
                     </div>
                     <div class="list-group-item d-flex align-items-center">
                         <div class="circle"></div>
-                        <p class="mb-0">Plan de trabajo de prácticas profesionales</p>
+                        <p class="mb-0">Constancia finalizacion</p>
                     </div>
                     <div class="list-group-item d-flex align-items-center">
                         <div class="circle"></div>
-                        <p class="mb-0">Carta de Aceptación</p>
+                        <p class="mb-0">Reporte global</p>
                     </div>
                 </div>
 
