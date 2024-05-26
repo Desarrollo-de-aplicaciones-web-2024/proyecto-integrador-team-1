@@ -71,6 +71,7 @@ define('RUTA_INCLUDE', '../../../'); // ajustar a necesidad
                     <li>Las firmas, datos del alumno y demás involucrados se observen claramente.</li>
                     <li>No subir archivos manchados o maltratados.</li>
                     <li>Recuerda tu periodo de prácticas comienza al momento de que los documentos sean validados por el aseguramiento de calidad.</li>
+
                 </ul>
             </div>
             <div class="container">
