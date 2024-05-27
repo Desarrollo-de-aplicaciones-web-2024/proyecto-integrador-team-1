@@ -85,25 +85,6 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
                         </td>
                     </tr>
                     <tr>
-                        <td>201960861</td>
-                        <td>Bruno Rangel Zuñiga</td>
-                        <td>201960861@ucc.mx</td>
-                        <td>Ing. En Sistemas Computacionales</td>
-                        <td>6to</td>
-                        <td>2299133607</td>
-                        <td class="text-center">
-                            <a href="#" class="btn btn-link btn-sm"
-                               data-toggle="modal"
-                               data-target="#editModal"
-                               data-matricula="201960861"
-                               data-nombre="Bruno Rangel Zuñiga"
-                               data-correo="201960861@ucc.mx"
-                               data-licenciatura="Ing. En Sistemas Computacionales"
-                               data-semestre="6to"
-                               data-telefono="2299133607"><img src="../../../../img/edit-30x30.png" alt="Imagen Editar"></a>
-                        </td>
-                    </tr>
-                    <tr>
                         <td>202160467</td>
                         <td>Elisa Villa Caballero</td>
                         <td>202160467@ucc.mx</td>
