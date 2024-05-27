@@ -1,6 +1,6 @@
 <?php
 require_once '../../../../config/global.php';
-
+require_once '../../../../config/db.php';
 define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
 ?>
 <!DOCTYPE html>
@@ -27,7 +27,6 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
     <?php getSidebar() ?>
 
     <div id="content-wrapper">
-
         <div class="container-fluid">
 
             <nav aria-label="breadcrumb">
