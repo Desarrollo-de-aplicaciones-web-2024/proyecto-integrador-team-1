@@ -1,3 +1,30 @@
 /* Estilos adicionales */
 @import 'scss/_footer.scss';
 @import "scss/_variables.scss";
+
+.hora-asistencia {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px; /* Espacio entre cada fila */
+    width: 55%;
+}
+
+.hora-asistencia .form-check-input {
+    flex-shrink: 0; /* No permite que el switch se encoja */
+}
+
+.hora-asistencia .form-check-label {
+    flex: 1; /* Permite que la etiqueta tome el espacio disponible */
+    margin-left: 10px; /* Espacio entre el switch y la etiqueta */
+}
+
+.horarios {
+    display: flex;
+    gap: 25px; /* Espacio entre los campos de hora */
+}
+
+.horarios .form-control {
+    max-width: 100px; /* Ajusta el ancho de los campos de hora si es necesario */
+    flex-shrink: 0; /* No permite que los campos de tiempo se encojan */
+}

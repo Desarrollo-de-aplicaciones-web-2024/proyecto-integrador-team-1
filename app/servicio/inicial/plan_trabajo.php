@@ -52,43 +52,55 @@ define('RUTA_INCLUDE', '../../../'); //ajustar a necesidad
                     <input type="date" id="fecha_inicio" name="fecha_inicio" required>                </div>
 
                 <div class="form-group">
-                    <label>Hora de Asistencia:</label>
-                    <div class="day-group">
-                        <div class="day">
-                            <input type="checkbox" id="lunes" name="dias[]" value="lunes">
-                            <label for="lunes">Lunes</label>
-                            <input type="time" name="hora_inicio_lunes">
-                            <input type="time" name="hora_fin_lunes">
+                    <label>Horario de Asistencia:</label>
+                    <div class="container mt-4">
+                        <div class="hora-asistencia form-check form-switch">
+                            <input class="form-check-input" type="checkbox" role="switch" id="lunes">
+                            <label class="form-check-label" for="lunes">Lunes</label>
+                            <div class="horarios">
+                                <input type="time" class="form-control" name="hora_inicio_lunes">
+                                <input type="time" class="form-control" name="hora_fin_lunes">
+                            </div>
                         </div>
-                        <div class="day">
-                            <input type="checkbox" id="martes" name="dias[]" value="martes">
-                            <label for="martes">Martes</label>
-                            <input type="time" name="hora_inicio_martes">
-                            <input type="time" name="hora_fin_martes">
+                        <div class="hora-asistencia form-check form-switch">
+                            <input class="form-check-input" type="checkbox" role="switch" id="martes">
+                            <label class="form-check-label" for="martes">Martes</label>
+                            <div class="horarios">
+                                <input type="time" class="form-control" name="hora_inicio_martes">
+                                <input type="time" class="form-control" name="hora_fin_martes">
+                            </div>
                         </div>
-                        <div class="day">
-                            <input type="checkbox" id="miercoles" name="dias[]" value="miercoles">
-                            <label for="miercoles">Miércoles</label>
-                            <input type="time" name="hora_inicio_miercoles">
-                            <input type="time" name="hora_fin_miercoles">
+                        <div class="hora-asistencia form-check form-switch">
+                            <input class="form-check-input" type="checkbox" role="switch" id="miercoles">
+                            <label class="form-check-label" for="miercoles">Miércoles</label>
+                            <div class="horarios">
+                                <input type="time" class="form-control" name="hora_inicio_miercoles">
+                                <input type="time" class="form-control" name="hora_fin_miercoles">
+                            </div>
                         </div>
-                        <div class="day">
-                            <input type="checkbox" id="jueves" name="dias[]" value="jueves">
-                            <label for="jueves">Jueves</label>
-                            <input type="time" name="hora_inicio_jueves">
-                            <input type="time" name="hora_fin_jueves">
+                        <div class="hora-asistencia form-check form-switch">
+                            <input class="form-check-input" type="checkbox" role="switch" id="jueves">
+                            <label class="form-check-label" for="jueves">Jueves</label>
+                            <div class="horarios">
+                                <input type="time" class="form-control" name="hora_inicio_jueves">
+                                <input type="time" class="form-control" name="hora_fin_jueves">
+                            </div>
                         </div>
-                        <div class="day">
-                            <input type="checkbox" id="viernes" name="dias[]" value="viernes">
-                            <label for="viernes">Viernes</label>
-                            <input type="time" name="hora_inicio_viernes">
-                            <input type="time" name="hora_fin_viernes">
+                        <div class="hora-asistencia form-check form-switch">
+                            <input class="form-check-input" type="checkbox" role="switch" id="viernes">
+                            <label class="form-check-label" for="viernes">Viernes</label>
+                            <div class="horarios">
+                                <input type="time" class="form-control" name="hora_inicio_viernes">
+                                <input type="time" class="form-control" name="hora_fin_viernes">
+                            </div>
                         </div>
-                        <div class="day">
-                            <input type="checkbox" id="sabado" name="dias[]" value="sabado">
-                            <label for="sabado">Sábado</label>
-                            <input type="time" name="hora_inicio_sabado">
-                            <input type="time" name="hora_fin_sabado">
+                        <div class="hora-asistencia form-check form-switch">
+                            <input class="form-check-input" type="checkbox" role="switch" id="sabado">
+                            <label class="form-check-label" for="sabado">Sábado</label>
+                            <div class="horarios">
+                                <input type="time" class="form-control" name="hora_inicio_sabado">
+                                <input type="time" class="form-control" name="hora_fin_sabado">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -98,7 +110,7 @@ define('RUTA_INCLUDE', '../../../'); //ajustar a necesidad
                 </div>
                 <div class="row mb-5">
                     <div class="col">
-                        <button onclick="window.location.href='plan_trabajo.php'" class="btn btn-success">Guardar</button>
+                        <button onclick="window.location.href='plan_trabajo.php'" class="btn btn-primary">Guardar</button>
                     </div>
                     <div class="col text-right">
                         <button type="button" class="btn btn-danger">Cancelar</button>

@@ -89,7 +89,7 @@ define('RUTA_INCLUDE', '../../../'); //ajustar a necesidad
             </form>
             <div class="row mb-5">
                 <div class="col">
-                    <button onclick="window.location.href='plan_trabajo.php'" class="btn btn-success">Guardar</button>
+                    <button onclick="window.location.href='plan_trabajo.php'" class="btn btn-primary">Guardar</button>
                 </div>
                 <div class="col text-right">
                     <button type="button" class="btn btn-danger">Cancelar</button>
