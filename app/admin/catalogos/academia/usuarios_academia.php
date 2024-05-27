@@ -62,20 +62,31 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
                     </tr>
                     </thead>
                     <tbody>
-                    </tr>
-                    <tr>
-                        <td>Erick Onofre Ruiz</td>
-                        <td>206345875@ucc.mx</td>
-                        <td>283-456-7891</td>
-                        <td>Vinculación Académica</td>
-                        <td class="text-center">
-                            <a href="#" class="btn btn-link btn-sm" data-toggle="modal" data-target="#editModal"
-                               data-nombre="Erick Onofre Ruiz"
-                               data-correo="206345875@ucc.mx"
-                               data-telefono="283-456-7891"
-                               data-cargo="Vinculación Académica"><img src="../../../../img/edit-30x30.png"></a>
-                        </td>
-                    </tr>
+                    <?php
+                    $sql = "SELECT * FROM usuarios_academia ORDER BY id DESC"; // Consulta SQL para obtener todos los usuarios ordenados por ID de forma descendente
+                    $result = $conexion->query($sql);
+
+                    if ($result->num_rows > 0) {
+                        // Iterar sobre cada fila de resultado
+                        while($row = $result->fetch_assoc()) {
+                            echo "<tr>";
+                            echo "<td>".$row["nombre_completo"]."</td>";
+                            echo "<td>".$row["correo_electronico"]."</td>";
+                            echo "<td>".$row["numero_telefono"]."</td>";
+                            echo "<td>".$row["cargo"]."</td>";
+                            echo '<td class="text-center">
+                    <a href="#" class="btn btn-link btn-sm" data-toggle="modal" data-target="#editModal"
+                    data-nombre="'.$row["nombre_completo"].'"
+                    data-correo="'.$row["correo_electronico"].'"
+                    data-telefono="'.$row["numero_telefono"].'"
+                    data-cargo="'.$row["cargo"].'"><img src="../../../../img/edit-30x30.png"></a>
+                    </td>';
+                            echo "</tr>";
+                        }
+                    } else {
+                        echo "<tr><td colspan='5'>No hay usuarios registrados</td></tr>";
+                    }
+                    ?>
                     </tbody>
                 </table>
             </div>
