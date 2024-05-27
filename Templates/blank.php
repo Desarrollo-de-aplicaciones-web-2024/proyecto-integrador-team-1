@@ -34,9 +34,42 @@ define('RUTA_INCLUDE', '../'); //ajustar a necesidad
         <div class="container-fluid">
 
             <!-- Page Content -->
-            <h1>Página en blanco</h1>
+            <h1>Documentacion final</h1>
             <hr>
-            <p>Utiliza esta página para crear tus pantallas.</p>
+            <p>En este espacio descargarás los documentos necesarios para el inicio de tus prácticas
+                profesionales, asi como tambián realizar la solicitud de la carta de presentación.</p>
+
+            <p>Nota:</p>
+            <ul>
+                <li>Las firmas, datos del alumno y demás involucrados se observen claramente.</li>
+                <li>No subir archivos manchados o maltratados.</li>
+                <li>Recuerda tu periodo de prácticas comienza al momento de que los documentos sean validados por el aseguramiento de calidad.</li>
+            </ul>
+
+            <h2>Archivos por subir</h2>
+
+            <div>
+                <p>Solicitud para realizacion de practicas profesionales</p>
+                <div></div>
+            </div>
+
+            <div>
+                <p>Plan de trabajo de practicas profesionales</p>
+                <div></div>
+            </div>
+        </div>
+
+        <div>
+            <p>Carta de Aceptación</p>
+            <div></div>
+        </div>
+
+        <div>
+            <button></button>
+            <button></button>
+            <button></button>
+
+        </div>
 
         </div>
         <!-- /.container-fluid -->
