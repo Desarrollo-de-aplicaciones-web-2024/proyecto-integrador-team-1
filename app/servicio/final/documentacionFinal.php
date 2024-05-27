@@ -97,16 +97,16 @@ define('RUTA_INCLUDE', '../../../'); // ajustar a necesidad
                     <tbody>
                     <tr>
                         <td class="align-middle">Reporte global</td>
-                        <td class="align-middle text-center"><div class="circle-rechazado"></div></td>
+                        <td class="align-middle text-center"><div class="circle-rechazado" id="reporte_global"></div></td>
                     </tr>
                     <tr>
                         <td class="align-middle">Reseña practicas profesionales
                         </td>
-                        <td class="align-middle text-center"><div class="circle-rechazado"></div></td>
+                        <td class="align-middle text-center"><div class="circle-rechazado" id="resena_practicas"></div></td>
                     </tr>
                     <tr>
                         <td class="align-middle">Constancia finalizacion</td>
-                        <td class="align-middle text-center"><div class="circle-rechazado"></div></td>
+                        <td class="align-middle text-center"><div class="circle-rechazado" id="constancia"></div></td>
                     </tr>
                     </tbody>
                 </table>
