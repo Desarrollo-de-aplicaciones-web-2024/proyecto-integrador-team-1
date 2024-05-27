@@ -1,6 +1,6 @@
 <?php
 require_once '../../../../config/global.php';
-
+require_once '../../../../config/db.php';
 define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
 ?>
 <!DOCTYPE html>
