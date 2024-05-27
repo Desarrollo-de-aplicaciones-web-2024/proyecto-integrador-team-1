@@ -118,8 +118,8 @@ define('RUTA_INCLUDE', '../../../'); // ajustar a necesidad
                     <button type="button" class="btn btn-primary">Descargar archivos</button>
                 </div>
                 <div class="col-auto">
-                    <button type="button" class="btn btn-primary" id="boton-subir">Subir Archivos</button>
-                    <input type="file" name="archivo" id="archivo" accept="application/pdf">
+                    <button type="button" class="btn btn-primary" id="boton-subir">Seleccionar Archivos</button>
+                    <input type="file" name="archivos[]" id="archivo" accept="application/pdf" multiple>
 
                 </div>
                </div>
@@ -170,6 +170,13 @@ define('RUTA_INCLUDE', '../../../'); // ajustar a necesidad
 
     }
 
+    //Vaciar lista de documentos
+    const vaciarLista = ()=>{
+        let div = document.querySelector('.archivos_subidos');
+        div.innerHTML = '';
+
+    }
+
     //BOTON SUBIDA
     document.getElementById('boton-subir').addEventListener('click', function() {
         document.getElementById('archivo').click();
@@ -177,12 +184,17 @@ define('RUTA_INCLUDE', '../../../'); // ajustar a necesidad
 
     //Validacion archivo pdf
     document.getElementById('archivo').addEventListener('change', function() {
+        console.log(this.files);
         const archivo = this.files[0];
         const mensajeError = document.getElementById('mensaje-error');
 
         if(archivo.name === 'Reporte_Global.pdf' || archivo.name === 'Reseña_Practicas.pdf' || archivo.name === 'Constancia.pdf'){
             if (archivo && archivo.type === 'application/pdf') {
-                crearElemento(archivo.name);
+                vaciarLista();
+                for (const file of this.files) {
+                    crearElemento(file.name);
+                }
+
                 mensajeError.style.display = 'none'; // Oculta el mensaje de error si el archivo es válido
             } else {
                 mensajeError.style.display = 'block'; // Muestra el mensaje de error si el archivo no es un PDF
