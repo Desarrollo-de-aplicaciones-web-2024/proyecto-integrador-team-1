@@ -28,3 +28,17 @@
     max-width: 100px; /* Ajusta el ancho de los campos de hora si es necesario */
     flex-shrink: 0; /* No permite que los campos de tiempo se encojan */
 }
+.fecha_inicio {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px; /* Espacio entre cada fila */
+    width: 50%;
+}
+.fecha_inicio .col-form-label {
+    flex: 0 0 250px; /* Ajusta el ancho de la etiqueta según sea necesario */
+}
+
+.fecha_inicio .form-control {
+    flex: 1; /* Permite que el campo de fecha tome el espacio disponible */
+}

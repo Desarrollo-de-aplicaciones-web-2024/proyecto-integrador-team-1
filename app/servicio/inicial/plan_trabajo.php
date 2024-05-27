@@ -47,7 +47,7 @@ define('RUTA_INCLUDE', '../../../'); //ajustar a necesidad
 
         <div class="container">
             <form>
-                <div class="form-group">
+                <div class="fecha_inicio form-group row align-items-center">
                     <label for="fecha_inicio">Fecha de inicio de las prácticas:</label>
                     <input type="date" id="fecha_inicio" name="fecha_inicio" required>                </div>
 
