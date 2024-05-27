@@ -38,26 +38,12 @@ define('RUTA_INCLUDE', '../../../'); //ajustar a necesidad
                 </ol>
             </nav>
 
-            <div class="alert alert-danger" role="alert">
-                <i class="fas fa-exclamation-triangle"></i> Uno de los campos está vacío
-            </div>
-
-
         </div>
 
         <!-- /.container-fluid -->
 
         <div class="container">
-            <div class="row mb-5">
-                <div class="col">
-                    <button onclick="window.location.href='plan_trabajo.php'" class="btn btn-success">Guardar</button>
-                </div>
-                <div class="col text-right">
-                    <button type="button" class="btn btn-danger">Cancelar</button>
-                </div>
-            </div>
-
-
+            <form>
                 <div class="form-group">
                     <label for="inputAddress2">Empresa:    </label>
 
@@ -101,6 +87,14 @@ define('RUTA_INCLUDE', '../../../'); //ajustar a necesidad
                 <input type="text" class="form-control" id="inputEmail4">
             </div>
             </form>
+            <div class="row mb-5">
+                <div class="col">
+                    <button onclick="window.location.href='plan_trabajo.php'" class="btn btn-success">Guardar</button>
+                </div>
+                <div class="col text-right">
+                    <button type="button" class="btn btn-danger">Cancelar</button>
+                </div>
+            </div>
         </div>
 
         <!-- /.container -->
