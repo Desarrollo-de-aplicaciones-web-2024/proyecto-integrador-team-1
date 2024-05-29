@@ -63,7 +63,7 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
                     </thead>
                     <tbody>
                     <?php
-                    $sql = "SELECT * FROM usuarios_academia ORDER BY id DESC"; // Consulta SQL para obtener todos los usuarios ordenados por ID de forma descendente
+                    $sql = "SELECT * FROM usuarios_academia"; // Consulta SQL para obtener todos los usuarios
                     $result = $conexion->query($sql);
 
                     if ($result->num_rows > 0) {
@@ -88,6 +88,7 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
                     }
                     ?>
                     </tbody>
+
                 </table>
             </div>
 
@@ -138,6 +139,7 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
                     </div>
                     <button type="submit" class="btn btn-primary">Guardar cambios</button>
                     <button type="button" class="btn btn-danger" id="deleteUser">Eliminar Usuario</button>
+
                 </form>
             </div>
         </div>
