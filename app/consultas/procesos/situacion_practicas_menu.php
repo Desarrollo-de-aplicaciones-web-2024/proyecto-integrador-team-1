@@ -31,6 +31,37 @@ define('RUTA_INCLUDE', '../../../'); //ajustar a necesidad
             font-family: 'Liberation Sans', sans-serif;
         }
 
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .table td, .table th {
+            vertical-align: middle;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: .35em .65em;
+            font-size: 75%;
+            font-weight: 700;
+            line-height: 1;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: baseline;
+            border-radius: .25rem;
+        }
+        .ready-for-review {
+            background-color: #ffc107;
+            color: #212529;
+        }
+        .draft {
+            background-color: #17a2b8;
+            color: #fff;
+        }
+        .ready-for-editing {
+            background-color: #28a745;
+            color: #fff;
+        }
 
     </style>
 
@@ -50,36 +81,98 @@ define('RUTA_INCLUDE', '../../../'); //ajustar a necesidad
 
             <!-- Page Content -->
 
-            <div class="container mt-5">
+            <div class="container mt-5 mb-4">
                 <div class="mt-5 mb-3 text-center">
                     <h1 class="">Situación de Prácticas Profesionales</h1>
 
                 </div>
                 <hr>
-                <nav class="navbar navbar-expand-lg bg-body-tertiary">
-                    <div class="container-fluid">
-                        <a class="navbar-brand" href="#">Navbar w/ text</a>
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="collapse navbar-collapse" id="navbarText">
-                            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                                <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="#">Home</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Features</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Pricing</a>
-                                </li>
-                            </ul>
-                            <span class="navbar-text">
-        Navbar text with an inline element
-      </span>
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>Consultar situación</h5>
+                            </div>
+                            <div class="card-body p-0">
+                                <div class="table-responsive mt-3 mb-3">
+                                    <table class="table dataTable">
+                                        <thead>
+                                        <tr>
+                                            <th>Nombre</th>
+                                            <th>Empresa</th>
+                                            <th>Etapa</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>Elvis Gamboa Quiroz</td>
+                                            <td>TENARIS TAMSA</td>
+                                            <td>Documentos finales</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Irving López García</td>
+                                            <td>Grupo Mimpo</td>
+                                            <td>Documentos finales</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Bruno Rangel Zuñiga</td>
+                                            <td>Grupo MAS</td>
+                                            <td>2do Reporte Mensual</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </nav>
+
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>Documentos recientes</h5>
+
+                            </div>
+                            <div class="card-body p-0">
+                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+
+                                </ul>
+                                <div class="tab-content" id="myTabContent">
+                                    <div class="tab-pane fade show active" id="content-items" role="tabpanel" aria-labelledby="content-items-tab">
+                                        <table class="table mb-0">
+                                            <thead>
+                                            <tr>
+                                                <th>Nombre</th>
+                                                <th>Documento</th>
+                                                <th style="width: 100px;">Fecha</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>Irving de Jesús López García</td>
+                                                <td>Reporte Final</td>
+                                                <td>5/31/2024</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Elvis Gamboa Quiroz</td>
+                                                <td>Reporte Final</td>
+                                                <td>5/31/2024</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Bruno Rangel Zuñiga</td>
+                                                <td>2do Reporte Mensual</td>
+                                                <td>5/31/2024</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="tab-pane fade" id="editions" role="tabpanel" aria-labelledby="editions-tab">
+                                        <!-- Content for editions tab -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
 
             </div>
         </div>
