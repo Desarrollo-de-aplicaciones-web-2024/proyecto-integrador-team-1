@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $archivoSubido = $directorioSubida . $nombreUnico;
 
         // Validación del archivo
-        if ($tipoArchivo == 'application/pdf' && ($nombreArchivo === 'Reporte_Global.pdf' || $nombreArchivo === 'Reseña_Practicas.pdf' || $nombreArchivo === 'Constancia.pdf')) {
+        if ($tipoArchivo == 'application/pdf') {
             if (move_uploaded_file($_FILES['archivos']['tmp_name'][$indice], $archivoSubido)) {
                 $mensaje .= "El archivo " . basename($nombreArchivo) . " ha sido subido con éxito como " . $nombreUnico . ".<br>";
             } else {
