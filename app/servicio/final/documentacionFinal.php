@@ -46,12 +46,46 @@ define('RUTA_INCLUDE', '../../../'); // ajustar a necesidad
             margin-right: 10px;
         }
 
-        #archivo {
+        #subir-reporte,#subir-constancia,#subir-resena {
             display: none; /* Oculta el input de tipo file */
         }
 
         #mensaje-error {
             display: none;
+        }
+
+        .contenedor-icono svg{
+            width: 20px;
+            height: 20px;
+        }
+
+        .contenedor-icono{
+            background-color: transparent;
+            border: none;
+            color: blue;
+        }
+
+        .archivo-reporte {
+            display: none;
+            margin-top: 10px;
+            font-size: 14px;
+            color: green;
+        }
+
+
+        .archivo-resena {
+            display: none;
+            margin-top: 10px;
+            font-size: 14px;
+            color: green;
+        }
+
+
+        .archivo-constancia {
+            display: none;
+            margin-top: 10px;
+            font-size: 14px;
+            color: green;
         }
     </style>
 </head>
@@ -96,33 +130,60 @@ define('RUTA_INCLUDE', '../../../'); // ajustar a necesidad
                     </thead>
                     <tbody>
                     <tr>
-                        <td class="align-middle">Reporte global</td>
-                        <td class="align-middle text-center"><div class="circle-rechazado"></div></td>
-                    </tr>
-                    <tr>
-                        <td class="align-middle">Reseña practicas profesionales
+                        <!--REPORTE GLOBAL-->
+                        <td class="align-middle" >Reporte global
+                            <a href="Solicitud.php" download="Solicitud Practicas Profesionales" class="contenedor-icono" type="button" id="boton-descarga"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-arrow-down" viewBox="0 0 16 16">
+                                    <path d="M8.5 6.5a.5.5 0 0 0-1 0v3.793L6.354 9.146a.5.5 0 1 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0-.708-.708L8.5 10.293z"/>
+                                    <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
+                                </svg></a>
+                            <button class="contenedor-icono" id="boton-subida-reporte"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-arrow-up" viewBox="0 0 16 16">
+                                    <path d="M8.5 11.5a.5.5 0 0 1-1 0V7.707L6.354 8.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 7.707z"/>
+                                    <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
+                                </svg> </button>
+                            <p class="archivo-reporte"> constancia.pdf</p>
                         </td>
-                        <td class="align-middle text-center"><div class="circle-rechazado"></div></td>
+
+                        <td class="align-middle text-center" ><p class="text-danger">Rechazado</p></td>
                     </tr>
                     <tr>
-                        <td class="align-middle">Constancia finalizacion</td>
-                        <td class="align-middle text-center"><div class="circle-rechazado"></div></td>
+                        <!--RESEÑA DE PRACTICAS-->
+                        <td class="align-middle">Reseña de practicas
+                            <a href="" download="Plan de trabajo de prácticas profesionales" class="contenedor-icono" id> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-arrow-down" viewBox="0 0 16 16">
+                                    <path d="M8.5 6.5a.5.5 0 0 0-1 0v3.793L6.354 9.146a.5.5 0 1 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0-.708-.708L8.5 10.293z"/>
+                                    <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
+                                </svg></a>
+                            <button class="contenedor-icono" id="boton-subida-resena"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-arrow-up" viewBox="0 0 16 16">
+                                    <path d="M8.5 11.5a.5.5 0 0 1-1 0V7.707L6.354 8.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 7.707z"/>
+                                    <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
+                                </svg></button>
+                            <p class="archivo-resena"> constancia.pdf</p>
+
+                        </td>
+                        <td class="align-middle text-center" ><p class="text-success">Aceptado</p></td>
+                    </tr>
+                    <tr>
+                        <!--CONSTANCIA-->
+                        <td class="align-middle">Constancia <a href="Formulario_Registro_Dato.php" download="Carta de Aceptación" class="contenedor-icono"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-arrow-down" viewBox="0 0 16 16">
+                                    <path d="M8.5 6.5a.5.5 0 0 0-1 0v3.793L6.354 9.146a.5.5 0 1 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0-.708-.708L8.5 10.293z"/>
+                                    <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
+                                </svg></a>
+                            <button href="" class="contenedor-icono" id="boton-subida-constancia"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-arrow-up" viewBox="0 0 16 16">
+                                    <path d="M8.5 11.5a.5.5 0 0 1-1 0V7.707L6.354 8.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 7.707z"/>
+                                    <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
+                                </svg></button>
+                            <p class="archivo-constancia"> constancia.pdf</p>
+                        </td>
+                        <td class="align-middle text-center" ><p class="text-warning">Pendiente</p></td>
                     </tr>
                     </tbody>
                 </table>
             </div>
 
             <form id="formulario-subida" action="subir.php" method="post" enctype="multipart/form-data">
-            <div class="row my-3 justify-content-center">
-                <div class="col-auto">
-                    <button type="button" class="btn btn-primary">Descargar archivos</button>
-                </div>
-                <div class="col-auto">
-                    <button type="button" class="btn btn-primary" id="boton-subir">Subir Archivos</button>
-                    <input type="file" name="archivo" id="archivo" accept="application/pdf">
+                    <input class="archivo" type="file" name="archivo-reporte" id="subir-reporte" accept="application/pdf">
+                    <input class="archivo" type="file" name="archivo-resena" id="subir-resena" accept="application/pdf">
+                    <input class="archivo" type="file" name="archivo-constancia" id="subir-constancia" accept="application/pdf">
 
-                </div>
-               </div>
                 <div class="archivos_subidos">
 
                 </div>
@@ -130,7 +191,7 @@ define('RUTA_INCLUDE', '../../../'); // ajustar a necesidad
             <div class="d-flex flex-column" style="height: 15vh;">
                 <div class="flex-grow-1"></div>
                 <div class="row my-3">
-                    <div class="col text-right">
+                    <div class="col text-center">
                         <input type="submit" value="Subir Archivos" class="btn btn-success"</input>
                     </div>
                 </div>
@@ -160,43 +221,53 @@ define('RUTA_INCLUDE', '../../../'); // ajustar a necesidad
 
 <script>
 
-    //Mostrar archivos ya subidos
-    const crearElemento = (texto)=>{
-        let div = document.querySelector('.archivos_subidos');
-        let li = document.createElement('li');
-        li.className = 'list-group-item list-group-item-primary';
-        li.textContent = texto;
-        div.appendChild(li);
 
-    }
+    document.addEventListener('DOMContentLoaded', function() {
+        const reporteInput = document.getElementById('subir-reporte');
+        const resenaInput = document.getElementById('subir-resena');
+        const constanciaInput = document.getElementById('subir-constancia');
 
-    //BOTON SUBIDA
-    document.getElementById('boton-subir').addEventListener('click', function() {
-        document.getElementById('archivo').click();
+        const botonSubidaReporte = document.getElementById('boton-subida-reporte');
+        const botonSubidaResena = document.getElementById('boton-subida-resena');
+        const botonSubidaConstancia = document.getElementById('boton-subida-constancia');
+
+        const archivoSubidoReporte = document.querySelector('.archivo-reporte');
+        const archivoSubidoResena = document.querySelector('.archivo-resena');
+        const archivoSubidoConstancia = document.querySelector('.archivo-constancia');
+
+        //BOTONES SUBIDA
+        botonSubidaReporte.addEventListener('click', () => {
+            reporteInput.click();
+        });
+
+        botonSubidaResena.addEventListener('click', () => {
+            resenaInput.click();
+        });
+
+        botonSubidaConstancia.addEventListener('click', () => {
+            constanciaInput.click();
+        });
+
+        //MOSTRAR ARCHIVOS
+        reporteInput.addEventListener('change', function() {
+            const fileName = this.files[0].name;
+            archivoSubidoReporte.textContent = fileName;
+            archivoSubidoReporte.style.display = 'block';
+        });
+
+        resenaInput.addEventListener('change', function() {
+            const fileName = this.files[0].name;
+            archivoSubidoResena.textContent = fileName;
+            archivoSubidoResena.style.display = 'block';
+        });
+
+        constanciaInput.addEventListener('change', function() {
+            const fileName = this.files[0].name;
+            archivoSubidoConstancia.textContent = fileName;
+            archivoSubidoConstancia.style.display = 'block';
+        });
     });
 
-    //Validacion archivo pdf
-    document.getElementById('archivo').addEventListener('change', function() {
-        const archivo = this.files[0];
-        const mensajeError = document.getElementById('mensaje-error');
-
-        if(archivo.name === 'Reporte_Global.pdf' || archivo.name === 'Reseña_Practicas.pdf' || archivo.name === 'Constancia.pdf'){
-            if (archivo && archivo.type === 'application/pdf') {
-                crearElemento(archivo.name);
-                mensajeError.style.display = 'none'; // Oculta el mensaje de error si el archivo es válido
-            } else {
-                mensajeError.style.display = 'block'; // Muestra el mensaje de error si el archivo no es un PDF
-                mensajeError.textContent = "Solo se permiten archivos PDF";
-                this.value = ''; // Resetea el input de archivo para permitir una nueva selección
-            }
-        } else{
-            document.getElementById('boton-subir').textContent = 'Seleccionar Archivo';
-            mensajeError.style.display = 'block'; // Muestra el mensaje de error si el archivo no es un PDF
-            mensajeError.textContent = "Escoge un nombre valido";
-            this.value = ''; // Resetea el input de archivo para permitir una nueva selección
-        }
-
-    });
 
 
 
