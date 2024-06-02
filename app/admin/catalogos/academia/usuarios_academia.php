@@ -1,8 +1,8 @@
 <?php
-include_once 'db.php';
+include_once '../../../../config/global.php';
 include_once 'AcademiaUsuario.php';
 
-$database = new PP_TEAM1();
+$database = new Database();
 $db = $database->getConnection();
 $usuario = new AcademiaUsuario($db);
 
