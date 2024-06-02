@@ -1,223 +1,225 @@
 <?php
-require_once '../../../../config/global.php';
-require_once '../../../../config/db.php';
-define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
+include_once '../../../../config/global.php';
+include_once 'AcademiaUsuario.php';
+
+$database = new Database();
+$db = $database->getConnection();
+$usuario = new AcademiaUsuario($db);
+
+// Crear usuario
+if($_POST && isset($_POST['create'])) {
+    $usuario->nombre_completo = $_POST['nombre_completo'];
+    $usuario->correo = $_POST['correo'];
+    $usuario->telefono = $_POST['telefono'];
+    $usuario->cargo = $_POST['cargo'];
+
+    if($usuario->create()) {
+        echo "<p class='success-message'>Usuario creado exitosamente.</p>";
+    } else {
+        echo "<p class='error-message'>Error al crear el usuario.</p>";
+    }
+}
+
+// Eliminar usuario
+if($_GET && isset($_GET['delete'])) {
+    $usuario->id = $_GET['delete'];
+
+    if($usuario->delete()) {
+        echo "<p class='success-message'>Usuario eliminado exitosamente.</p>";
+    } else {
+        echo "<p class='error-message'>Error al eliminar el usuario.</p>";
+    }
+}
+
+// Actualizar usuario
+if($_POST && isset($_POST['update'])) {
+    $usuario->id = $_POST['id'];
+    $usuario->nombre_completo = $_POST['nombre_completo'];
+    $usuario->correo = $_POST['correo'];
+    $usuario->telefono = $_POST['telefono'];
+    $usuario->cargo = $_POST['cargo'];
+    $usuario->contrasena = $_POST['contrasena'];
+
+    if($usuario->update()) {
+        echo "<p class='success-message'>Usuario actualizado exitosamente.</p>";
+    } else {
+        echo "<p class='error-message'>Error al actualizar el usuario.</p>";
+    }
+}
+
+// Leer usuarios
+$stmt = $usuario->read();
 ?>
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title><?php echo PAGE_TITLE ?></title>
-
-    <?php getTopIncludes(RUTA_INCLUDE ) ?>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Usuarios de Academia</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #007BFF;
+        }
+        form {
+            margin-bottom: 30px;
+        }
+        form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        form input[type="text"], form input[type="email"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        form button {
+            padding: 10px 15px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        form button:hover {
+            background-color: #0056b3;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+        table th, table td {
+            padding: 10px;
+            text-align: left;
+        }
+        table th {
+            background-color: #007BFF;
+            color: white;
+        }
+        .actions button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .actions button:hover {
+            background-color: #218838;
+        }
+        .actions a {
+            color: #dc3545;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            border: 1px solid #dc3545;
+            margin-left: 5px;
+        }
+        .actions a:hover {
+            background-color: #dc3545;
+            color: white;
+        }
+        .success-message {
+            color: #28a745;
+            font-weight: bold;
+        }
+        .error-message {
+            color: #dc3545;
+            font-weight: bold;
+        }
+    </style>
 </head>
+<body>
+<div class="container">
+    <h1>Registro de Usuario</h1>
+    <form action="index.php" method="post">
+        <input type="hidden" name="id" id="id">
+        <label for="nombre_completo">Nombre Completo:</label>
+        <input type="text" name="nombre_completo" id="nombre_completo" required><br>
+        <label for="correo">Correo:</label>
+        <input type="email" name="correo" id="correo" required><br>
+        <label for="telefono">Teléfono:</label>
+        <input type="text" name="telefono" id="telefono" required><br>
+        <label for="cargo">Cargo:</label>
+        <input type="text" name="cargo" id="cargo" required><br>
+        <label for="cargo">Contraseña:</label>
+        <input type="text" name="contrasena" id="contrasena" disabled><br>
 
-<body id="page-top">
 
-<?php getNavbar() ?>
+        <button type="submit" name="create">Registrar</button>
+        <button type="submit" name="update" id="updateBtn" style="display: none;">Actualizar</button>
+    </form>
 
-<div id="wrapper">
-
-    <?php getSidebar() ?>
-
-    <div id="content-wrapper">
-        <div class="container-fluid">
-
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item">Catálogos</li>
-                    <li class="breadcrumb-item active" aria-current="page">Usuarios Academia</li>
-                </ol>
-            </nav>
-
-          <!-- <div class="alert alert-success" role="alert">
-                <i class="fas fa-check"></i> Mensaje de éxito
-            </div>
-
-            <div class="alert alert-danger" role="alert">
-                <i class="fas fa-exclamation-triangle"></i> Mensaje de error
-            </div>
-            -->
-            <div class="row my-3">
-                <div class="col text-right">
-                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addModal"><i class="fas fa-plus"></i> Agregar Usuario</button>
-                </div>
-            </div>
-
-            <div class="table-responsive mb-3">
-                <table class="table table-bordered table-striped dataTable">
-                    <thead>
-                    <tr>
-                        <th>Nombre Completo</th>
-                        <th>Correo Electrónico</th>
-                        <th>Número de Teléfono</th>
-                        <th>Cargo</th>
-                        <th>Acciones</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>Maria del Carmen Aguirre Torres</td>
-                        <td>202851268@ucc.mx</td>
-                        <td>224-456-7891</td>
-                        <td>Aseguramiento de Calidad</td>
-                        <td class="text-center">
-                            <a href="#" class="btn btn-link btn-sm" data-toggle="modal" data-target="#editModal"
-                               data-nombre="Maria del Carmen Aguirre Torres"
-                               data-correo="202851268@ucc.mx"
-                               data-telefono="224-456-7891"
-                               data-cargo="Aseguramiento de Calidad"><img src="../../../../img/edit-30x30.png"></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Ramon Palet Naranjo</td>
-                        <td>202456219@ucc.mx</td>
-                        <td>294-456-778</td>
-                        <td> Jefe de Área Académica</td>
-                        <td class="text-center">
-                            <a href="#" class="btn btn-link btn-sm" data-toggle="modal" data-target="#editModal"
-                               data-nombre="Ramon Palet Naranjo"
-                               data-correo="202456219@ucc.mx"
-                               data-telefono="294-456-778"
-                               data-cargo="Jefe de Área Académica"><img src="../../../../img/edit-30x30.png"></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Erick Onofre Ruiz</td>
-                        <td>206345875@ucc.mx</td>
-                        <td>283-456-7891</td>
-                        <td>Vinculación Académica</td>
-                        <td class="text-center">
-                            <a href="#" class="btn btn-link btn-sm" data-toggle="modal" data-target="#editModal"
-                               data-nombre="Erick Onofre Ruiz"
-                               data-correo="206345875@ucc.mx"
-                               data-telefono="283-456-7891"
-                               data-cargo="Vinculación Académica"><img src="../../../../img/edit-30x30.png"></a>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-
-        </div>
-        <!-- /.container-fluid -->
-
-        <?php getFooter() ?>
-
-    </div>
-    <!-- /.content-wrapper -->
-
-</div>
-<!-- /#wrapper -->
-
-<!-- Scroll to Top Button-->
-<a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-</a>
-
-<?php getModalLogout() ?>
-<!-- Modal Editar -->
-<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editModalLabel">Editar Usuario</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form id="editForm">
-                    <div class="form-group">
-                        <label for="editNombre">Nombre</label>
-                        <input type="text" class="form-control" id="editNombre" name="nombre">
-                    </div>
-                    <div class="form-group">
-                        <label for="editCorreo">Correo</label>
-                        <input type="email" class="form-control" id="editCorreo" name="correo">
-                    </div>
-                    <div class="form-group">
-                        <label for="editTelefono">Número de Teléfono</label>
-                        <input type="text" class="form-control" id="editTelefono" name="telefono">
-                    </div>
-                    <div class="form-group">
-                        <label for="editCargo">Cargo</label>
-                        <input type="text" class="form-control" id="editCargo" name="cargo">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Guardar cambios</button>
-                    <button type="button" class="btn btn-danger" id="deleteUser">Eliminar Usuario</button>
-                </form>
-            </div>
-        </div>
-    </div>
+    <h1>Listado de Usuarios</h1>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre Completo</th>
+            <th>Correo</th>
+            <th>Teléfono</th>
+            <th>Cargo</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php
+        if($stmt->rowCount() > 0) {
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                extract($row);
+                echo "<tr>
+                                <td>{$id}</td>
+                                <td>{$nombre_completo}</td>
+                                <td>{$correo}</td>
+                                <td>{$telefono}</td>
+                                <td>{$cargo}</td>
+                                <td class='actions'>
+                                    <button onclick=\"editUser('{$id}', '{$nombre_completo}', '{$correo}', '{$telefono}', '{$cargo}','{$contrasena}')\">Modificar</button>
+                                    <a href=\"index.php?delete={$id}\">Eliminar</a>
+                                </td>
+                              </tr>";
+            }
+        } else {
+            echo "<tr><td colspan='6'>No se encontraron usuarios.</td></tr>";
+        }
+        ?>
+        </tbody>
+    </table>
 </div>
 
-<!-- Incluir jQuery y Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script>
-    $('#editModal').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget);
-        var nombre = button.data('nombre');
-        var correo = button.data('correo');
-        var telefono = button.data('telefono');
-        var cargo = button.data('cargo');
+    function editUser(id, nombre_completo, correo, telefono, cargo) {
+        document.getElementById('id').value = id;
+        document.getElementById('nombre_completo').value = nombre_completo;
+        document.getElementById('correo').value = correo;
+        document.getElementById('telefono').value = telefono;
+        document.getElementById('cargo').value = cargo;
+        document.getElementById('updateBtn').style.display = 'inline';
+        document.getElementById('contrasena').style.disabled = 'false';
+        document.getElementById('contrasena').style.enabled = 'true';
 
-        var modal = $(this);
-        modal.find('.modal-body #editNombre').val(nombre);
-        modal.find('.modal-body #editCorreo').val(correo);
-        modal.find('.modal-body #editTelefono').val(telefono);
-        modal.find('.modal-body #editCargo').val(cargo);
-    });
-
-    $('#deleteUser').click(function () {
-        // Aquí agregarías la lógica para eliminar al usuario
-        alert('Usuario eliminado');
-        $('#editModal').modal('hide');
-    });
+    }
 </script>
-<!-- Modal Agregar -->
-<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addModalLabel">Agregar Usuario</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form id="addForm">
-                    <div class="form-group">
-                        <label for="addNombre">Nombre</label>
-                        <input type="text" class="form-control" id="addNombre" name="nombre">
-                    </div>
-                    <div class="form-group">
-                        <label for="addCorreo">Correo</label>
-                        <input type="email" class="form-control" id="addCorreo" name="correo">
-                    </div>
-                    <div class="form-group">
-                        <label for="addTelefono">Número de Teléfono</label>
-                        <input type="text" class="form-control" id="addTelefono" name="telefono">
-                    </div>
-                    <div class="form-group">
-                        <label for="addCargo">Cargo</label>
-                        <input type="text" class="form-control" id="addCargo" name="cargo">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Agregar Usuario</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-<?php getBottomIncudes( RUTA_INCLUDE ) ?>
 </body>
-
 </html>
