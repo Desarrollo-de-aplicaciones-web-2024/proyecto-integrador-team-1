@@ -80,31 +80,37 @@
                 <img src="../img/escudoo.svg" alt="Escudo de la Universidad Cristóbal Colón">
                 <h4>Registro</h4>
             </div>
-            <form>
+            <form action="registro_post.php" method="post">
                 <div class="form-group">
                     <div class="form-label-group">
-                        <input type="text" id="nombre" class="form-control" placeholder="Nombre(s)" required="required" autofocus="autofocus">
+                        <input type="text" name="nombres" id="nombre" class="form-control" placeholder="Nombre(s)" required="required" autofocus="autofocus">
                         <label for="nombre">Nombre(s)</label>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <div class="form-label-group">
-                        <input type="text" id="apellido" class="form-control" placeholder="Apellido(s)" required="required">
-                        <label for="apellido">Apellido(s)</label>
+                        <input type="text" name="apellido_paterno" id="apellido" class="form-control" placeholder="Apellido(s)" required="required">
+                        <label for="apellido">Apellido Paterno</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-label-group">
+                        <input type="text" name="apellido_materno" id="apellido" class="form-control" placeholder="Apellido(s)" required="required">
+                        <label for="apellido">Apellido Materno</label>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <div class="form-label-group">
-                        <input type="email" id="email" class="form-control" placeholder="Correo electrónico" required="required">
+                        <input type="email" name="correo" id="email" class="form-control" placeholder="Correo electrónico" required="required">
                         <label for="email">Correo electrónico</label>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <div class="form-label-group">
-                        <input type="password" id="password" class="form-control" placeholder="Contraseña" required="required">
+                        <input type="password" name="pwd" id="password" class="form-control" placeholder="Contraseña" required="required">
                         <label for="password">Contraseña</label>
                     </div>
                 </div>
