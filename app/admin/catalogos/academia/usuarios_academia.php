@@ -1,6 +1,6 @@
 <?php
 require_once '../../../../config/global.php';
-
+require_once '../../../../config/db.php';
 define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
 ?>
 <!DOCTYPE html>
@@ -62,45 +62,31 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>Maria del Carmen Aguirre Torres</td>
-                        <td>202851268@ucc.mx</td>
-                        <td>224-456-7891</td>
-                        <td>Aseguramiento de Calidad</td>
-                        <td class="text-center">
-                            <a href="#" class="btn btn-link btn-sm" data-toggle="modal" data-target="#editModal"
-                               data-nombre="Maria del Carmen Aguirre Torres"
-                               data-correo="202851268@ucc.mx"
-                               data-telefono="224-456-7891"
-                               data-cargo="Aseguramiento de Calidad"><img src="../../../../img/edit-30x30.png"></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Ramon Palet Naranjo</td>
-                        <td>202456219@ucc.mx</td>
-                        <td>294-456-778</td>
-                        <td> Jefe de Área Académica</td>
-                        <td class="text-center">
-                            <a href="#" class="btn btn-link btn-sm" data-toggle="modal" data-target="#editModal"
-                               data-nombre="Ramon Palet Naranjo"
-                               data-correo="202456219@ucc.mx"
-                               data-telefono="294-456-778"
-                               data-cargo="Jefe de Área Académica"><img src="../../../../img/edit-30x30.png"></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Erick Onofre Ruiz</td>
-                        <td>206345875@ucc.mx</td>
-                        <td>283-456-7891</td>
-                        <td>Vinculación Académica</td>
-                        <td class="text-center">
-                            <a href="#" class="btn btn-link btn-sm" data-toggle="modal" data-target="#editModal"
-                               data-nombre="Erick Onofre Ruiz"
-                               data-correo="206345875@ucc.mx"
-                               data-telefono="283-456-7891"
-                               data-cargo="Vinculación Académica"><img src="../../../../img/edit-30x30.png"></a>
-                        </td>
-                    </tr>
+                    <?php
+                    $sql = "SELECT * FROM usuarios_academia ORDER BY id DESC"; // Consulta SQL para obtener todos los usuarios ordenados por ID de forma descendente
+                    $result = $conexion->query($sql);
+
+                    if ($result->num_rows > 0) {
+                        // Iterar sobre cada fila de resultado
+                        while($row = $result->fetch_assoc()) {
+                            echo "<tr>";
+                            echo "<td>".$row["nombre_completo"]."</td>";
+                            echo "<td>".$row["correo_electronico"]."</td>";
+                            echo "<td>".$row["numero_telefono"]."</td>";
+                            echo "<td>".$row["cargo"]."</td>";
+                            echo '<td class="text-center">
+                    <a href="#" class="btn btn-link btn-sm" data-toggle="modal" data-target="#editModal"
+                    data-nombre="'.$row["nombre_completo"].'"
+                    data-correo="'.$row["correo_electronico"].'"
+                    data-telefono="'.$row["numero_telefono"].'"
+                    data-cargo="'.$row["cargo"].'"><img src="../../../../img/edit-30x30.png"></a>
+                    </td>';
+                            echo "</tr>";
+                        }
+                    } else {
+                        echo "<tr><td colspan='5'>No hay usuarios registrados</td></tr>";
+                    }
+                    ?>
                     </tbody>
                 </table>
             </div>
@@ -194,22 +180,22 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
                 </button>
             </div>
             <div class="modal-body">
-                <form id="addForm">
+                <form id="addForm" method="post">
                     <div class="form-group">
-                        <label for="addNombre">Nombre</label>
-                        <input type="text" class="form-control" id="addNombre" name="nombre">
+                        <label for="addNombre">Nombre Completo</label>
+                        <input type="text" class="form-control" id="addNombre" name="nombre_completo" required>
                     </div>
                     <div class="form-group">
-                        <label for="addCorreo">Correo</label>
-                        <input type="email" class="form-control" id="addCorreo" name="correo">
+                        <label for="addCorreo">Correo Electronico</label>
+                        <input type="email" class="form-control" id="addCorreo" name="correo_electronico" required>
                     </div>
                     <div class="form-group">
                         <label for="addTelefono">Número de Teléfono</label>
-                        <input type="text" class="form-control" id="addTelefono" name="telefono">
+                        <input type="text" class="form-control" id="addTelefono" name="numero_telefono" required>
                     </div>
                     <div class="form-group">
                         <label for="addCargo">Cargo</label>
-                        <input type="text" class="form-control" id="addCargo" name="cargo">
+                        <input type="text" class="form-control" id="addCargo" name="cargo" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Agregar Usuario</button>
                 </form>
@@ -217,7 +203,30 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
         </div>
     </div>
 </div>
+
 <?php getBottomIncudes( RUTA_INCLUDE ) ?>
+
 </body>
 
 </html>
+<script>
+    $(document).ready(function(){
+        $('#addForm').on('submit', function(event){
+            event.preventDefault();
+            $.ajax({
+                url: 'agregar_usuario.php',
+                method: 'POST',
+                data: $(this).serialize(),
+                success: function(data){
+                    alert(data);
+                    $('#addForm')[0].reset();
+                    $('#addModal').modal('hide');
+                    location.reload(); // Recargar la página para ver los cambios
+                }
+            });
+        });
+    });
+</script>
+
+
+
