@@ -6,9 +6,11 @@ define('RUTA_INCLUDE', '../../../'); //ajustar a necesidad
 
 $sql = "SELECT * FROM usuarios_alumno";
 
-$sql2 = "SELECT nombre, Tipo_Doc, Fecha 
+$sql2 = "SELECT * 
 FROM Reporte_Mensual JOIN usuarios_alumno ON Reporte_Mensual.Alumno = usuarios_alumno.matricula 
 WHERE Reporte_Mensual.Estatus = 'Pendiente';
+
+
 ";
 ?>
 
@@ -107,8 +109,8 @@ WHERE Reporte_Mensual.Estatus = 'Pendiente';
                                     <table class="table table-hover dataTable">
                                         <thead>
                                             <tr>
+                                                <th>Matrícula</th>
                                                 <th>Nombre</th>
-                                                <th>Empresa</th>
                                                 <th>Etapa</th>
                                             </tr>
                                         </thead>
@@ -147,7 +149,7 @@ WHERE Reporte_Mensual.Estatus = 'Pendiente';
                     <div class="col-md-6">
                         <div class="card">
                             <div class="card-header">
-                                <h5>Documentos pendientes<span class="badge ml-2" style="color: #ffffff; background-color: #1c81f8;">
+                                <h5>Pendientes de revisar<span class="badge ml-2" style="color: #ffffff; background-color: #1c81f8;">
                                         <?php
                                             $resultado2 = mysqli_query($conexion, $sql2);
                                             $encontrados2 = mysqli_num_rows($resultado2);
@@ -175,9 +177,10 @@ WHERE Reporte_Mensual.Estatus = 'Pendiente';
 
                                             if($encontrados2 > 0){
                                             while ($fila2=mysqli_fetch_assoc($resultado2)){
+                                                $first_key = key($fila2);
+                                                $first_value = current($fila2);
                                             ?>
-
-                                            <tr>
+                                                <tr onclick="window.location.href='revision_documento.php?id=<?php echo $first_value; ?>&tipo=<?php echo $fila2['Tipo_Doc']; ?>&nombre=<?php echo $fila2['nombre']; ?>'">
                                                 <td><?php echo $fila2['nombre']?></td>
                                                 <td><?php echo $fila2['Tipo_Doc']?></td>
                                                 <td><?php echo $fila2['Fecha']?></td>

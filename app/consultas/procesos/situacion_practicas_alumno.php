@@ -4,13 +4,10 @@ require_once '../../../config/db.php';
 
 define('RUTA_INCLUDE', '../../../'); //ajustar a necesidad
 
-// Compruebo que no venga vacio
 if(!empty($_GET['matricula'])){
 
-    // Si no es vacio obtengo la matrícula
     $id_proposito = $_GET['matricula'];
 
-    // Utilizo la Matrícula en queries para obtener los datos [Matrícula][Nombre][Empresa] y desplegarlos en pantalla
     $sql_empresa = "SELECT Empresa.Razon_social
     FROM Carta_Aceptación
     JOIN Empresa ON Carta_Aceptación.Empresa = Empresa.idEmpresa
@@ -47,6 +44,7 @@ if(!empty($_GET['matricula'])){
         $encontrados_SP = mysqli_num_rows($resultado_SP);
         if($encontrados_SP > 0) {
             $fila_SP = mysqli_fetch_assoc($resultado_SP);
+            $SP_ID = $fila_SP['idSolicitud_Practicas'];
             $SP_Tipo_Doc = $fila_SP['Tipo_Doc'];
             $SP_Fecha_Subida = $fila_SP['Fecha'];
             $SP_Encargado_Rev = $fila_SP['Encargado_Rev'];
@@ -65,6 +63,7 @@ if(!empty($_GET['matricula'])){
         $encontrados_PT = mysqli_num_rows($resultado_PT);
         if($encontrados_PT > 0) {
             $fila_PT = mysqli_fetch_assoc($resultado_PT);
+            $PT_ID = $fila_PT['idPlan_Trabajo'];
             $PT_Tipo_Doc = $fila_PT['Tipo_Doc'];
             $PT_Fecha_Subida = $fila_PT['Fecha'];
             $PT_Encargado_Rev = $fila_PT['Encargado_Rev'];
@@ -83,6 +82,7 @@ if(!empty($_GET['matricula'])){
         $encontrados_CA = mysqli_num_rows($resultado_CA);
         if($encontrados_CA > 0) {
             $fila_CA = mysqli_fetch_assoc($resultado_CA);
+            $CA_ID = $fila_CA['idCarta_Aceptación'];
             $CA_Tipo_Doc = $fila_CA['Tipo_Doc'];
             $CA_Fecha_Subida = $fila_CA['Fecha'];
             $CA_Encargado_Rev = $fila_CA['Encargado_Rev'];
@@ -97,13 +97,98 @@ if(!empty($_GET['matricula'])){
         }
     }
 
-    if(mysqli_num_rows($resultado_CA)>0 && mysqli_num_rows($resultado_PT)>0 && mysqli_num_rows($resultado_SP)>0)$etapa++;
+    if($SP_Estatus == 'Aceptado' && $PT_Estatus == 'Aceptado' && $CA_Estatus == 'Aceptado')$etapa++;
 
     // 2
-    $sql_RM1 = $sql = "select * from Solicitud_practicas where matricula = $id_proposito";   $resultado_SP = mysqli_query($conexion, $sql_SP);
-    $sql_RM2 = $sql = "select * from Plan_Trabajo where matricula = $id_proposito";          $resultado_PT = mysqli_query($conexion, $sql_PT);
-    $sql_RM3 = $sql = "select * from Carta_Aceptación where matricula = $id_proposito";      $resultado_CA = mysqli_query($conexion, $sql_CA);
+    $sql_RM = $sql = "select * from Reporte_Mensual where Alumno = $id_proposito order by Fecha_Fin";
+    $resultado_RM = mysqli_query($conexion, $sql_RM);
 
+    $all_rows_data = [];
+
+    if($resultado_RM){
+        $encontrados_RM = mysqli_num_rows($resultado_RM);
+
+        while ($row = mysqli_fetch_assoc($resultado_RM)){
+            $all_rows_data[] = $row;
+        }
+
+        if($encontrados_RM > 0){
+
+            $first_row = $all_rows_data[0];
+
+            $RM1_ID = $first_row['idReporte_Mensual'];
+            $RM1_Tipo_Doc = $first_row['Tipo_Doc'];
+            $RM1_Fecha_Subida = $first_row['Fecha'];
+            $RM1_Encargado_Rev = $first_row['Encargado_Rev'];
+            $RM1_Fecha_Rev = $first_row['Fecha_Rev'];
+            $RM1_Estatus = $first_row['Estatus'];
+
+            if($encontrados_RM > 1){
+
+                $second_row = $all_rows_data[1];
+
+                $RM2_ID = $second_row['idReporte_Mensual'];
+                $RM2_Tipo_Doc = $second_row['Tipo_Doc'];
+                $RM2_Fecha_Subida = $second_row['Fecha'];
+                $RM2_Encargado_Rev = $second_row['Encargado_Rev'];
+                $RM2_Fecha_Rev = $second_row['Fecha_Rev'];
+                $RM2_Estatus = $second_row['Estatus'];
+
+                if($encontrados_RM > 2){
+
+                    $third_row = $all_rows_data[2];
+
+                    $RM3_ID = $third_row['idReporte_Mensual'];
+                    $RM3_Tipo_Doc = $third_row['Tipo_Doc'];
+                    $RM3_Fecha_Subida = $third_row['Fecha'];
+                    $RM3_Encargado_Rev = $third_row['Encargado_Rev'];
+                    $RM3_Fecha_Rev = $third_row['Fecha_Rev'];
+                    $RM3_Estatus = $third_row['Estatus'];
+
+                }else{
+                    $RM3_Tipo_Doc = '-';
+                    $RM3_Fecha_Subida = '-';
+                    $RM3_Encargado_Rev = '-';
+                    $RM3_Fecha_Rev = '-';
+                    $RM3_Estatus = 'Sin subir';
+                }
+
+            }else{
+                $RM2_Tipo_Doc = '-';
+                $RM2_Fecha_Subida = '-';
+                $RM2_Encargado_Rev = '-';
+                $RM2_Fecha_Rev = '-';
+                $RM2_Estatus = 'Sin subir';
+                $RM3_Tipo_Doc = '-';
+                $RM3_Fecha_Subida = '-';
+                $RM3_Encargado_Rev = '-';
+                $RM3_Fecha_Rev = '-';
+                $RM3_Estatus = 'Sin subir';
+            }
+
+        }else{
+            $RM1_Tipo_Doc = '-';
+            $RM1_Fecha_Subida = '-';
+            $RM1_Encargado_Rev = '-';
+            $RM1_Fecha_Rev = '-';
+            $RM1_Estatus = 'Sin subir';
+            $RM2_Tipo_Doc = '-';
+            $RM2_Fecha_Subida = '-';
+            $RM2_Encargado_Rev = '-';
+            $RM2_Fecha_Rev = '-';
+            $RM2_Estatus = 'Sin subir';
+            $RM3_Tipo_Doc = '-';
+            $RM3_Fecha_Subida = '-';
+            $RM3_Encargado_Rev = '-';
+            $RM3_Fecha_Rev = '-';
+            $RM3_Estatus = 'Sin subir';
+        }
+
+        if($RM1_Estatus == "Aceptado")$etapa++;
+        if($RM2_Estatus == "Aceptado")$etapa++;
+        if($RM3_Estatus == "Aceptado")$etapa++;
+
+    }
 }
 
 ?>
@@ -259,177 +344,253 @@ if(!empty($_GET['matricula'])){
                             </div>
                             <div class="card-body">
                                 <div id="collapse1" class="panel-collapse collapse" data-parent="#myGroup">
-                                    <div class="table-responsive table-hover">
-                                        <table class="table table-bordered" id="dataTable1" width="100%" cellspacing="0">
-                                            <thead>
-                                            <tr>
-                                                <th>Documento</th>
-                                                <th>Fecha de subida</th>
-                                                <th>Encargado de revisión</th>
-                                                <th>Fecha de revisión</th>
-                                                <th>Estatus</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr>
-                                                <td>Solicitud de Prácticas</td>
-                                                <td><?php echo $SP_Fecha_Subida ?></td>
-                                                <td><?php echo $SP_Encargado_Rev ?></td>
-                                                <td><?php echo $SP_Fecha_Rev ?></td>
-                                                <?php
-                                                switch($SP_Estatus) {
-                                                    case "Aceptado":
-                                                        echo '<td class="text-success">' . $SP_Estatus . '</td>';
-                                                        break;
-                                                    case "Rechazado":
-                                                        echo '<td class="text-danger">' . $SP_Estatus . '</td>';
-                                                        break;
-                                                    case "Pendiente":
-                                                        echo '<td class="text-warning">' . $SP_Estatus . '</td>';
-                                                        break;
-                                                    case "Sin subir":
-                                                        echo '<td class="text-secondary">' . $SP_Estatus . '</td>';
-                                                        break;
-                                                }
-                                                ?>
-                                            </tr>
-                                            <tr>
-                                                <td>Plan de Trabajo</td>
-                                                <td><?php echo $PT_Fecha_Subida ?></td>
-                                                <td><?php echo $PT_Encargado_Rev ?></td>
-                                                <td><?php echo $PT_Fecha_Rev ?></td>
-                                                <?php
-                                                switch($PT_Estatus) {
-                                                    case "Aceptado":
-                                                        echo '<td class="text-success">' . $PT_Estatus . '</td>';
-                                                        break;
-                                                    case "Rechazado":
-                                                        echo '<td class="text-danger">' . $PT_Estatus . '</td>';
-                                                        break;
-                                                    case "Pendiente":
-                                                        echo '<td class="text-warning">' . $PT_Estatus . '</td>';
-                                                        break;
-                                                    case "Sin subir":
-                                                        echo '<td class="text-secondary">' . $PT_Estatus . '</td>';
-                                                        break;
-                                                }
-                                                ?>
-                                            </tr>
-                                            <tr>
-                                                <td>Carta de Aceptación</td>
-                                                <td><?php echo $CA_Fecha_Subida ?></td>
-                                                <td><?php echo $CA_Encargado_Rev ?></td>
-                                                <td><?php echo $CA_Fecha_Rev ?></td>
-                                                <?php
-                                                    switch($CA_Estatus) {
+
+                                    <?php
+                                    if ($encontrados_SP == 0) {
+                                        echo '<div class="alert alert-warning" role="alert">El alumno no ha iniciado el trámite</div>';
+                                    } else { ?>
+                                        <div class="table-responsive table-hover">
+                                            <table class="table table-bordered" id="dataTable1" width="100%" cellspacing="0">
+                                                <thead>
+                                                <tr>
+                                                    <th>Documento</th>
+                                                    <th>Fecha de subida</th>
+                                                    <th>Encargado de revisión</th>
+                                                    <th>Fecha de revisión</th>
+                                                    <th>Estatus</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr onclick="window.location.href='revision_documento.php?id=<?php echo $SP_ID; ?>&tipo=<?php echo $SP_Tipo_Doc; ?>&nombre=<?php echo $nombre; ?>'">
+                                                    <td>Solicitud de Prácticas</td>
+                                                    <td><?php echo $SP_Fecha_Subida ?></td>
+                                                    <td><?php echo $SP_Encargado_Rev ?></td>
+                                                    <td><?php echo $SP_Fecha_Rev ?></td>
+                                                    <?php
+                                                    switch($SP_Estatus) {
                                                         case "Aceptado":
-                                                            echo '<td class="text-success">' . $CA_Estatus . '</td>';
+                                                            echo '<td class="text-success">' . $SP_Estatus . '</td>';
                                                             break;
                                                         case "Rechazado":
-                                                            echo '<td class="text-danger">' . $CA_Estatus . '</td>';
+                                                            echo '<td class="text-danger">' . $SP_Estatus . '</td>';
                                                             break;
                                                         case "Pendiente":
-                                                            echo '<td class="text-warning">' . $CA_Estatus . '</td>';
+                                                            echo '<td class="text-warning">' . $SP_Estatus . '</td>';
                                                             break;
                                                         case "Sin subir":
-                                                            echo '<td class="text-secondary">' . $CA_Estatus . '</td>';
+                                                            echo '<td class="text-secondary">' . $SP_Estatus . '</td>';
                                                             break;
                                                     }
-                                                ?>
-                                            </tr>
-                                            <tr>
-                                                <td>Carta de Recomendación</td>
-                                                <td>-</td>
-                                                <td>-</td>
-                                                <td>-</td>
-                                                <td class="text-secondary">Sin subir</td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                                    ?>
+                                                </tr>
+                                                <tr onclick="window.location.href='revision_documento.php?id=<?php echo $PT_ID; ?>&tipo=<?php echo $PT_Tipo_Doc; ?>&nombre=<?php echo $nombre; ?>'">
+                                                    <td>Plan de Trabajo</td>
+                                                    <td><?php echo $PT_Fecha_Subida ?></td>
+                                                    <td><?php echo $PT_Encargado_Rev ?></td>
+                                                    <td><?php echo $PT_Fecha_Rev ?></td>
+                                                    <?php
+                                                    switch($PT_Estatus) {
+                                                        case "Aceptado":
+                                                            echo '<td class="text-success">' . $PT_Estatus . '</td>';
+                                                            break;
+                                                        case "Rechazado":
+                                                            echo '<td class="text-danger">' . $PT_Estatus . '</td>';
+                                                            break;
+                                                        case "Pendiente":
+                                                            echo '<td class="text-warning">' . $PT_Estatus . '</td>';
+                                                            break;
+                                                        case "Sin subir":
+                                                            echo '<td class="text-secondary">' . $PT_Estatus . '</td>';
+                                                            break;
+                                                    }
+                                                    ?>
+                                                </tr>
+                                                <tr onclick="window.location.href='revision_documento.php?id=<?php echo $CA_ID; ?>&tipo=<?php echo $CA_Tipo_Doc; ?>&nombre=<?php echo $nombre; ?>'">
+                                                    <td>Carta de Aceptación</td>
+                                                    <td><?php echo $CA_Fecha_Subida ?></td>
+                                                    <td><?php echo $CA_Encargado_Rev ?></td>
+                                                    <td><?php echo $CA_Fecha_Rev ?></td>
+                                                    <?php
+                                                        switch($CA_Estatus) {
+                                                            case "Aceptado":
+                                                                echo '<td class="text-success">' . $CA_Estatus . '</td>';
+                                                                break;
+                                                            case "Rechazado":
+                                                                echo '<td class="text-danger">' . $CA_Estatus . '</td>';
+                                                                break;
+                                                            case "Pendiente":
+                                                                echo '<td class="text-warning">' . $CA_Estatus . '</td>';
+                                                                break;
+                                                            case "Sin subir":
+                                                                echo '<td class="text-secondary">' . $CA_Estatus . '</td>';
+                                                                break;
+                                                        }
+                                                    ?>
+                                                </tr>
+                                                <tr>
+                                                    <td>Carta de Recomendación</td>
+                                                    <td>-</td>
+                                                    <td>-</td>
+                                                    <td>-</td>
+                                                    <td class="text-secondary">Sin subir</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    <?php } ?>
                                 </div>
 
                                 <div id="collapse2" class="panel-collapse collapse" data-parent="#myGroup">
-
-                                     <?php
-                                        if($etapa < 2){
-
-                                            echo '<div class="alert alert-danger" role="alert">El alumno no ha completado un proceso anterior</div>';
-
-                                        }else{
-                                            echo '
-                                                <div class="table-responsive table-hover">
-                                                    <table class="table table-bordered" id="dataTable2" width="100%" cellspacing="0">
-                                                        <thead>
-                                                        <tr>
-                                                            <th>Documento</th>
-                                                            <th>Fecha de subida</th>
-                                                            <th>Encargado de revisión</th>
-                                                            <th>Fecha de revisión</th>
-                                                            <th>Estatus</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        <tr>
-                                                            <td>1er Reporte Mensual</td>
-                                                            <td>12/05/2024</td>
-                                                            <td>María del Carmen Aguirre</td>
-                                                            <td>15/05/2024</td>
-                                                            <td class="text-success">Aceptado</td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                    
-                                                    </div>
-                                                ';
-                                        }
-                                     ?>
-
+                                    <?php
+                                    if ($etapa < 2) {
+                                        echo '<div class="alert alert-danger" role="alert">El alumno no ha completado un proceso anterior</div>';
+                                    } else {
+                                        ?>
+                                        <div class="table-responsive table-hover">
+                                            <table class="table table-bordered" id="dataTable2" width="100%" cellspacing="0">
+                                                <thead>
+                                                <tr>
+                                                    <th>Documento</th>
+                                                    <th>Fecha de subida</th>
+                                                    <th>Encargado de revisión</th>
+                                                    <th>Fecha de revisión</th>
+                                                    <th>Estatus</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr onclick="window.location.href='revision_documento.php?id=<?php echo $RM1_ID; ?>&tipo=<?php echo $RM1_Tipo_Doc; ?>&nombre=<?php echo $nombre; ?>'">
+                                                    <td>1er Reporte Mensual</td>
+                                                    <td><?php echo $RM1_Fecha_Subida; ?></td>
+                                                    <td><?php echo $RM1_Encargado_Rev; ?></td>
+                                                    <td><?php echo $RM1_Fecha_Rev; ?></td>
+                                                    <td>
+                                                        <?php
+                                                        switch ($RM1_Estatus) {
+                                                            case "Aceptado":
+                                                                echo '<span class="text-success">' . $RM1_Estatus . '</span>';
+                                                                break;
+                                                            case "Rechazado":
+                                                                echo '<span class="text-danger">' . $RM1_Estatus . '</span>';
+                                                                break;
+                                                            case "Pendiente":
+                                                                echo '<span class="text-warning">' . $RM1_Estatus . '</span>';
+                                                                break;
+                                                            case "Sin subir":
+                                                                echo '<span class="text-secondary">' . $RM1_Estatus . '</span>';
+                                                                break;
+                                                        }
+                                                        ?>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <?php
+                                    }
+                                    ?>
                                 </div>
+
 
                                 <div id="collapse3" class="panel-collapse collapse" data-parent="#myGroup">
                                     <?php
-                                    if($etapa < 3){
-
+                                    if ($etapa < 3) {
                                         echo '<div class="alert alert-danger" role="alert">El alumno no ha completado un proceso anterior</div>';
-
-                                    }else{
-                                        echo '
-                                                <div class="table-responsive table-hover">
-                                        <table class="table table-bordered" id="dataTable3" width="100%" cellspacing="0">
-                                            <thead>
-                                            <tr>
-                                                <th>Documento</th>
-                                                <th>Fecha de subida</th>
-                                                <th>Encargado de revisión</th>
-                                                <th>Fecha de revisión</th>
-                                                <th>Estatus</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr onclick="window.location="revision_documento.php"">
-                                                <td>2do Reporte Mensual</td>
-                                                <td>17/05/2024<td>
-                                                <td>-</td>
-                                                <td class="text-warning">Pendiente</td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
+                                    } else {
+                                        ?>
+                                        <div class="table-responsive table-hover">
+                                            <table class="table table-bordered" id="dataTable2" width="100%" cellspacing="0">
+                                                <thead>
+                                                <tr>
+                                                    <th>Documento</th>
+                                                    <th>Fecha de subida</th>
+                                                    <th>Encargado de revisión</th>
+                                                    <th>Fecha de revisión</th>
+                                                    <th>Estatus</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr onclick="window.location.href='revision_documento.php?id=<?php echo $RM2_ID; ?>&tipo=<?php echo $RM2_Tipo_Doc; ?>&nombre=<?php echo $nombre; ?>'">
+                                                    <td>2do Reporte Mensual</td>
+                                                    <td><?php echo $RM2_Fecha_Subida; ?></td>
+                                                    <td><?php echo $RM2_Encargado_Rev; ?></td>
+                                                    <td><?php echo $RM2_Fecha_Rev; ?></td>
+                                                    <td>
+                                                        <?php
+                                                        switch ($RM2_Estatus) {
+                                                            case "Aceptado":
+                                                                echo '<span class="text-success">' . $RM2_Estatus . '</span>';
+                                                                break;
+                                                            case "Rechazado":
+                                                                echo '<span class="text-danger">' . $RM2_Estatus . '</span>';
+                                                                break;
+                                                            case "Pendiente":
+                                                                echo '<span class="text-warning">' . $RM2_Estatus . '</span>';
+                                                                break;
+                                                            case "Sin subir":
+                                                                echo '<span class="text-secondary">' . $RM2_Estatus . '</span>';
+                                                                break;
+                                                        }
+                                                        ?>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
                                         </div>
-                                                ';
+                                        <?php
                                     }
                                     ?>
-
                                 </div>
 
                                 <div id="collapse4" class="panel-collapse collapse" data-parent="#myGroup">
-                                    <div class="table-responsive">
-                                        <div class="alert alert-danger" role="alert">
-                                            El alumno no ha completado un proceso anterior
+                                    <?php
+                                    if ($etapa < 4) {
+                                        echo '<div class="alert alert-danger" role="alert">El alumno no ha completado un proceso anterior</div>';
+                                    } else {
+                                        ?>
+                                        <div class="table-responsive table-hover">
+                                            <table class="table table-bordered" id="dataTable2" width="100%" cellspacing="0">
+                                                <thead>
+                                                <tr>
+                                                    <th>Documento</th>
+                                                    <th>Fecha de subida</th>
+                                                    <th>Encargado de revisión</th>
+                                                    <th>Fecha de revisión</th>
+                                                    <th>Estatus</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr onclick="window.location.href='revision_documento.php?id=<?php echo $RM3_ID; ?>&tipo=<?php echo $RM3_Tipo_Doc; ?>&nombre=<?php echo $nombre; ?>'">
+                                                    <td>3er Reporte Mensual</td>
+                                                    <td><?php echo $RM3_Fecha_Subida; ?></td>
+                                                    <td><?php echo $RM3_Encargado_Rev; ?></td>
+                                                    <td><?php echo $RM3_Fecha_Rev; ?></td>
+                                                    <td>
+                                                        <?php
+                                                        switch ($RM3_Estatus) {
+                                                            case "Aceptado":
+                                                                echo '<span class="text-success">' . $RM3_Estatus . '</span>';
+                                                                break;
+                                                            case "Rechazado":
+                                                                echo '<span class="text-danger">' . $RM3_Estatus . '</span>';
+                                                                break;
+                                                            case "Pendiente":
+                                                                echo '<span class="text-warning">' . $RM3_Estatus . '</span>';
+                                                                break;
+                                                            case "Sin subir":
+                                                                echo '<span class="text-secondary">' . $RM3_Estatus . '</span>';
+                                                                break;
+                                                        }
+                                                        ?>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
                                         </div>
-
-                                    </div>
+                                        <?php
+                                    }
+                                    ?>
                                 </div>
+
 
                                 <div id="collapse5" class="panel-collapse collapse" data-parent="#myGroup">
                                     <div class="table-responsive">
