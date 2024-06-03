@@ -1,21 +1,19 @@
 <?php
+require_once '../../../../config/global.php';
 require_once '../../../../config/db.php';
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_POST) {
     $id = $_POST['id'];
-    $nombre = $_POST['nombre'];
+    $nombre_completo = $_POST['nombre_completo'];
     $correo = $_POST['correo'];
     $telefono = $_POST['telefono'];
     $cargo = $_POST['cargo'];
 
-    $sql = "UPDATE Prueba SET nombre='$nombre', correo='$correo', telefono='$telefono', cargo='$cargo' WHERE id='$id'";
-
-    if ($conexion->query($sql) === TRUE) {
-        echo "Usuario actualizado correctamente";
+    $sql = "UPDATE academia_usuarios SET nombre_completo='$nombre_completo', correo='$correo', telefono='$telefono', cargo='$cargo' WHERE id=$id";
+    if (mysqli_query($conexion, $sql)) {
+        echo "Usuario actualizado exitosamente.";
     } else {
-        echo "Error actualizando usuario: " . $conexion->error;
+        echo "Error: " . $sql . "<br>" . mysqli_error($conexion);
     }
-
-    $conexion->close();
 }
 ?>
