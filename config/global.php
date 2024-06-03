@@ -12,9 +12,9 @@ function getSidebar($ruta = ''){
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="{$ruta}index.php">
+        <a class="nav-link" href="{$ruta}app/admin/catalogos/alumnos/paginainicio.php">
             <i class="fas fa-truck"></i>
-            <span>Opción 2</span>
+            <span>Progreso de prácticas</span>
         </a>
     </li>
     <li class="nav-item dropdown">
@@ -29,7 +29,7 @@ function getSidebar($ruta = ''){
             <a class="dropdown-item" href="#">Usuarios Alumnos</a>            
             <div class="dropdown-divider"></div>        
             <a class="dropdown-item" href="#">Empresas</a>            
-            <a class="dropdown-item" href="#">Vacantes</a>         
+            <a class="dropdown-item" href="{$ruta}app/admin/catalogos/vacantes/listavacantes.php">Vacantes</a>         
         </div>
     </li>
     <li class="nav-item">
