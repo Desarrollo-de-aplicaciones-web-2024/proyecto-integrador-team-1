@@ -1,8 +1,13 @@
 <?php
 require_once '../../../../config/global.php';
-
+require_once '../../../../config/db.php';
 // Definir la ruta de inclusión, ajustar según sea necesario
 define('RUTA_INCLUDE', '../../../../');
+
+
+
+
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -43,7 +48,7 @@ define('RUTA_INCLUDE', '../../../../');
         }
 
         .progress-stage.active {
-            background-color: #4caf50;
+            background-color: #3d65ee;
         }
 
         .progress-title {
@@ -117,10 +122,15 @@ define('RUTA_INCLUDE', '../../../../');
                 </div>
             </div>
             <!-- Texto adicional -->
-            <p><b>Etapa 1:</b> Solicitar carta de presentación y formato de documentos requeridos
-                </br><b>Etapa 2:</b> Subir documentos  de Solicitud y Carta de Aceptación
-                </br><b>Etapa 3:</b>Subir Reportes mensuales de prácticas
-                </br><b>Etapa 4:</b>Documentos de conclusión de prácticas aceptados</p>
+            <p><i class="fas fa-file"></i> <b>Etapa 1:</b> Solicitar carta de presentación y formato de documentos requeridos
+                </br><i class="fas fa-file"></i> <b>Etapa 2:</b> Subir documentos de Solicitud y Carta de Aceptación
+                </br><i class="fas fa-file"></i> <b>Etapa 3:</b> Subir Reportes mensuales de prácticas
+                </br><i class="fas fa-file"></i> <b>Etapa 4:</b> Documentos de conclusión de prácticas aceptados</p>
+
+
+                    </div>
+                </div>
+            </div>
         </div>
         <!-- /.container-fluid -->
 
