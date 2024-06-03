@@ -7,6 +7,7 @@ if ($_POST) {
     $correo = $_POST['correo'];
     $telefono = $_POST['telefono'];
     $cargo = $_POST['cargo'];
+    $rol = $_POST['rol'];
 
     // Generar contraseña aleatoria
     function generatePassword($length = 10) {
@@ -22,7 +23,7 @@ if ($_POST) {
             window.location.href = 'usuarios_academia.php';
           </script>";
 
-    $sql = "INSERT INTO academia_usuarios (nombre_completo, correo, telefono, cargo, contrasena) VALUES ('$nombre_completo', '$correo', '$telefono', '$cargo', '$contrasena')";
+    $sql = "INSERT INTO academia_usuarios (nombre_completo, correo, telefono, cargo, rol, contrasena) VALUES ('$nombre_completo', '$correo', '$telefono', '$cargo', '$rol', '$contrasena')";
     if (mysqli_query($conexion, $sql)) {
         echo "Usuario agregado exitosamente.";
     } else {
