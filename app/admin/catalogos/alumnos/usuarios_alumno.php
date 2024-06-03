@@ -1,5 +1,6 @@
 <?php
 require_once '../../../../config/global.php';
+require_once '../../../../config/db.php';
 
 define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
 ?>
@@ -25,7 +26,6 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
 <div id="wrapper">
 
     <?php getSidebar(RUTA_INCLUDE) ?>
-
     <div id="content-wrapper">
 
         <div class="container-fluid">
@@ -44,13 +44,21 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
             <div class="alert alert-danger" role="alert">
                 <i class="fas fa-exclamation-triangle"></i> Mensaje de error
             </div> -->
-
             <div class="row my-3">
                 <div class="col text-right">
-                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addModal"><i class="fas fa-plus"></i> Agregar Usuario</button>
+                    <!-- Contenedor para los botones -->
+                    <div class="d-inline">
+                        <!-- Botón para importar usuarios -->
+                        <button type="button" class="btn btn-primary d-inline-block" data-toggle="modal" data-target="#importModal">
+                            <i class="fas fa-file-import"></i> Importar Usuarios
+                        </button>
+                        <!-- Botón para agregar usuario -->
+                        <button type="button" class="btn btn-success d-inline-block ml-2" data-toggle="modal" data-target="#addModal">
+                            <i class="fas fa-plus"></i> Agregar Usuario
+                        </button>
+                    </div>
                 </div>
             </div>
-
             <div class="table-responsive mb-3">
                 <table class="table table-bordered table-striped dataTable">
                     <thead>
@@ -61,88 +69,45 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
                         <th>Licenciatura</th>
                         <th>Semestre</th>
                         <th>Teléfono</th>
+                        <th>Sexo</th>
                         <th>Acciones</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>202160177</td>
-                        <td>Ximena Ruiz de la Peña</td>
-                        <td>202160177@ucc.mx</td>
-                        <td>Ing. En Sistemas Computacionales</td>
-                        <td>6to</td>
-                        <td>2294309616</td>
-                        <td class="text-center">
-                            <a href="#" class="btn btn-link btn-sm"
-                               data-toggle="modal"
-                               data-target="#editModal"
-                               data-matricula="202160177"
-                               data-nombre="Ximena Ruiz de la Peña"
-                               data-correo="202160177@ucc.mx"
-                               data-licenciatura="Ing. En Sistemas Computacionales"
-                               data-semestre="6to"
-                               data-telefono="2294309616"><img src="../../../../img/edit-30x30.png" alt="Imagen Editar"></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>201960861</td>
-                        <td>Bruno Rangel Zuñiga</td>
-                        <td>201960861@ucc.mx</td>
-                        <td>Ing. En Sistemas Computacionales</td>
-                        <td>6to</td>
-                        <td>2299133607</td>
-                        <td class="text-center">
-                            <a href="#" class="btn btn-link btn-sm"
-                               data-toggle="modal"
-                               data-target="#editModal"
-                               data-matricula="201960861"
-                               data-nombre="Bruno Rangel Zuñiga"
-                               data-correo="201960861@ucc.mx"
-                               data-licenciatura="Ing. En Sistemas Computacionales"
-                               data-semestre="6to"
-                               data-telefono="2299133607"><img src="../../../../img/edit-30x30.png" alt="Imagen Editar"></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>202160467</td>
-                        <td>Elisa Villa Caballero</td>
-                        <td>202160467@ucc.mx</td>
-                        <td>Ing. En Sistemas Computacionales</td>
-                        <td>6to</td>
-                        <td>2831231627</td>
-                        <td class="text-center">
-                            <a href="#" class="btn btn-link btn-sm"
-                               data-toggle="modal"
-                               data-target="#editModal"
-                               data-matricula="202160467"
-                               data-nombre="Elisa Villa Caballero"
-                               data-correo="202160467@ucc.mx"
-                               data-licenciatura="Ing. En Sistemas Computacionales"
-                               data-semestre="6to"
-                               data-telefono="2831231627"><img src="../../../../img/edit-30x30.png" alt="Imagen Editar"></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>202160171</td>
-                        <td>Abimael Ochoa Hernández</td>
-                        <td>202160171@ucc.mx</td>
-                        <td>Ing. En Sistemas Computacionales</td>
-                        <td>6to</td>
-                        <td>2297732121</td>
-                        <td class="text-center">
-                            <a href="#" class="btn btn-link btn-sm"
-                               data-toggle="modal"
-                               data-target="#editModal"
-                               data-matricula="202160171"
-                               data-nombre="Abimael Ochoa Hernández"
-                               data-correo="202160171@ucc.mx"
-                               data-licenciatura="Ing. En Sistemas Computacionales"
-                               data-semestre="6to"
-                               data-telefono="2297732121"><img src="../../../../img/edit-30x30.png" alt="Imagen Editar"></a>
-                        </td>
-                    </tr>
+                    <?php
+                    // Verifica si la conexión a la base de datos existe
+                    if ($conexion) {
+                        $sql = "SELECT * FROM usuarios_alumno";
+                        if ($result = mysqli_query($conexion, $sql)) {
+                            if (mysqli_num_rows($result) > 0) {
+                                while ($row = mysqli_fetch_array($result)) {
+                                    echo "<tr>";
+                                    echo "<td>" . $row['matricula'] . "</td>";
+                                    echo "<td>" . $row['nombre'] . "</td>";
+                                    echo "<td>" . $row['correo'] . "</td>";
+                                    echo "<td>" . $row['licenciatura'] . "</td>";
+                                    echo "<td>" . $row['semestre'] . "</td>";
+                                    echo "<td>" . $row['telefono'] . "</td>";
+                                    echo "<td>" . $row['sexo'] . "</td>";
+                                    echo "<td class='text-center'>";
+                                    echo "<a href='#' class='btn btn-link btn-sm' data-toggle='modal' data-target='#editModal' data-matricula='" . $row['matricula'] . "' data-nombre='" . $row['nombre'] . "' data-correo='" . $row['correo'] . "' data-licenciatura='" . $row['licenciatura'] . "' data-semestre='" . $row['semestre'] . "' data-telefono='" . $row['telefono'] . "' data-sexo='" . $row['sexo'] . "'><img src='../../../../img/edit-30x30.png' alt='Imagen Editar'></a>";
+                                    echo "</td>";
+                                    echo "</tr>";
+                                }
+                                mysqli_free_result($result);
+                            } else {
+                                echo "<tr><td colspan='8'>No se encontraron registros.</td></tr>";
+                            }
+                        } else {
+                            echo "ERROR: No se pudo ejecutar $sql. " . mysqli_error($conexion);
+                        }
+                    } else {
+                        echo "ERROR: No se pudo conectar a la base de datos.";
+                    }
+                    ?>
                     </tbody>
                 </table>
+
                 <!-- Modal Editar -->
                 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
@@ -154,8 +119,11 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form id="editForm" method="post" action="editUser.php">
-                                    <input type="hidden" id="editMatricula" name="matricula">
+                                <form id="editForm" method="post" action="editar_usuario.php">
+                                    <div class="form-group">
+                                        <label for="editMatricula">Matrícula</label>
+                                        <input type="text" class="form-control" id="editMatricula" name="matricula">
+                                    </div>
                                     <div class="form-group">
                                         <label for="editNombre">Nombre</label>
                                         <input type="text" class="form-control" id="editNombre" name="nombre">
@@ -176,6 +144,13 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
                                         <label for="editTelefono">Teléfono</label>
                                         <input type="text" class="form-control" id="editTelefono" name="telefono">
                                     </div>
+                                    <div class="form-group">
+                                        <label for="editSexo">Sexo</label>
+                                        <select class="form-control" id="editSexo" name="sexo">
+                                            <option value="Masculino">Masculino</option>
+                                            <option value="Femenino">Femenino</option>
+                                        </select>
+                                    </div>
                                     <button type="submit" class="btn btn-primary">Guardar cambios</button>
                                     <button type="button" class="btn btn-danger" id="deleteUser" data-matricula="">Eliminar Usuario</button>
                                 </form>
@@ -194,27 +169,39 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
+
                             <div class="modal-body">
-                                <form id="addForm" method="post" action="addUser.php">
+                                <form id="addForm" method="post" action="agregar_usuario.php">
+                                    <div class="form-group">
+                                        <label for="addMatricula">Matrícula</label>
+                                        <input type="text" class="form-control" id="addMatricula" name="matricula" required>
+                                    </div>
                                     <div class="form-group">
                                         <label for="addNombre">Nombre</label>
-                                        <input type="text" class="form-control" id="addNombre" name="nombre">
+                                        <input type="text" class="form-control" id="addNombre" name="nombre" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="addCorreo">Correo</label>
-                                        <input type="email" class="form-control" id="addCorreo" name="correo">
+                                        <input type="email" class="form-control" id="addCorreo" name="correo" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="addLicenciatura">Licenciatura</label>
-                                        <input type="text" class="form-control" id="addLicenciatura" name="licenciatura">
+                                        <input type="text" class="form-control" id="addLicenciatura" name="licenciatura" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="addSemestre">Semestre</label>
-                                        <input type="text" class="form-control" id="addSemestre" name="semestre">
+                                        <input type="text" class="form-control" id="addSemestre" name="semestre" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="addTelefono">Teléfono</label>
-                                        <input type="text" class="form-control" id="addTelefono" name="telefono">
+                                        <input type="text" class="form-control" id="addTelefono" name="telefono" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="addSexo">Sexo</label>
+                                        <select class="form-control" id="addSexo" name="sexo" required>
+                                            <option value="Masculino">Masculino</option>
+                                            <option value="Femenino">Femenino</option>
+                                        </select>
                                     </div>
                                     <button type="submit" class="btn btn-primary">Agregar Usuario</button>
                                 </form>
@@ -222,6 +209,24 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
                         </div>
                     </div>
                 </div>
+
+                <!-- Modal Importar -->
+                <div class="modal fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="importModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="importModalLabel">Importar Usuarios</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <!-- Aquí puedes agregar un formulario para seleccionar el archivo CSV y enviarlo -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         <!-- /.container-fluid -->
 
@@ -239,11 +244,27 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
 </a>
 
 <?php getModalLogout() ?>
+    <script>
+        document.getElementById('addForm').addEventListener('submit', function(event) {
+            var matricula = document.getElementById('addMatricula').value;
+            var correo = document.getElementById('addCorreo').value;
 
-    <!-- Incluir jQuery y Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+            // Validar que la matrícula sea solo números
+            if (!/^\d+$/.test(matricula)) {
+                alert('La matrícula debe contener solo números.');
+                event.preventDefault();
+                return;
+            }
+
+            // Validar que el correo termine en "@ucc.mx"
+            if (!correo.endsWith('@ucc.mx')) {
+                alert('El correo debe finalizar con "@ucc.mx".');
+                event.preventDefault();
+                return;
+            }
+        });
+    </script>
+<?php getBottomIncudes( RUTA_INCLUDE ) ?>
     <script>
         $(document).ready(function() {
             $('#editModal').on('show.bs.modal', function (event) {
@@ -254,6 +275,7 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
                 var licenciatura = button.data('licenciatura');
                 var semestre = button.data('semestre');
                 var telefono = button.data('telefono');
+                var sexo = button.data('sexo');
 
                 var modal = $(this);
                 modal.find('.modal-body #editMatricula').val(matricula);
@@ -262,21 +284,36 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
                 modal.find('.modal-body #editLicenciatura').val(licenciatura);
                 modal.find('.modal-body #editSemestre').val(semestre);
                 modal.find('.modal-body #editTelefono').val(telefono);
-                modal.find('.modal-footer #deleteUser').data('matricula', matricula);
+                modal.find('.modal-body #editSexo').val(sexo);
+
+                modal.find('.modal-body #deleteUser').data('matricula', matricula);
             });
 
-            $('#deleteUser').click(function () {
+            $('#deleteUser').click(function() {
                 var matricula = $(this).data('matricula');
-                if(confirm('¿Estás seguro de que deseas eliminar este usuario?')) {
-                    $.post('deleteUser.php', { matricula: matricula }, function(result) {
-                        alert('Usuario eliminado');
-                        location.reload();
+                if (confirm('¿Estás seguro de que deseas eliminar este usuario?')) {
+                    $.ajax({
+                        url: 'eliminar_usuario.php',
+                        type: 'POST',
+                        data: { matricula: matricula },
+                        dataType: 'json',
+                        success: function(response) {
+                            if (response.success) {
+                                alert('Usuario eliminado correctamente.');
+                                $('#editModal').modal('hide'); // Cerrar el modal
+                                location.reload(); // Recargar la página
+                            } else {
+                                alert('Error al eliminar usuario: ' + response.error);
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            alert('Error al eliminar usuario: ' + xhr.responseText);
+                        }
                     });
                 }
             });
         });
     </script>
-<?php getBottomIncudes( RUTA_INCLUDE ) ?>
 
 </body>
 

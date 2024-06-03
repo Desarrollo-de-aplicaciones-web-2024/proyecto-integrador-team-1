@@ -3,6 +3,11 @@ require_once '../../../config/global.php';
 
 
 define('RUTA_INCLUDE', '../../../'); //ajustar a necesidad
+// Conexión a la base de datos
+$conn = new mysqli("database-team1-daw.c30w0agw4764.us-east-2.rds.amazonaws.com", "admin", "S1stemas_23", "PP_TEAM1");
+if ($conn->connect_error) {
+    die("Conexión fallida: " . $conn->connect_error);
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -46,59 +51,27 @@ define('RUTA_INCLUDE', '../../../'); //ajustar a necesidad
         <!-- /.container-fluid -->
 
         <div class="container">
-            <form>
-                <div class="form-group">
-                    <label for="fecha_inicio">Fecha de inicio de las prácticas:</label>
-                    <input type="date" id="fecha_inicio" name="fecha_inicio" required>                </div>
-
-                <div class="form-group">
-                    <label>Hora de Asistencia:</label>
-                    <div class="day-group">
-                        <div class="day">
-                            <input type="checkbox" id="lunes" name="dias[]" value="lunes">
-                            <label for="lunes">Lunes</label>
-                            <input type="time" name="hora_inicio_lunes">
-                            <input type="time" name="hora_fin_lunes">
-                        </div>
-                        <div class="day">
-                            <input type="checkbox" id="martes" name="dias[]" value="martes">
-                            <label for="martes">Martes</label>
-                            <input type="time" name="hora_inicio_martes">
-                            <input type="time" name="hora_fin_martes">
-                        </div>
-                        <div class="day">
-                            <input type="checkbox" id="miercoles" name="dias[]" value="miercoles">
-                            <label for="miercoles">Miércoles</label>
-                            <input type="time" name="hora_inicio_miercoles">
-                            <input type="time" name="hora_fin_miercoles">
-                        </div>
-                        <div class="day">
-                            <input type="checkbox" id="jueves" name="dias[]" value="jueves">
-                            <label for="jueves">Jueves</label>
-                            <input type="time" name="hora_inicio_jueves">
-                            <input type="time" name="hora_fin_jueves">
-                        </div>
-                        <div class="day">
-                            <input type="checkbox" id="viernes" name="dias[]" value="viernes">
-                            <label for="viernes">Viernes</label>
-                            <input type="time" name="hora_inicio_viernes">
-                            <input type="time" name="hora_fin_viernes">
-                        </div>
-                        <div class="day">
-                            <input type="checkbox" id="sabado" name="dias[]" value="sabado">
-                            <label for="sabado">Sábado</label>
-                            <input type="time" name="hora_inicio_sabado">
-                            <input type="time" name="hora_fin_sabado">
-                        </div>
-                    </div>
+            <form id="formulario-subida" action="registro_pt.php" method="post" enctype="multipart/form-data">
+                <div class="form-group" >
+                    <label for="fecha-inicio">Fecha de inicio de las prácticas:</label>
+                    <input name="fecha_inicio" type="date" class="form-control custom-width" id="fecha-inicio" placeholder="dd/mm/aaaa">
                 </div>
+                <div class="form-group">
+                    <label for="dias-asistencia">Días en los que se asistirá:</label>
+                    <input name="asistencia" type="text" class="form-control" placeholder="Lunes-Viernes" id="dias-asistencia">
+                </div>
+                <div class="form-group">
+                    <label for="horario-asistencia">Horario de asistencia:</label>
+                    <input name="horario" type="text" class="form-control" placeholder="08:00-14:00" id="horario-asistencia">
+                </div>
+
                 <div class="mb-3">
-                    <label for="descripcion_act_real" class="form-label">Descripción de las actividades a realizar:</label>
-                    <textarea class="form-control" id="descripcion_act_real" rows="10"></textarea>
+                    <label for="descripcion_act" class="form-label">Descripción de las actividades a realizar:</label>
+                    <textarea name="descripcion" class="form-control" id="descripcion_act" rows="10"></textarea>
                 </div>
                 <div class="row mb-5">
                     <div class="col">
-                        <button onclick="window.location.href='plan_trabajo.php'" class="btn btn-success">Guardar</button>
+                        <input type="submit" value="Guardar" class="btn btn-primary" id="input-subida">
                     </div>
                     <div class="col text-right">
                         <button type="button" class="btn btn-danger">Cancelar</button>
