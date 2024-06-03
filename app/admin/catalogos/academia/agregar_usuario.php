@@ -16,6 +16,12 @@ if ($_POST) {
 
     $contrasena = generatePassword(rand(6, 10));
 
+    // Mostrar la contraseña generada en una ventana emergente y redirigir a la pantalla después de aceptar
+    echo "<script>
+            alert('La contraseña generada es: $contrasena');
+            window.location.href = 'usuarios_academia.php';
+          </script>";
+
     $sql = "INSERT INTO academia_usuarios (nombre_completo, correo, telefono, cargo, contrasena) VALUES ('$nombre_completo', '$correo', '$telefono', '$cargo', '$contrasena')";
     if (mysqli_query($conexion, $sql)) {
         echo "Usuario agregado exitosamente.";
