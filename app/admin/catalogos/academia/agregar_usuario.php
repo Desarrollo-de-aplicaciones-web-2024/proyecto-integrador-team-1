@@ -1,25 +1,20 @@
 <?php
+require_once '../../../../config/global.php';
 require_once '../../../../config/db.php';
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $nombre_completo = $_POST['nombre_completo'];
-    $correo_electronico = $_POST['correo_electronico'];
-    $numero_telefono = $_POST['numero_telefono'];
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $nombre = $_POST['nombre_completo'];
+    $correo = $_POST['correo_electronico'];
+    $telefono = $_POST['numero_telefono'];
     $cargo = $_POST['cargo'];
 
-    $sql = "INSERT INTO usuarios_academia (nombre_completo,correo_electronico,numero_telefono, cargo) VALUES (?, ?, ?, ?)";
-    $stmt = $conexion->prepare($sql);
-    $stmt->bind_param("ssss", $nombre_completo, $correo_electronico, $numero_telefono, $cargo);
+    // Aquí debes realizar la inserción en la base de datos
+    $sql = "INSERT INTO Prueba (nombre, correo, telefono, cargo) VALUES ('$nombre', '$correo', '$telefono', '$cargo')";
 
-    if ($stmt->execute()) {
-        echo "Usuario agregado exitosamente.";
+    if ($conexion->query($sql) === TRUE) {
+        echo "Usuario agregado correctamente";
     } else {
-        echo "Error: " . $stmt->error;
+        echo "Error al agregar usuario: " . $conexion->error;
     }
-
-    $stmt->close();
-    $conexion->close();
 }
 ?>
-
-

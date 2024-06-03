@@ -15,7 +15,7 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
 
     <title><?php echo PAGE_TITLE ?></title>
 
-    <?php getTopIncludes(RUTA_INCLUDE ) ?>
+    <?php getTopIncludes(RUTA_INCLUDE) ?>
 </head>
 
 <body id="page-top">
@@ -36,14 +36,6 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
                 </ol>
             </nav>
 
-          <!-- <div class="alert alert-success" role="alert">
-                <i class="fas fa-check"></i> Mensaje de éxito
-            </div>
-
-            <div class="alert alert-danger" role="alert">
-                <i class="fas fa-exclamation-triangle"></i> Mensaje de error
-            </div>
-            -->
             <div class="row my-3">
                 <div class="col text-right">
                     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addModal"><i class="fas fa-plus"></i> Agregar Usuario</button>
@@ -62,41 +54,49 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
                     </tr>
                     </thead>
                     <tbody>
-                    </tr>
-                    <tr>
-                        <td>Erick Onofre Ruiz</td>
-                        <td>206345875@ucc.mx</td>
-                        <td>283-456-7891</td>
-                        <td>Vinculación Académica</td>
-                        <td class="text-center">
-                            <a href="#" class="btn btn-link btn-sm" data-toggle="modal" data-target="#editModal"
-                               data-nombre="Erick Onofre Ruiz"
-                               data-correo="206345875@ucc.mx"
-                               data-telefono="283-456-7891"
-                               data-cargo="Vinculación Académica"><img src="../../../../img/edit-30x30.png"></a>
-                        </td>
-                    </tr>
+                    <?php
+                    $sql = "SELECT * FROM Prueba";
+                    $result = $conexion->query($sql);
+
+                    if ($result->num_rows > 0) {
+                        while($row = $result->fetch_assoc()) {
+                            echo "<tr>";
+                            echo "<td>".$row["nombre"]."</td>";
+                            echo "<td>".$row["correo"]."</td>";
+                            echo "<td>".$row["telefono"]."</td>";
+                            echo "<td>".$row["cargo"]."</td>";
+                            echo '<td class="text-center">
+                    <a href="#" class="btn btn-link btn-sm" data-toggle="modal" data-target="#editModal"
+                    data-id="'.$row["id"].'"
+                    data-nombre="'.$row["nombre"].'"
+                    data-correo="'.$row["correo"].'"
+                    data-telefono="'.$row["telefono"].'"
+                    data-cargo="'.$row["cargo"].'"><img src="../../../../img/edit-30x30.png"></a>
+                    </td>';
+                            echo "</tr>";
+                        }
+                    } else {
+                        echo "<tr><td colspan='5'>No hay usuarios registrados</td></tr>";
+                    }
+                    ?>
                     </tbody>
+
                 </table>
             </div>
 
         </div>
-        <!-- /.container-fluid -->
 
         <?php getFooter() ?>
 
     </div>
-    <!-- /.content-wrapper -->
-
 </div>
-<!-- /#wrapper -->
 
-<!-- Scroll to Top Button-->
 <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
 </a>
 
 <?php getModalLogout() ?>
+
 <!-- Modal Editar -->
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -109,6 +109,7 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
             </div>
             <div class="modal-body">
                 <form id="editForm">
+                    <input type="hidden" id="editId" name="id">
                     <div class="form-group">
                         <label for="editNombre">Nombre</label>
                         <input type="text" class="form-control" id="editNombre" name="nombre">
@@ -133,31 +134,6 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
     </div>
 </div>
 
-<!-- Incluir jQuery y Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-<script>
-    $('#editModal').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget);
-        var nombre = button.data('nombre');
-        var correo = button.data('correo');
-        var telefono = button.data('telefono');
-        var cargo = button.data('cargo');
-
-        var modal = $(this);
-        modal.find('.modal-body #editNombre').val(nombre);
-        modal.find('.modal-body #editCorreo').val(correo);
-        modal.find('.modal-body #editTelefono').val(telefono);
-        modal.find('.modal-body #editCargo').val(cargo);
-    });
-
-    $('#deleteUser').click(function () {
-        // Aquí agregarías la lógica para eliminar al usuario
-        alert('Usuario eliminado');
-        $('#editModal').modal('hide');
-    });
-</script>
 <!-- Modal Agregar -->
 <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -193,11 +169,12 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
     </div>
 </div>
 
-<?php getBottomIncudes( RUTA_INCLUDE ) ?>
+<?php getBottomIncudes(RUTA_INCLUDE) ?>
 
-</body>
-
-</html>
+<!-- Incluir jQuery y Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script>
     $(document).ready(function(){
         $('#addForm').on('submit', function(event){
@@ -214,8 +191,56 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
                 }
             });
         });
+
+        $('#editModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var id = button.data('id');
+            var nombre = button.data('nombre');
+            var correo = button.data('correo');
+            var telefono = button.data('telefono');
+            var cargo = button.data('cargo');
+
+            var modal = $(this);
+            modal.find('.modal-body #editId').val(id);
+            modal.find('.modal-body #editNombre').val(nombre);
+            modal.find('.modal-body #editCorreo').val(correo);
+            modal.find('.modal-body #editTelefono').val(telefono);
+            modal.find('.modal-body #editCargo').val(cargo);
+        });
+
+        $('#editForm').on('submit', function(event){
+            event.preventDefault();
+            $.ajax({
+                url: 'editar_usuario.php',
+                method: 'POST',
+                data: $(this).serialize(),
+                success: function(data){
+                    alert(data);
+                    $('#editForm')[0].reset();
+                    $('#editModal').modal('hide');
+                    location.reload(); // Recargar la página para ver los cambios
+                }
+            });
+        });
+
+        $('#deleteUser').on('click', function(event){
+            var id = $('#editId').val();
+            if(confirm('¿Estás seguro de que quieres eliminar este usuario?')){
+                $.ajax({
+                    url: 'eliminar_usuario.php',
+                    method: 'POST',
+                    data: { id: id },
+                    success: function(data){
+                        alert(data);
+                        $('#editModal').modal('hide');
+                        location.reload(); // Recargar la página para ver los cambios
+                    }
+                });
+            }
+        });
     });
 </script>
 
+</body>
 
-
+</html>
