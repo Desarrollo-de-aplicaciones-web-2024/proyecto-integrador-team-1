@@ -3,6 +3,11 @@ require_once '../../../config/global.php';
 
 
 define('RUTA_INCLUDE', '../../../'); //ajustar a necesidad
+// Conexión a la base de datos
+$conn = new mysqli("database-team1-daw.c30w0agw4764.us-east-2.rds.amazonaws.com", "admin", "S1stemas_23", "PP_TEAM1");
+if ($conn->connect_error) {
+    die("Conexión fallida: " . $conn->connect_error);
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -46,71 +51,27 @@ define('RUTA_INCLUDE', '../../../'); //ajustar a necesidad
         <!-- /.container-fluid -->
 
         <div class="container">
-            <form>
-                <div class="fecha_inicio form-group row align-items-center">
-                    <label for="fecha_inicio">Fecha de inicio de las prácticas:</label>
-                    <input type="date" id="fecha_inicio" name="fecha_inicio" required>                </div>
-
-                <div class="form-group">
-                    <label>Horario de Asistencia:</label>
-                    <div class="container mt-4">
-                        <div class="hora-asistencia form-check form-switch">
-                            <input class="form-check-input" type="checkbox" role="switch" id="lunes">
-                            <label class="form-check-label" for="lunes">Lunes</label>
-                            <div class="horarios">
-                                <input type="time" class="form-control" name="hora_inicio_lunes">
-                                <input type="time" class="form-control" name="hora_fin_lunes">
-                            </div>
-                        </div>
-                        <div class="hora-asistencia form-check form-switch">
-                            <input class="form-check-input" type="checkbox" role="switch" id="martes">
-                            <label class="form-check-label" for="martes">Martes</label>
-                            <div class="horarios">
-                                <input type="time" class="form-control" name="hora_inicio_martes">
-                                <input type="time" class="form-control" name="hora_fin_martes">
-                            </div>
-                        </div>
-                        <div class="hora-asistencia form-check form-switch">
-                            <input class="form-check-input" type="checkbox" role="switch" id="miercoles">
-                            <label class="form-check-label" for="miercoles">Miércoles</label>
-                            <div class="horarios">
-                                <input type="time" class="form-control" name="hora_inicio_miercoles">
-                                <input type="time" class="form-control" name="hora_fin_miercoles">
-                            </div>
-                        </div>
-                        <div class="hora-asistencia form-check form-switch">
-                            <input class="form-check-input" type="checkbox" role="switch" id="jueves">
-                            <label class="form-check-label" for="jueves">Jueves</label>
-                            <div class="horarios">
-                                <input type="time" class="form-control" name="hora_inicio_jueves">
-                                <input type="time" class="form-control" name="hora_fin_jueves">
-                            </div>
-                        </div>
-                        <div class="hora-asistencia form-check form-switch">
-                            <input class="form-check-input" type="checkbox" role="switch" id="viernes">
-                            <label class="form-check-label" for="viernes">Viernes</label>
-                            <div class="horarios">
-                                <input type="time" class="form-control" name="hora_inicio_viernes">
-                                <input type="time" class="form-control" name="hora_fin_viernes">
-                            </div>
-                        </div>
-                        <div class="hora-asistencia form-check form-switch">
-                            <input class="form-check-input" type="checkbox" role="switch" id="sabado">
-                            <label class="form-check-label" for="sabado">Sábado</label>
-                            <div class="horarios">
-                                <input type="time" class="form-control" name="hora_inicio_sabado">
-                                <input type="time" class="form-control" name="hora_fin_sabado">
-                            </div>
-                        </div>
-                    </div>
+            <form id="formulario-subida" action="registro_pt.php" method="post" enctype="multipart/form-data">
+                <div class="form-group" >
+                    <label for="fecha-inicio">Fecha de inicio de las prácticas:</label>
+                    <input name="fecha_inicio" type="date" class="form-control custom-width" id="fecha-inicio" placeholder="dd/mm/aaaa">
                 </div>
+                <div class="form-group">
+                    <label for="dias-asistencia">Días en los que se asistirá:</label>
+                    <input name="asistencia" type="text" class="form-control" placeholder="Lunes-Viernes" id="dias-asistencia">
+                </div>
+                <div class="form-group">
+                    <label for="horario-asistencia">Horario de asistencia:</label>
+                    <input name="horario" type="text" class="form-control" placeholder="08:00-14:00" id="horario-asistencia">
+                </div>
+
                 <div class="mb-3">
-                    <label for="descripcion_act_real" class="form-label">Descripción de las actividades a realizar:</label>
-                    <textarea class="form-control" id="descripcion_act_real" rows="10"></textarea>
+                    <label for="descripcion_act" class="form-label">Descripción de las actividades a realizar:</label>
+                    <textarea name="descripcion" class="form-control" id="descripcion_act" rows="10"></textarea>
                 </div>
                 <div class="row mb-5">
                     <div class="col">
-                        <button onclick="window.location.href='plan_trabajo.php'" class="btn btn-primary">Guardar</button>
+                        <input type="submit" value="Guardar" class="btn btn-primary" id="input-subida">
                     </div>
                     <div class="col text-right">
                         <button type="button" class="btn btn-danger">Cancelar</button>

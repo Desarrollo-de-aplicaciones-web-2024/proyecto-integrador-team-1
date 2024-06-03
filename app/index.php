@@ -72,16 +72,16 @@
         <div class="card-header">¡Bienvenido!</div>
         <div class="card-body">
             <img src="../img/escudoo.svg" alt="Escudo de la Universidad Cristóbal Colón">
-            <form action="login.php" method="post">
+            <form action="login_post.php" method="post">
                 <div class="form-group">
                     <div class="form-label-group">
-                        <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Correo electrónico" required autofocus>
+                        <input type="email" name="correo" id="inputEmail" class="form-control" placeholder="Correo electrónico" required autofocus>
                         <label for="inputEmail">Correo electrónico</label>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="form-label-group">
-                        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Contraseña" required>
+                        <input type="password" name="pwd" id="inputPassword" class="form-control" placeholder="Contraseña" required>
                         <label for="inputPassword">Contraseña</label>
                     </div>
                 </div>
