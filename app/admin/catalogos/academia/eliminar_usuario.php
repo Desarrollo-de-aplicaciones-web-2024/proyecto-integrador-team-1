@@ -1,17 +1,15 @@
 <?php
+require_once '../../../../config/global.php';
 require_once '../../../../config/db.php';
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_POST) {
     $id = $_POST['id'];
 
-    $sql = "DELETE FROM Prueba WHERE id='$id'";
-
-    if ($conexion->query($sql) === TRUE) {
-        echo "Usuario eliminado correctamente";
+    $sql = "DELETE FROM academia_usuarios WHERE id=$id";
+    if (mysqli_query($conexion, $sql)) {
+        echo "Usuario eliminado exitosamente.";
     } else {
-        echo "Error eliminando usuario: " . $conexion->error;
+        echo "Error: " . $sql . "<br>" . mysqli_error($conexion);
     }
-
-    $conexion->close();
 }
 ?>
