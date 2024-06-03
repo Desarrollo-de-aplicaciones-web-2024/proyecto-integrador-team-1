@@ -42,6 +42,7 @@ define('RUTA_INCLUDE', '../../../../');
                         <th>Correo</th>
                         <th>Teléfono</th>
                         <th>Cargo</th>
+                        <th>Contraseña</th>
                         <th>Acciones</th>
                     </tr>
                     </thead>
@@ -57,6 +58,10 @@ define('RUTA_INCLUDE', '../../../../');
                                     echo "<td>" . $row['correo'] . "</td>";
                                     echo "<td>" . $row['telefono'] . "</td>";
                                     echo "<td>" . $row['cargo'] . "</td>";
+                                    // echo "<td>" . $row['contrasena'] . "</td>"; //Contraseña no Encriptada
+                                    //Encriptar Contraseña
+                                    $contrasena_encriptada = str_repeat('*', strlen($row['contrasena']));
+                                    echo "<td>" . $contrasena_encriptada . "</td>";
                                     echo "<td class='text-center'>";
                                     echo "<a href='#' class='btn btn-link btn-sm' data-toggle='modal' data-target='#editModal' data-id='" . $row['id'] . "' data-nombre_completo='" . $row['nombre_completo'] . "' data-correo='" . $row['correo'] . "' data-telefono='" . $row['telefono'] . "' data-cargo='" . $row['cargo'] . "'><img src='../../../../img/edit-30x30.png' alt='Imagen Editar'></a>";
                                     echo "<button class='btn btn-link btn-sm deleteUser' data-id='" . $row['id'] . "'>Eliminar</button>";
