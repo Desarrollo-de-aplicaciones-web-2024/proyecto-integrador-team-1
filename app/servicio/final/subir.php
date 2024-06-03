@@ -11,29 +11,37 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Inicializa el mensaje de resultado
     $mensaje = "";
 
-    // Itera sobre los archivos subidos
-    foreach ($_FILES['archivos']['name'] as $indice => $nombreArchivo) {
-        $tipoArchivo = mime_content_type($_FILES['archivos']['tmp_name'][$indice]);
+    // Función para procesar cada archivo
+    function procesarArchivo($nombreInput, $nombreArchivoDestino) {
+        global $directorioSubida, $mensaje;
+        if (isset($_FILES[$nombreInput]) && $_FILES[$nombreInput]['error'] == UPLOAD_ERR_OK) {
+            $tipoArchivo = mime_content_type($_FILES[$nombreInput]['tmp_name']);
+            $archivoSubido = $directorioSubida . $nombreArchivoDestino;
 
-        // Genera un nombre de archivo único
-        $nombreUnico = uniqid() . "_" . basename($nombreArchivo);
-        $archivoSubido = $directorioSubida . $nombreUnico;
-
-        // Validación del archivo
-        if ($tipoArchivo == 'application/pdf') {
-            if (move_uploaded_file($_FILES['archivos']['tmp_name'][$indice], $archivoSubido)) {
-                $mensaje .= "El archivo " . basename($nombreArchivo) . " ha sido subido con éxito como " . $nombreUnico . ".<br>";
+            // Validación del archivo
+            if ($tipoArchivo == 'application/pdf') {
+                if (move_uploaded_file($_FILES[$nombreInput]['tmp_name'], $archivoSubido)) {
+                    $mensaje .= "El archivo " . basename($_FILES[$nombreInput]['name']) . " ha sido subido con éxito como " . $nombreArchivoDestino . ".<br>";
+                } else {
+                    $mensaje .= "Hubo un error al subir el archivo " . basename($_FILES[$nombreInput]['name']) . ". Por favor, intenta de nuevo.<br>";
+                }
             } else {
-                $mensaje .= "Hubo un error al subir el archivo " . basename($nombreArchivo) . ". Por favor, intenta de nuevo.<br>";
+                $mensaje .= "Error: El archivo " . basename($_FILES[$nombreInput]['name']) . " no es un PDF válido.<br>";
             }
-        } else {
-            $mensaje .= "Error: El archivo " . basename($nombreArchivo) . " no es un PDF válido o no tiene el nombre permitido.<br>";
         }
     }
 
+    // Procesa cada archivo individualmente
+    procesarArchivo('archivo-reporte', 'Reporte_Global.pdf');
+    procesarArchivo('archivo-resena', 'Reseña_Practicas.pdf');
+    procesarArchivo('archivo-constancia', 'Constancia.pdf');
+
     // Muestra el mensaje final basado en los resultados de la subida
     echo $mensaje;
+    header("Location: documentos-finales.php?upload=success");
+    exit();
 } else {
-    echo "Error: No se ha enviado ningún archivo.";
+    header("Location: documentos-finales.php?upload=failure");
+    exit();
 }
 ?>

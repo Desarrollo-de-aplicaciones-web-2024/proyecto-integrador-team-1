@@ -112,7 +112,7 @@ define('RUTA_INCLUDE', '../../../'); // ajustar a necesidad
                 <ul class="mb-0">
                     <li>No subir archivos manchados o maltratados.</li>
                     <li>Recuerda cumplir con todos los documento necesarios para poder completar tu periodo de practicas</li>
-                    <li>Los nombres de los archivos PDF deben de ser: "Reporte_Global.pdf", "Reseña_Practicas.pdf" y "Constancia.pdf"</li>
+                    <li>Las firmas, datos del alumno y demás involucrados se observen claramente.</li>
 
                 </ul>
             </div>
@@ -192,7 +192,7 @@ define('RUTA_INCLUDE', '../../../'); // ajustar a necesidad
                 <div class="flex-grow-1"></div>
                 <div class="row my-3">
                     <div class="col text-center">
-                        <input type="submit" value="Subir Archivos" class="btn btn-success"</input>
+                        <input type="submit" value="Subir Archivos" class="btn btn-success" id="input-subida" </input>
                     </div>
                 </div>
             </div>
@@ -268,7 +268,26 @@ define('RUTA_INCLUDE', '../../../'); // ajustar a necesidad
         });
     });
 
+    document.getElementById('input-subida').addEventListener('click', function(event) {
 
+        const reporte = document.getElementById('subir-reporte').files.length;
+        const resena = document.getElementById('subir-resena').files.length;
+        const constancia = document.getElementById('subir-constancia').files.length;
+        if (reporte === 0 || resena === 0 || constancia === 0) {
+            event.preventDefault();
+            const mensajeError = document.getElementById('mensaje-error');
+            mensajeError.textContent = 'Por favor, sube todos los archivos requeridos antes de enviar el formulario.';
+            mensajeError.style.display = 'block';
+        }
+    });
+
+    // Mostrar mensaje de éxito si se redirige con ?upload=success
+    window.addEventListener('load', function() {
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('upload') === 'success') {
+            alert('¡Todos los archivos se han subido con éxito!');
+        }
+    });
 
 
 </script>

@@ -1,6 +1,6 @@
 <?php
 require_once '../../../../config/global.php';
-
+require_once '../../../../config/db.php';
 define('RUTA_INCLUDE', '../../../../'); // ajustar a necesidad
 ?>
 
@@ -21,7 +21,7 @@ define('RUTA_INCLUDE', '../../../../'); // ajustar a necesidad
 
     <?php getTopIncludes(RUTA_INCLUDE); ?>
     <style>
-        .additional-info {
+         {
             background-color: #f8f9fa;
             border: 1px solid #dee2e6;
             border-radius: 5px;
