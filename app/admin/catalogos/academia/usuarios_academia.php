@@ -107,7 +107,6 @@ define('RUTA_INCLUDE', '../../../../');
                                         <input type="text" class="form-control" id="editCargo" name="cargo">
                                     </div>
                                     <button type="submit" class="btn btn-primary">Guardar cambios</button>
-
                                 </form>
                             </div>
                         </div>
