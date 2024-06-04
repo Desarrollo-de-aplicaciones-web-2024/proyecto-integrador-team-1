@@ -1,15 +1,6 @@
 <?php
 require_once '../../../../config/global.php';
-define('DB_HOST', 'database-team1-daw.c30w0agw4764.us-east-2.rds.amazonaws.com');
-define('DB_USER', 'admin');
-define('DB_PASS', 'S1stemas_23');
-define('DB_NAME', 'PP_TEAM1');
-// Conexión a la base de datos de Amazon RDS
-$conexion = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-
-if ($conexion->connect_error) {
-    die("Conexión fallida: " . $conexion->connect_error);
-}
+require_once '../../../../config/db.php';
 
 define('RUTA_INCLUDE', '../../../../'); // ajustar a necesidad
 ?>
@@ -98,7 +89,7 @@ define('RUTA_INCLUDE', '../../../../'); // ajustar a necesidad
                             echo "<td>" . $row['telefono'] . "</td>";
                             echo "<td>" . $row['direccion'] . "</td>";
                             echo "<td>" . $row['disponibilidad'] . "</td>";
-                            echo "<td><a href='#' class='btn btn-link btn-sm'>Editar</a> <a href='#' class='btn btn-link btn-sm desactivar-empresa'>Desactivar</a></td>";
+                            echo "<td><a href='#' class='btn btn-link btn-sm' data-toggle='modal' data-target='#editCompanyModal'data-id='" . $row['id'] . "'data-nombreempresa='" . $row['nombre'] . "'data-sector='" . $row['sector_id'] . "'data-telefono='" . $row['telefono'] . "'data-direccion='" . $row['direccion'] . "'data-disponibilidad='" . $row['disponibilidad'] . "'data-logo='" . $row['logo'] . "'>Editar</a><a href='#' class='btn btn-link btn-sm desactivar-empresa'>Desactivar</a></td>";
                             echo "</tr>";
                         }
                     } else {
@@ -189,7 +180,87 @@ define('RUTA_INCLUDE', '../../../../'); // ajustar a necesidad
         </div>
     </div>
 </div>
+<!-- Modal Editar empresa -->
+<div class="modal fade" id="editCompanyModal" tabindex="-1" role="dialog" aria-labelledby="editCompanyModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editCompanyModalLabel">Editar Empresa</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="editCompanyForm" action="editar_empresa.php" method="post">
+                    <input type="hidden" id="editCompanyId" name="id">
+                    <div class="form-group">
+                        <label for="editCompanyName">Nombre</label>
+                        <input type="text" class="form-control" id="editCompanyName" name="nombre" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editSector">Sector</label>
+                        <select class="form-control" id="editSector" name="sector" required>
+                            <?php
+                            $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+                            $sql = "SELECT id, nombre FROM sectores";
+                            $result = $conn->query($sql);
+                            while($row = $result->fetch_assoc()) {
+                                echo "<option value='" . $row['id'] . "'>" . $row['nombre'] . "</option>";
+                            }
+                            $conn->close();
+                            ?>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="editPhone">Teléfono</label>
+                        <input type="text" class="form-control" id="editPhone" name="telefono" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editAddress">Dirección</label>
+                        <input type="text" class="form-control" id="editAddress" name="direccion" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editAvailability">Disponibilidad</label>
+                        <select class="form-control" id="editAvailability" name="disponibilidad" required>
+                            <option value="Disponible">Disponible</option>
+                            <option value="No Disponible">No Disponible</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="editLogo">Logo</label>
+                        <input type="text" class="form-control" id="editLogo" name="logo" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="submit" form="editCompanyForm" class="btn btn-primary">Guardar Cambios</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function() {
+        $('#editCompanyModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var nombreEmpresa = button.data('nombreempresa');
+            var sector = button.data('sector');
+            var telefono = button.data('telefono');
+            var direccion = button.data('direccion');
+            var disponibilidad = button.data('disponibilidad');
+            var logo = button.data('logo');
 
+            var modal = $(this);
+            modal.find('.modal-body #editCompanyName').val(nombreEmpresa);
+            modal.find('.modal-body #editSector').val(sector);
+            modal.find('.modal-body #editPhone').val(telefono);
+            modal.find('.modal-body #editAddress').val(direccion);
+            modal.find('.modal-body #editAvailability').val(disponibilidad);
+            modal.find('.modal-body #editLogo').val(logo);
+        });
+    });
+
+</script>
 <?php
 // Agregar un mensaje de error si hay alguno
 if(isset($_SESSION['response'])) {
