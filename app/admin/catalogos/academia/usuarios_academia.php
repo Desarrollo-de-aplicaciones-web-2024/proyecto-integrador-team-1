@@ -1,7 +1,6 @@
 <?php
 require_once '../../../../config/global.php';
 require_once '../../../../config/db.php';
-
 define('RUTA_INCLUDE', '../../../../');
 ?>
 <!DOCTYPE html>
@@ -15,11 +14,17 @@ define('RUTA_INCLUDE', '../../../../');
     <title><?php echo PAGE_TITLE ?></title>
     <?php getTopIncludes(RUTA_INCLUDE) ?>
 </head>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <body id="page-top">
 
 <?php getNavbar() ?>
+
 <div id="wrapper">
-    <?php getSidebar($rutas) ?>
+
+    <?php getSidebar($rutas)?>
+
     <div id="content-wrapper">
         <div class="container-fluid">
             <nav aria-label="breadcrumb">
@@ -48,6 +53,25 @@ define('RUTA_INCLUDE', '../../../../');
                     <tbody>
                     <?php
                     if ($conexion) {
+                        // Obtener la matrícula del usuario (cambia esto por la matrícula real del estudiante)
+                        $nombre_completo = 'Maria del Carmen Aguirre Torres';
+
+                        // Consulta SQL para obtener los archivos subidos por el nombre completo especificado
+                        $sql = "SELECT rol FROM academia_usuarios WHERE nombre_completo = ?";
+                        $stmt = $conexion->prepare($sql);
+                        $stmt->bind_param("s", $nombre_completo);
+                        $stmt->execute();
+                        $result = $stmt->get_result();
+
+                        // Mostrar el resultado usando JavaScript
+                        echo "<script>";
+                        if ($result->num_rows > 0) {
+                            $row = $result->fetch_assoc();
+                            echo "alert('El rol de $nombre_completo es: " . $row["rol"] . "');";
+                        } else {
+                            echo "alert('No se encontró ningún rol para $nombre_completo.');";
+                        }
+                        echo "</script>";
                         $sql = "SELECT * FROM academia_usuarios";
                         if ($result = mysqli_query($conexion, $sql)) {
                             if (mysqli_num_rows($result) > 0) {
@@ -108,8 +132,11 @@ define('RUTA_INCLUDE', '../../../../');
                                         <input type="text" class="form-control" id="editCargo" name="cargo">
                                     </div>
                                     <div class="form-group">
-                                        <label for="editRol">Rol</label>
-                                        <input type="text" class="form-control" id="editRol" name="rol">
+                                        <label for="addRol">Rol</label>
+                                        <select id="addRol" name="rol">
+                                            <option value="administrador">Administrador</option>
+                                            <option value="vinculador">Vinculador</option>
+                                        </select>
                                     </div>
                                     <button type="submit" class="btn btn-primary">Guardar cambios</button>
                                 </form>
@@ -148,7 +175,10 @@ define('RUTA_INCLUDE', '../../../../');
                                     </div>
                                     <div class="form-group">
                                         <label for="addRol">Rol</label>
-                                        <input type="text" class="form-control" id="addRol" name="rol" required>
+                                        <select id="addRol" name="rol">
+                                            <option value="administrador">Administrador</option>
+                                            <option value="vinculador">Vinculador</option>
+                                        </select>
                                     </div>
                                     <button type="submit" class="btn btn-success">Agregar Usuario</button>
                                 </form>
@@ -168,7 +198,6 @@ define('RUTA_INCLUDE', '../../../../');
     <i class="fas fa-angle-up"></i>
 </a>
 <?php getModalLogout() ?>
-
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
