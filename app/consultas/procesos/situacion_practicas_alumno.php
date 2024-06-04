@@ -36,9 +36,9 @@ if(!empty($_GET['matricula'])){
     $etapa = 1;
 
     // 1
-    $sql_SP = $sql = "select * from Solicitud_practicas where Alumno = $id_proposito";   $resultado_SP = mysqli_query($conexion, $sql_SP);
-    $sql_PT = $sql = "select * from Plan_Trabajo where Alumno = $id_proposito";          $resultado_PT = mysqli_query($conexion, $sql_PT);
-    $sql_CA = $sql = "select * from Carta_Aceptación where Alumno = $id_proposito";      $resultado_CA = mysqli_query($conexion, $sql_CA);
+    $sql_SP = "select * from Solicitud_practicas where Alumno = $id_proposito";   $resultado_SP = mysqli_query($conexion, $sql_SP);
+    $sql_PT = "select * from Plan_Trabajo where Alumno = $id_proposito";          $resultado_PT = mysqli_query($conexion, $sql_PT);
+    $sql_CA = "select * from Carta_Aceptación where Alumno = $id_proposito";      $resultado_CA = mysqli_query($conexion, $sql_CA);
 
     if($resultado_SP){
         $encontrados_SP = mysqli_num_rows($resultado_SP);
@@ -187,8 +187,95 @@ if(!empty($_GET['matricula'])){
         if($RM1_Estatus == "Aceptado")$etapa++;
         if($RM2_Estatus == "Aceptado")$etapa++;
         if($RM3_Estatus == "Aceptado")$etapa++;
-
     }
+
+    $sql_RG = "select * from Archivos where matricula = $id_proposito and clasificacion = 'reporte' and tipo_archivo = 'final'";        $resultado_RG = mysqli_query($conexion, $sql_RG);
+    $sql_CO = "select * from Archivos where matricula = $id_proposito and clasificacion = 'constancia' and tipo_archivo = 'final'";     $resultado_CO = mysqli_query($conexion, $sql_CO);
+    $sql_RP = "select * from Archivos where matricula = $id_proposito and clasificacion = 'resena' and tipo_archivo = 'final'";         $resultado_RP = mysqli_query($conexion, $sql_RP);
+
+    if($resultado_RG){
+        $encontrados_RG = mysqli_num_rows($resultado_RG);
+        if($encontrados_RG > 0) {
+            $fila_RG = mysqli_fetch_assoc($resultado_RG);
+            $tipo_archivo_RG = $fila_RG['tipo_archivo'];
+            $nombre_archivo_RG = $fila_RG['nombre_archivo'];
+            $estado_RG = $fila_RG['estado'];
+            $ruta_RG = $fila_RG['ruta_archivo'];
+
+            if($estado_RG === 'pendiente'){
+                $encargado_RG = '-';
+                $fecha_rev_RG = '-';
+            }else{
+                $encargado_RG = 'María del Carmen Aguirre';
+                $fecha_rev_RG = date('Y-m-d');
+            }
+        }else{
+            $nombre_RG = '-';
+            $tipo_archivo_RG = '-';
+            $nombre_archivo_RG = '-';
+            $estado_RG = 'Sin subir';
+            $ruta_RG = '-';
+            $encargado_RG = '-';
+            $fecha_rev_RG = '-';
+        }
+    }
+
+    if($resultado_CO){
+        $encontrados_CO = mysqli_num_rows($resultado_CO);
+        if($encontrados_CO > 0) {
+            $fila_CO = mysqli_fetch_assoc($resultado_CO);
+            $tipo_archivo_CO = $fila_CO['tipo_archivo'];
+            $nombre_archivo_CO = $fila_CO['nombre_archivo'];
+            $estado_CO = $fila_CO['estado'];
+            $ruta_CO = $fila_CO['ruta_archivo'];
+
+            if($estado_CO === 'pendiente'){
+                $encargado_CO = '-';
+                $fecha_rev_CO = '-';
+            }else{
+                $encargado_CO = 'María del Carmen Aguirre';
+                $fecha_rev_CO = date('Y-m-d');
+            }
+
+        }else{
+            $nombre_CO = '-';
+            $tipo_archivo_CO = '-';
+            $nombre_archivo_CO = '-';
+            $estado_CO = 'Sin subir';
+            $ruta_CO = '-';
+            $encargado_CO = '-';
+            $fecha_rev_CO = '-';
+        }
+    }
+
+    if($resultado_RP){
+        $encontrados_RP = mysqli_num_rows($resultado_RP);
+        if($encontrados_RP > 0) {
+            $fila_RP = mysqli_fetch_assoc($resultado_RP);
+            $tipo_archivo_RP = $fila_RP['tipo_archivo'];
+            $nombre_archivo_RP = $fila_RP['nombre_archivo'];
+            $estado_RP = $fila_RP['estado'];
+            $ruta_RP = $fila_RP['ruta_archivo'];
+
+            if($estado_RP === 'pendiente'){
+                $encargado_RP = '-';
+                $fecha_rev_RP = '-';
+            }else{
+                $encargado_RP = 'María del Carmen Aguirre';
+                $fecha_rev_RP = date('Y-m-d');
+            }
+        }else{
+            $nombre_RP = '-';
+            $tipo_archivo_RP = '-';
+            $nombre_archivo_RP = '-';
+            $estado_RP = 'Sin subir';
+            $ruta_RP = '-';
+            $encargado_RP = '-';
+            $fecha_rev_RP = '-';
+        }
+    }
+
+    if($estado_RP === 'aceptado' && $estado_CO === 'aceptado' && $estado_RG === 'aceptado')$etapa++;
 }
 
 ?>
@@ -593,12 +680,107 @@ if(!empty($_GET['matricula'])){
 
 
                                 <div id="collapse5" class="panel-collapse collapse" data-parent="#myGroup">
-                                    <div class="table-responsive">
-                                        <div class="alert alert-danger" role="alert">
-                                            El alumno no ha completado un proceso anterior
+                                    <?php
+                                    if ($etapa < 5) {
+                                        echo '<div class="alert alert-danger" role="alert">El alumno no ha completado un proceso anterior</div>';
+                                    } else { ?>
+                                        <div class="table-responsive table-hover">
+                                            <table class="table table-bordered" id="dataTable1" width="100%" cellspacing="0">
+                                                <thead>
+                                                <tr>
+                                                    <th>Documento</th>
+                                                    <th>Fecha de subida</th>
+                                                    <th>Encargado de revisión</th>
+                                                    <th>Fecha de revisión</th>
+                                                    <th>Estatus</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr onclick="window.location.href='revision_documento2.php?id=<?php echo $fila_RG['id']; ?>'">
+                                                    <td>Reporte Global</td>
+                                                    <td>
+                                                        <?php
+                                                        date_default_timezone_set('America/New_York');
+                                                        $todays_date = date('Y-m-d');
+                                                        echo $todays_date;?>
+                                                    </td>
+                                                    <td><?php echo $encargado_RG;?></td>
+                                                    <td><?php echo $fecha_rev_RG;?></td>
+                                                    <?php
+                                                    switch($estado_RG) {
+                                                        case "aceptado":
+                                                            echo '<td class="text-success">' . $estado_RG . '</td>';
+                                                            break;
+                                                        case "rechazado":
+                                                            echo '<td class="text-danger">' . $estado_RG . '</td>';
+                                                            break;
+                                                        case "pendiente":
+                                                            echo '<td class="text-warning">' . $estado_RG . '</td>';
+                                                            break;
+                                                        case "Sin subir":
+                                                            echo '<td class="text-secondary">' . $estado_RG . '</td>';
+                                                            break;
+                                                    }
+                                                    ?>
+                                                </tr>
+                                                <tr onclick="window.location.href='revision_documento2.php?id=<?php echo $fila_RP['id']; ?>'">
+                                                    <td>Reseña de Prácticas</td>
+                                                    <td>
+                                                        <?php
+                                                        date_default_timezone_set('America/New_York');
+                                                        $todays_date = date('Y-m-d');
+                                                        echo $todays_date;?>
+                                                    </td>
+                                                    <td><?php echo $encargado_RP;?></td>
+                                                    <td><?php echo $fecha_rev_RP;?></td>
+                                                    <?php
+                                                    switch($estado_RP) {
+                                                        case "aceptado":
+                                                            echo '<td class="text-success">' . $estado_RP . '</td>';
+                                                            break;
+                                                        case "rechazado":
+                                                            echo '<td class="text-danger">' . $estado_RP . '</td>';
+                                                            break;
+                                                        case "pendiente":
+                                                            echo '<td class="text-warning">' . $estado_RP . '</td>';
+                                                            break;
+                                                        case "Sin subir":
+                                                            echo '<td class="text-secondary">' . $estado_RP . '</td>';
+                                                            break;
+                                                    }
+                                                    ?>
+                                                </tr>
+                                                <tr onclick="window.location.href='revision_documento2.php?id=<?php echo $fila_CO['id']; ?>'">
+                                                    <td>Constancia de Finalización</td>
+                                                    <td>
+                                                        <?php
+                                                        date_default_timezone_set('America/New_York');
+                                                        $todays_date = date('Y-m-d');
+                                                        echo $todays_date;?>
+                                                    </td>
+                                                    <td><?php echo $encargado_CO;?></td>
+                                                    <td><?php echo $fecha_rev_CO;?></td>
+                                                    <?php
+                                                    switch($estado_CO) {
+                                                        case "aceptado":
+                                                            echo '<td class="text-success">' . $estado_CO . '</td>';
+                                                            break;
+                                                        case "rechazado":
+                                                            echo '<td class="text-danger">' . $estado_CO . '</td>';
+                                                            break;
+                                                        case "pendiente":
+                                                            echo '<td class="text-warning">' . $estado_CO . '</td>';
+                                                            break;
+                                                        case "Sin subir":
+                                                            echo '<td class="text-secondary">' . $estado_CO . '</td>';
+                                                            break;
+                                                    }
+                                                    ?>
+                                                </tr>
+                                                </tbody>
+                                            </table>
                                         </div>
-
-                                    </div>
+                                    <?php } ?>
                                 </div>
 
                             </div>

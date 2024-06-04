@@ -29,7 +29,6 @@ WHERE a.estado = 'pendiente'";
 
     <title><?php echo PAGE_TITLE ?></title>
 
-
     <?php getTopIncludes(RUTA_INCLUDE ) ?>
     <style>
         .table-hover tbody tr:hover {
