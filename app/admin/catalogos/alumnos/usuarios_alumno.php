@@ -3,6 +3,9 @@ require_once '../../../../config/global.php';
 require_once '../../../../config/db.php';
 
 define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
+
+session_start();
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -17,6 +20,21 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
     <title><?php echo PAGE_TITLE ?></title>
    <!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">-->
     <?php getTopIncludes(RUTA_INCLUDE ) ?>
+    <style>
+        th, td {
+            text-align: center;
+        }
+
+        th {
+            background-color: #016CA1;
+            color: white;
+        }
+
+        .btn-secondary {
+            margin: 0 auto;
+            display: block;
+        }
+    </style>
 </head>
 
 <body id="page-top">
@@ -36,6 +54,12 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
                     <li class="breadcrumb-item active" aria-current="page">Usuarios Alumnos</li>
                 </ol>
             </nav>
+            <?php if (isset($_SESSION['response'])): ?>
+                <div class="alert <?php echo $_SESSION['response']['success'] ? 'alert-success' : 'alert-danger'; ?>" role="alert">
+                    <?php echo $_SESSION['response']['message']; ?>
+                </div>
+                <?php unset($_SESSION['response']); ?>
+            <?php endif; ?>
 
            <!-- <div class="alert alert-success" role="alert">
                 <i class="fas fa-check"></i> Mensaje de éxito
@@ -60,7 +84,7 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
                 </div>
             </div>
             <div class="table-responsive mb-3">
-                <table class="table table-bordered table-striped dataTable">
+                <table class="table table-bordered table-striped dataTable" >
                     <thead>
                     <tr>
                         <th>Matrícula</th>
@@ -169,46 +193,48 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-
                             <div class="modal-body">
                                 <form id="addForm" method="post" action="agregar_usuario.php">
                                     <div class="form-group">
-                                        <label for="addMatricula">Matrícula</label>
-                                        <input type="text" class="form-control" id="addMatricula" name="matricula" required>
+                                        <label for="matricula">Matrícula</label>
+                                        <input type="text" class="form-control" id="matricula" name="matricula" required>
                                     </div>
                                     <div class="form-group">
-                                        <label for="addNombre">Nombre</label>
-                                        <input type="text" class="form-control" id="addNombre" name="nombre" required>
+                                        <label for="nombre">Nombre</label>
+                                        <input type="text" class="form-control" id="nombre" name="nombre" required>
                                     </div>
                                     <div class="form-group">
-                                        <label for="addCorreo">Correo</label>
-                                        <input type="email" class="form-control" id="addCorreo" name="correo" required>
+                                        <label for="correo">Correo</label>
+                                        <input type="email" class="form-control" id="correo" name="correo" required>
                                     </div>
                                     <div class="form-group">
-                                        <label for="addLicenciatura">Licenciatura</label>
-                                        <input type="text" class="form-control" id="addLicenciatura" name="licenciatura" required>
+                                        <label for="licenciatura">Licenciatura</label>
+                                        <input type="text" class="form-control" id="licenciatura" name="licenciatura" required>
                                     </div>
                                     <div class="form-group">
-                                        <label for="addSemestre">Semestre</label>
-                                        <input type="text" class="form-control" id="addSemestre" name="semestre" required>
+                                        <label for="semestre">Semestre</label>
+                                        <input type="text" class="form-control" id="semestre" name="semestre" required>
                                     </div>
                                     <div class="form-group">
-                                        <label for="addTelefono">Teléfono</label>
-                                        <input type="text" class="form-control" id="addTelefono" name="telefono" required>
+                                        <label for="telefono">Teléfono</label>
+                                        <input type="text" class="form-control" id="telefono" name="telefono" required>
                                     </div>
                                     <div class="form-group">
-                                        <label for="addSexo">Sexo</label>
-                                        <select class="form-control" id="addSexo" name="sexo" required>
-                                            <option value="Masculino">Masculino</option>
-                                            <option value="Femenino">Femenino</option>
+                                        <label for="sexo">Sexo</label>
+                                        <select class="form-control" id="sexo" name="sexo" required>
+                                            <option value="M">Masculino</option>
+                                            <option value="F">Femenino</option>
                                         </select>
                                     </div>
-                                    <button type="submit" class="btn btn-primary">Agregar Usuario</button>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary">Agregar</button>
+                                    </div>
                                 </form>
                             </div>
                         </div>
                     </div>
                 </div>
+                <!-- Fin Modal Agregar -->
 
                 <!-- Modal Importar -->
                 <div class="modal fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="importModalLabel" aria-hidden="true">
@@ -221,11 +247,20 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <!-- Aquí puedes agregar un formulario para seleccionar el archivo CSV y enviarlo -->
+                                <form id="importForm" action="importar_usuario.php" method="post" enctype="multipart/form-data">
+                                    <div class="form-group">
+                                        <label for="csvFile">Seleccionar archivo CSV</label>
+                                        <input type="file" class="form-control-file" id="csvFile" name="csvFile" accept=".csv" required>
+                                        <small id="csvHelp" class="form-text text-muted">Asegúrate de que el archivo CSV esté en el formato correcto. Cada línea debe contener los siguientes campos separados por comas: Matrícula, Nombre, Correo, Licenciatura, Semestre, Teléfono, Sexo.</small>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Importar Usuarios</button>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
+
+
 
             </div>
         <!-- /.container-fluid -->
@@ -243,7 +278,10 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
     <i class="fas fa-angle-up"></i>
 </a>
 
+
 <?php getModalLogout() ?>
+    <!-- Validacion de usuario -->
+
     <script>
         document.getElementById('addForm').addEventListener('submit', function(event) {
             var matricula = document.getElementById('addMatricula').value;
@@ -264,7 +302,9 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
             }
         });
     </script>
-<?php getBottomIncudes( RUTA_INCLUDE ) ?>
+
+    <?php getBottomIncudes( RUTA_INCLUDE ) ?>
+
     <script>
         $(document).ready(function() {
             $('#editModal').on('show.bs.modal', function (event) {

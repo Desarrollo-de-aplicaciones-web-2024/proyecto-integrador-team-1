@@ -5,11 +5,11 @@ define('PAGE_TITLE', 'Universidad Cristóbal Colón');
 $rutas = [
     'documentos-iniciales' => '/proyecto-integrador-team-1/app/admin/catalogos/alumnos/paginainicio.php',
     'index' => '/proyecto-integrador-team-1/app/admin/catalogos/vacantes/listavacantes.php',
-    'charts' => '/proyecto-integrador-team-1/proyecto-integrador-team-1/app/consultas/procesos/situacion_practicas_alumno.php',
-    'tables' => '/proyecto-integrador-team-1/tables.php',
+    'charts' => '/proyecto-integrador-team-1/app/servicio/final/documentos-finales.php',
+    'tables' => '/proyecto-integrador-team-1/app/servicio/inicial/Formulario_Registro_Dato.php',
     'usuarios-academia' => '/ruta/a/usuarios-academia.php', // Ruta para usuarios de academia
     'usuarios-alumnos' => '/ruta/a/usuarios-alumnos.php', // Ruta para usuarios de alumnos
-    'empresas' => '/ruta/a/empresas.php', // Ruta para empresas
+    'empresas' => '/proyecto-integrador-team-1/app/admin/catalogos/empresas/empresas.php', // Ruta para empresas
     'vacantes' => '/ruta/a/vacantes.php', // Ruta para vacantes
 ];
 
@@ -19,6 +19,8 @@ function getSidebar($rutas) {
     $rutaIndex = isset($rutas['index']) ? $rutas['index'] : '';
     $rutaCharts = isset($rutas['charts']) ? $rutas['charts'] : '';
     $rutaTables = isset($rutas['tables']) ? $rutas['tables'] : '';
+    $rutaEmpresas = isset($rutas['empresas']) ? $rutas['empresas'] : '';
+
 
     $html = <<<EOD
 <!-- Sidebar -->
@@ -45,20 +47,20 @@ function getSidebar($rutas) {
             <a class="dropdown-item" href="#">Usuarios Academia</a>
             <a class="dropdown-item" href="#">Usuarios Alumnos</a>            
             <div class="dropdown-divider"></div>        
-            <a class="dropdown-item" href="#">Empresas</a>            
+            <a class="dropdown-item" href="{$rutaEmpresas}">Empresas</a>            
             <a class="dropdown-item" href="#">Vacantes</a>         
         </div>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="{$rutaCharts}">
             <i class="fas fa-fw fa-chart-area"></i>
-            <span>Documentos Iniciales</span>
+            <span>Documentos Finales</span>
         </a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="{$rutaTables}">
             <i class="fas fa-fw fa-table"></i>
-            <span>Tablas</span>
+            <span>Formulario de Registro de datos</span>
         </a>
     </li>
 </ul>
