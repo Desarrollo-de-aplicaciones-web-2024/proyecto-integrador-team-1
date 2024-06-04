@@ -192,7 +192,6 @@ define('RUTA_INCLUDE', '../../../../');
             modal.find('.modal-body #editCargo').val(cargo);
             modal.find('.modal-body #editRol').val(rol);
         });
-
         // Eliminar Usuario
         $('.deleteUser').click(function() {
             var id = $(this).data('id');
