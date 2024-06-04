@@ -1,7 +1,6 @@
 <?php
-session_start();
 require_once '../../../../config/db.php';
-
+session_start();
 $response = array();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
