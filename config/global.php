@@ -22,7 +22,7 @@ function getSidebar($rutas) {
     <li class="nav-item">
         <a class="nav-link" href="{$rutaDocumentosIniciales}">
             <i class="fa fa-archive"></i>
-            <span>Documentos Iniciales</span>
+            <span>Pagina de Inicio</span>
         </a>
     </li>
     <li class="nav-item">
@@ -62,6 +62,7 @@ EOD;
 
     echo $html;
 }
+
 function getNavbar($ruta = ''){
     $html = <<<EOD
 <nav class="navbar navbar-expand navbar-dark  custom-bg static-top">
