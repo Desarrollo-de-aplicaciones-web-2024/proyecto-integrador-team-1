@@ -26,7 +26,25 @@ if ($result->num_rows > 0) {
 } else {
     die("No se encontraron datos del alumno."); // Mostrar error si no se encuentran datos
 }
+// Definir el ID de la empresa que deseas buscar
+$id_empresa = 1; // Cambia este valor al ID numérico deseado
 
+// Consulta SQL para obtener la información de la empresa según su ID
+$sql_empresa_por_id = "SELECT nombre FROM Catalogo_empresas WHERE id = $id_empresa";
+$result_empresa_por_id = $conn->query($sql_empresa_por_id);
+
+// Verificar si se encontraron resultados
+if ($result_empresa_por_id->num_rows > 0) {
+    // Obtener los datos del primer resultado (asumiendo que el ID es único)
+    $row_empresa_por_id = $result_empresa_por_id->fetch_assoc();
+
+    // Almacenar la información en variables
+    $nombre_empresa = $row_empresa_por_id['nombre'];
+
+    // Aquí puedes usar la información como desees, por ejemplo, imprimir en pantalla o almacenar en variables para usar en tu documento PDF
+} else {
+    echo "No se encontró ninguna empresa con el ID especificado."; // O un mensaje adecuado si no se encuentra ninguna empresa con ese ID.
+}
 $conn->close(); // Cerrar la conexión a la base de datos
 
 // Establecer la zona horaria a Ciudad de México
@@ -149,7 +167,7 @@ $html = <<<EOD
     </tr>
     <tr>
         <td class="header-cell">5. Nombre de la empresa:</td>
-        <td colspan="3"></td>
+        <td colspan="3">{$nombre_empresa}</td>
     </tr>
     <tr>
         <td class="header-cell">6. Fecha de inicio de las prácticas:</td>

@@ -11,11 +11,12 @@ if ($conn->connect_error) {
 
 // Obtener la matrícula del usuario (cambia esto por la matrícula real del estudiante)
 $matricula = 202160177;
+$tipo_archivo = "inicial";
 
 // Consulta SQL para obtener los archivos subidos por la matrícula especificada
-$sql = "SELECT nombre_archivo, estado, clasificacion FROM Archivos WHERE matricula = ?";
+$sql = "SELECT nombre_archivo, estado, clasificacion FROM Archivos WHERE matricula = ? && tipo_archivo = ?";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $matricula);
+$stmt->bind_param("is", $matricula, $tipo_archivo);
 $stmt->execute();
 $result = $stmt->get_result();
 
