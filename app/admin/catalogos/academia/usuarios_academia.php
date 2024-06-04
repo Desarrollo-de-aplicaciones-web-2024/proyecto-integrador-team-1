@@ -20,7 +20,7 @@ define('RUTA_INCLUDE', '../../../../');
 <?php getNavbar() ?>
 
 <div id="wrapper">
-    <?php getSidebar(RUTA_INCLUDE) ?>
+    <?php getSidebar($rutas) ?>
     <div id="content-wrapper">
         <div class="container-fluid">
             <nav aria-label="breadcrumb">
@@ -78,6 +78,7 @@ define('RUTA_INCLUDE', '../../../../');
                     ?>
                     </tbody>
                 </table>
+
                 <!-- Modal Editar -->
                 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
