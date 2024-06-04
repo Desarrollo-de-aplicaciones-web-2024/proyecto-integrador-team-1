@@ -13,6 +13,21 @@ define('RUTA_INCLUDE', '../../../../');
     <meta name="author" content="">
     <title><?php echo PAGE_TITLE ?></title>
     <?php getTopIncludes(RUTA_INCLUDE) ?>
+    <style>
+        th, td {
+            text-align: center;
+        }
+
+        th {
+            background-color: #016CA1;
+            color: white;
+        }
+
+        .btn-secondary {
+            margin: 0 auto;
+            display: block;
+        }
+    </style>
 </head>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
@@ -53,7 +68,7 @@ define('RUTA_INCLUDE', '../../../../');
                     <tbody>
                     <?php
                     if ($conexion) {
-                        // Obtener el nombre del usuario
+                        //Obtener el nombre del usuario
                         $nombre_completo = 'María del Carmen Aguirre Torres';
 
                         // Consulta SQL para obtener los archivos subidos por el nombre completo especificado
