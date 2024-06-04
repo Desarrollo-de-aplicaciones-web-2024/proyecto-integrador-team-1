@@ -7,7 +7,7 @@ define('RUTA_INCLUDE', '../../../'); // ajustar a necesidad
 // Conexión a la base de datos
 $conn = new mysqli("database-team1-daw.c30w0agw4764.us-east-2.rds.amazonaws.com", "admin", "S1stemas_23", "PP_TEAM1");
 if ($conn->connect_error) {
-die("Conexión fallida: " . $conn->connect_error);
+    die("Conexión fallida: " . $conn->connect_error);
 }
 
 // Obtener datos de la tabla usuarios_alumno
@@ -16,13 +16,13 @@ $sql = "SELECT nombre, matricula, semestre, licenciatura FROM usuarios_alumno WH
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
-// Obtener los datos del primer resultado
-$row = $result->fetch_assoc();
-$nombre = $row['nombre'];
-$matricula = $row['matricula'];
-$semestre = $row['semestre'];
+    // Obtener los datos del primer resultado
+    $row = $result->fetch_assoc();
+    $nombre = $row['nombre'];
+    $matricula = $row['matricula'];
+    $semestre = $row['semestre'];
 } else {
-die("No se encontraron datos del alumno.");
+    die("No se encontraron datos del alumno.");
 }
 
 $conn->close();
@@ -31,30 +31,30 @@ require_once('tcpdf_include.php');
 
 // Extender TCPDF para agregar un pie de página personalizado
 class MYPDF extends TCPDF {
-// Pie de página
-public function Footer() {
-// Posición del pie de página a 15 mm del final
-$this->SetY(-15);
-// Fuente
-$this->SetFont('dejavusans', '', 8);
-// Información del pie de página
-$html = '<table style="width: 100%; font-size: 8px; color: #808080;">
-    <tr>
-        <td style="width: 70%; text-align: right;">
-            LICENCIATURAS EN INGENIERÍA EN SISTEMAS COMPUTACIONALES,<br>
-            INGENIERÍA EN TELECOMUNICACIONES Y SISTEMAS ELECTRÓNICOS,<br>
-            INGENIERÍA BIÓNICA E INGENIERÍA MECATRÓNICA
-        </td>
-        <td style="width: 2%; border-right: 1px solid #000000;">&nbsp;</td>
-        <td style="width: 28%; text-align: right;">
-            Tel. (229) 923 29 50 ext. 5327<br>
-            <a href="mailto:rpaletn@ucc.mx" style="color: #0000EE;">rpaletn@ucc.mx</a>
-        </td>
-    </tr>
-</table>';
-// Imprimir el HTML
-$this->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, '', true);
-}
+    // Pie de página
+    public function Footer() {
+        // Posición del pie de página a 15 mm del final
+        $this->SetY(-15);
+        // Fuente
+        $this->SetFont('dejavusans', '', 8);
+        // Información del pie de página
+        $html = '<table style="width: 100%; font-size: 8px; color: #808080;">
+            <tr>
+                <td style="width: 70%; text-align: right;">
+                    LICENCIATURAS EN INGENIERÍA EN SISTEMAS COMPUTACIONALES,<br>
+                    INGENIERÍA EN TELECOMUNICACIONES Y SISTEMAS ELECTRÓNICOS,<br>
+                    INGENIERÍA BIÓNICA E INGENIERÍA MECATRÓNICA
+                </td>
+                <td style="width: 2%; border-right: 1px solid #000000;">&nbsp;</td>
+                <td style="width: 28%; text-align: right;">
+                    Tel. (229) 923 29 50 ext. 5327<br>
+                    <a href="mailto:rpaletn@ucc.mx" style="color: #0000EE;">rpaletn@ucc.mx</a>
+                </td>
+            </tr>
+        </table>';
+        // Imprimir el HTML
+        $this->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, '', true);
+    }
 }
 
 // Crear nuevo documento PDF en tamaño carta
@@ -116,7 +116,7 @@ $html = <<<EOD
     Agradeciendo su gentil atención, reciba un cordial saludo.<br><br><br><br>
 </p>
 <br><br>
-<p class="signature" ><b>ATENTAMENTE<br><br><br><br><br><br><br></b>
+<p class="signature"><b>ATENTAMENTE<br><br><br><br><br><br><br></b>
     _____________________________________<br>
     Mtro. Ramón Palet Naranjo<br>
     Jefe de Área</p>
