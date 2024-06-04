@@ -12,6 +12,8 @@ $rutas = [
     'empresa' => '/proyecto-integrador-team-1/app/admin/catalogos/empresas/empresas.php', // Ruta para empresas
     'consultas' => '/proyecto-integrador-team-1/app/consultas/procesos/consultas_y_reportes.php', // Ruta para vacantes
     'documentos-iniciales' => '/proyecto-integrador-team-1/app/servicio/inicial/documentos-iniciales.php', // Ruta para vacantes
+    'situacion-practicas' => '/proyecto-integrador-team-1/app/consultas/procesos/situacion_practicas_menu.php', // Ruta para vacantes
+
 ];
 
 // Función para generar el sidebar
@@ -25,6 +27,7 @@ function getSidebar($rutas) {
     $rutaUsersAlum = isset($rutas['usuario-alumno']) ? $rutas['usuario-alumno'] : '';
     $rutaConsults = isset($rutas['consultas']) ? $rutas['consultas'] : '';
     $rutaIniDoc = isset($rutas['documentos-iniciales']) ? $rutas['documentos-iniciales'] : '';
+    $rutasitupract = isset($rutas['situacion-practicas']) ? $rutas['situacion-practicas'] : '';
 
     $html = <<<EOD
 <!-- Sidebar -->
@@ -52,7 +55,7 @@ function getSidebar($rutas) {
             <a class="dropdown-item" href="{$rutaUsersAlum}">Usuarios Alumnos</a>            
             <div class="dropdown-divider"></div>        
             <a class="dropdown-item" href="{$rutaEmpresa}">Empresas</a>            
-            <a class="dropdown-item" href="#">Vacantes</a>         
+            <a class="dropdown-item" href="{$rutasitupract}">Situación de prácticas</a>         
         </div>
     </li>
     <li class="nav-item">
