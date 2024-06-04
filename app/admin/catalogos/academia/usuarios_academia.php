@@ -20,7 +20,7 @@ define('RUTA_INCLUDE', '../../../../');
 <?php getNavbar() ?>
 
 <div id="wrapper">
-    <?php getSidebar($rutas) ?>
+    <?php getSidebar(RUTA_INCLUDE) ?>
     <div id="content-wrapper">
         <div class="container-fluid">
             <nav aria-label="breadcrumb">
