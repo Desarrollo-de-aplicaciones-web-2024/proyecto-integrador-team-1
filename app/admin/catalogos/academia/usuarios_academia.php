@@ -134,8 +134,8 @@ define('RUTA_INCLUDE', '../../../../');
                                     <div class="form-group">
                                         <label for="addRol">Rol</label>
                                         <select id="addRol" name="rol">
-                                            <option value="administrador">Administrador</option>
-                                            <option value="vinculador">Vinculador</option>
+                                            <option value="Administrador">Administrador</option>
+                                            <option value="Vizualizador">Vizualizador</option>
                                         </select>
                                     </div>
                                     <button type="submit" class="btn btn-primary">Guardar cambios</button>
