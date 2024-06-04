@@ -12,7 +12,7 @@ if ($conn->connect_error) {
 }
 
 // Obtener datos de la tabla usuarios_alumno
-$matricula = '202160327'; // Ajustar según sea necesario
+$matricula = '202160171'; // Ajustar según sea necesario
 $sql = "SELECT nombre, matricula, semestre, licenciatura FROM usuarios_alumno WHERE matricula = '$matricula'";
 $result = $conn->query($sql);
 
@@ -28,6 +28,17 @@ if ($result->num_rows > 0) {
 }
 
 $conn->close(); // Cerrar la conexión a la base de datos
+
+// Establecer la zona horaria a Ciudad de México
+date_default_timezone_set('America/Mexico_City');
+// Definir los nombres de los meses en español
+$meses = [
+    1 => 'enero', 2 => 'febrero', 3 => 'marzo', 4 => 'abril', 5 => 'mayo', 6 => 'junio',
+    7 => 'julio', 8 => 'agosto', 9 => 'septiembre', 10 => 'octubre', 11 => 'noviembre', 12 => 'diciembre'
+];
+
+// Obtener la fecha actual en el formato deseado
+$fecha_actual = date('d') . ' de ' . $meses[date('n')] . ' de ' . date('Y');
 
 require_once('tcpdf_include.php'); // Incluir la biblioteca TCPDF
 
@@ -102,9 +113,26 @@ $html = <<<EOD
         font-weight: bold;
     }
 </style>
-<p class="title">Universidad Cristóbal Colón</p>
-<p class="subtitle">Licenciatura en Ingeniería en Sistemas Computacionales</p>
-<p class="subtitle">Plan de Trabajo de Prácticas Profesionales</p>
+<table>
+    <tr>
+        <td class="no-border">
+            <div style="margin-top: 10px;"><img src="unnamed.jpg" width="200" alt="Logo Universidad Cristobal"></div>
+        </td>
+        
+    </tr>
+    <tr>
+        <td class="no-border title" colspan="2" >Universidad Cristóbal Colón</td>
+    </tr>
+    
+    <tr>
+        <td class="no-border subtitle" colspan="2">Licenciatura en Ingeniería en Sistemas Computacionales</td>
+    </tr>
+    <tr>
+        <td class="no-border subtitle" colspan="2">Plan de Trabajo de Prácticas Profesionales</td>
+    </tr>
+</table>
+
+
 
 <table>
     <tr>
@@ -148,7 +176,7 @@ $html = <<<EOD
     </tr>
 </table>
 
-<p class="content">H. Veracruz, Ver., a ___ de __________ de 2024</p>
+<p class="content">H. Veracruz, Ver., a {$fecha_actual}</p>
 
 <br><br>
 
