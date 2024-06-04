@@ -3,9 +3,12 @@
 @import "scss/_variables.scss";
 
 .empresa{
+    margin-bottom: 10px;
     width: 50%;
+
 }
 .meses {
+    margin-bottom: 10px;
     width: 50%;
 }
 .custom-width {
