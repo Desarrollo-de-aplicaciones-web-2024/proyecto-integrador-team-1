@@ -34,8 +34,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     // Inserta el registro en la base de datos
                     $matricula = 202160177; // Cambiar esto por la matricula real del estudiante
                     $estado = 'pendiente'; // Estado inicial del documento
+                    $lado = 'inicial';
                     $stmt = $conn->prepare("INSERT INTO Archivos (matricula, tipo_archivo, nombre_archivo, ruta_archivo, estado, clasificacion) VALUES (?, ?, ?, ?, ?, ?)");
-                    $stmt->bind_param("isssss", $matricula, $tipo, $nombreArchivoDestino, $archivoSubido, $estado, $tipo);
+                    $stmt->bind_param("isssss", $matricula, $lado, $nombreArchivoDestino, $archivoSubido, $estado, $tipo);
                     if ($stmt->execute()) {
                         $mensaje .= "El archivo " . $nombreArchivoOriginal . " ha sido subido con éxito como " . $nombreArchivoDestino . ".<br>";
                     } else {
@@ -52,9 +53,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // Procesa cada archivo individualmente
-    procesarArchivo('archivo-reporte', 'reporte');
-    procesarArchivo('archivo-resena', 'resena');
-    procesarArchivo('archivo-constancia', 'constancia');
+    procesarArchivo('archivo-solicitud', 'solicitud');
+    procesarArchivo('archivo-plan_trabajo', 'plan_trabajo');
+    procesarArchivo('archivo-carta_presentacion', 'carta_presentacion');
 
     // Muestra el mensaje final basado en los resultados de la subida
     echo $mensaje;

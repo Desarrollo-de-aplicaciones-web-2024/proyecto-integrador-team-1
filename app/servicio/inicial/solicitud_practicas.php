@@ -50,6 +50,21 @@ if ($result_academia_jefe->num_rows > 0) {
 } else {
     $nombre_academia_jefe = "Nombre no encontrado"; // O un mensaje adecuado si no se encuentra el nombre.
 }
+//Consulta tabla solicitud_practicas
+$id_solicitud_practicas = 0; // Define el ID de la solicitud de prácticas a buscar.
+$sql_solicitud_practicas = "SELECT duracion_practicas, nombre_super,puesto_super,email,departamento,puesto_tentativo FROM solicitud_practicas WHERE id_solicitud = $id_solicitud_practicas";
+$result_solicitud_practicas = $conn->query($sql_solicitud_practicas);
+if ($result_solicitud_practicas->num_rows > 0) {
+    $row_solicitud_practicas = $result_solicitud_practicas->fetch_assoc();
+    $duracion_practicas = $row_solicitud_practicas['duracion_practicas'];
+    $supervisor = $row_solicitud_practicas['nombre_super'];
+    $puesto_supervisor = $row_solicitud_practicas['puesto_super'];
+    $email = $row_solicitud_practicas['email'];
+    $departamento = $row_solicitud_practicas['departamento'];
+    $puesto_tentativo = $row_solicitud_practicas['puesto_tentativo'];
+} else {
+    echo "No se encontró ninguna solicitud de prácticas con el ID especificado.";
+}
 
 // Definir el ID de la empresa que deseas buscar
 $id_empresa = 1; // Cambia este valor al ID numérico deseado
@@ -202,23 +217,23 @@ $html = <<<EOD
         <th>3. Teléfono:</th>
         <td>{$telefono_empresa}</td>
         <th>4. E-mail:</th>
-        <td>rmartinez@grupomasagua.com</td>
+        <td>{$email}</td>
     </tr>
     <tr>
         <th>5. Duración de las prácticas:</th>
-        <td colspan="3">240 horas - 3 meses</td>
+        <td colspan="3">{$duracion_practicas}</td>
     </tr>
     <tr>
         <th>6. Puesto tentativo a desempeñar:</th>
-        <td>Practicante</td>
+        <td>{$puesto_tentativo}</td>
         <th>7. Departamento:</th>
-        <td>Tecnologías de la Información</td>
+        <td>{$departamento}</td>
     </tr>
     <tr>
         <th>8. Nombre del supervisor directo:</th>
-        <td>Guillermo Gómez Fernández</td>
+        <td>{$nombre}</td>
         <th>9. Puesto del supervisor directo:</th>
-        <td>Auxiliar TIC</td>
+        <td>{$puesto_supervisor}</td>
     </tr>
 </table>
 
@@ -236,7 +251,7 @@ $html = <<<EOD
         </td>
         <td class="no-border center" style="width: 50%; padding-top: 20px;">
             _______________________________<br>
-            Ing. Guillermo Gómez Fernández<br>
+            {$nombre}<br>
             Supervisor
         </td>
     </tr>
