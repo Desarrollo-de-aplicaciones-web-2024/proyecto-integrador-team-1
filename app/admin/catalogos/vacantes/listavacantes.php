@@ -1,9 +1,37 @@
 <?php
 require_once '../../../../config/global.php';
 require_once '../../../../config/db.php';
-define('RUTA_INCLUDE', '../../../../'); // ajustar a necesidad
-?>
+define('RUTA_INCLUDE', '../../../../');
 
+// Conexión a la base de datos
+$conexion = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+
+// Verificar conexión
+if ($conexion->connect_error) {
+    die("La conexión falló: " . $conexion->connect_error);
+}
+
+function getImageData($conexion, $idimages) {
+    $sql = "SELECT images_name, images_url FROM images WHERE idimages = ?";
+    $stmt = $conexion->prepare($sql);
+    $stmt->bind_param("i", $idimages);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $data = $result->fetch_assoc();
+    $stmt->close();
+    return $data ? $data : ['images_name' => '', 'images_url' => ''];
+}
+
+// Obtener datos de las imágenes para cada tarjeta
+$imageData1 = getImageData($conexion, 4);
+$imageData2 = getImageData($conexion, 5);
+$imageData3 = getImageData($conexion, 6);
+$imageData4 = getImageData($conexion, 7);
+$imageData5 = getImageData($conexion, 8);
+$imageData6 = getImageData($conexion, 9);
+
+$conexion->close();
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -16,12 +44,9 @@ define('RUTA_INCLUDE', '../../../../'); // ajustar a necesidad
 
     <title><?php echo htmlspecialchars(PAGE_TITLE); ?></title>
 
-    <!-- Cargar jQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
     <?php getTopIncludes(RUTA_INCLUDE); ?>
     <style>
-         {
+        .card {
             background-color: #f8f9fa;
             border: 1px solid #dee2e6;
             border-radius: 5px;
@@ -50,7 +75,7 @@ define('RUTA_INCLUDE', '../../../../'); // ajustar a necesidad
             <section class="jumbotron text-center">
                 <div class="container">
                     <h1 class="jumbotron-heading">Vacantes de empresas</h1>
-                    <p class="lead text-muted">Aquí encontrarás una lista de las distintas vacantes disponibles en diferentes empresas</br><b>NOTA:</b> la información desplegada puede cambiar sin previo aviso.</p>
+                    <p class="lead text-muted">Aquí encontrarás una lista de las distintas vacantes disponibles en diferentes empresas<br><b>NOTA:</b> la información desplegada puede cambiar sin previo aviso.</p>
                 </div>
             </section>
 
@@ -58,76 +83,72 @@ define('RUTA_INCLUDE', '../../../../'); // ajustar a necesidad
                 <div class="container">
 
                     <div class="row">
+                        <!-- Tarjeta 1 con imagen dinámica -->
                         <div class="col-md-4">
                             <div class="card mb-4 shadow-sm">
-                                <img src="https://via.placeholder.com/300" class="card-img-top" alt="Placeholder image">
+                                <img src="<?php echo htmlspecialchars($imageData1['images_url']); ?>" class="card-img-top" alt="Imagen dinámica 1">
                                 <div class="card-body">
+
                                     <p class="card-text"><b>Empresa:</b> Grupo Bimbo<br><b>Giro:</b> Panificadora a nivel nacional<br><b>Vacante:</b> Administración de redes</p>
-
                                 </div>
                             </div>
                         </div>
 
-                        <!-- tarjeta 2 -->
+                        <!-- Tarjeta 2 con imagen dinámica -->
                         <div class="col-md-4">
                             <div class="card mb-4 shadow-sm">
-                                <img src="ruta/a/la/imagen2.jpg" class="card-img-top" alt="Descripción de la imagen">
+                                <img src="<?php echo htmlspecialchars($imageData2['images_url']); ?>" class="card-img-top" alt="Imagen dinámica 2">
                                 <div class="card-body">
+
                                     <p class="card-text"><b>Empresa:</b> Grupo Tony<br><b>Giro:</b> Papelería y oficina<br><b>Vacante:</b> Administrador de BD</p>
-
                                 </div>
                             </div>
                         </div>
 
-
-                        <!-- Nueva tarjeta 3 -->
+                        <!-- Tarjeta 3 con imagen dinámica -->
                         <div class="col-md-4">
                             <div class="card mb-4 shadow-sm">
-                                <img src="ruta/a/la/imagen3.jpg" class="card-img-top" alt="Descripción de la imagen">
+                                <img src="<?php echo htmlspecialchars($imageData3['images_url']); ?>" class="card-img-top" alt="Imagen dinámica 3">
                                 <div class="card-body">
+
                                     <p class="card-text"><b>Empresa:</b> Grupo Chedraui<br><b>Giro:</b> Supermercado<br><b>Vacante:</b> Gestor de comunicaciones</p>
-
                                 </div>
                             </div>
                         </div>
 
-
-                        <!-- empresa 4 -->
+                        <!-- Tarjeta 4 con imagen dinámica -->
                         <div class="col-md-4">
                             <div class="card mb-4 shadow-sm">
-                                <img src="ruta/a/la/imagen4.jpg" class="card-img-top" alt="Descripción de la imagen">
+                                <img src="<?php echo htmlspecialchars($imageData4['images_url']); ?>" class="card-img-top" alt="Imagen dinámica 4">
                                 <div class="card-body">
+
                                     <p class="card-text"><b>Empresa:</b> Telmex<br><b>Giro:</b> Telefonía e Internet<br><b>Vacante:</b> Desarrollador Web</p>
-
                                 </div>
                             </div>
                         </div>
-                        <!-- Fin de la nueva tarjeta 4 -->
 
-                        <!-- empresa 5 -->
+                        <!-- Tarjeta 5 con imagen dinámica -->
                         <div class="col-md-4">
                             <div class="card mb-4 shadow-sm">
-                                <img src="ruta/a/la/imagen5.jpg" class="card-img-top" alt="Descripción de la imagen">
+                                <img src="<?php echo htmlspecialchars($imageData5['images_url']); ?>" class="card-img-top" alt="Imagen dinámica 5">
                                 <div class="card-body">
+
                                     <p class="card-text"><b>Empresa:</b> Grupo Lala<br><b>Giro:</b> Lácteos<br><b>Vacante:</b> Analista de Datos</p>
-
                                 </div>
                             </div>
                         </div>
-                        <!-- Fin de la nueva tarjeta 5 -->
 
-                        <!-- empresa 6 -->
+                        <!-- Tarjeta 6 con imagen dinámica -->
                         <div class="col-md-4">
                             <div class="card mb-4 shadow-sm">
-                                <img src="ruta/a/la/imagen6.jpg" class="card-img-top" alt="Descripción de la imagen">
+                                <img src="<?php echo htmlspecialchars($imageData6['images_url']); ?>" class="card-img-top" alt="Imagen dinámica 6">
                                 <div class="card-body">
-                                    <p class="card-text"><b>Empresa:</b> Centro MICRONA<br><b>Giro:</b> Centro de investigación<br><b>Vacante:</b> Coordinador de Logística</p>
 
+                                    <p class="card-text"><b>Empresa:</b> Centro MICRONA<br><b>Giro:</b> Centro de investigación<br><b>Vacante:</b> Coordinador de Logística</p>
                                 </div>
                             </div>
                         </div>
-                        <!-- Fin de la nueva tarjeta 6-->
-
+                        <!-- Fin de las tarjetas originales -->
                     </div>
                 </div>
             </div>

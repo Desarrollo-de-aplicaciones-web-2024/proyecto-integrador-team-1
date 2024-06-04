@@ -7,6 +7,12 @@ $conn = new mysqli("database-team1-daw.c30w0agw4764.us-east-2.rds.amazonaws.com"
 if ($conn->connect_error) {
     die("Conexión fallida: " . $conn->connect_error);
 }
+    $sql = "SELECT Razon_social FROM Empresa";
+    $result = $conn->query($sql);
+
+if ($result === false) {
+    die("Error en la consulta SQL: " . $conn->error);
+}
 ?>
 
 <!DOCTYPE html>
@@ -53,12 +59,19 @@ if ($conn->connect_error) {
                 <div class="empresa">
                     <label for="empresa">Empresa:</label>
                     <select name="empresa" class="form-control" aria-label="Default select example">
-                        <option value="">Nombre de la empresa</option>
-                        <option value="Empresa 1">Empresa 1</option>
-                        <option value="Empresa 2">Empresa 2</option>
-                        <option value="Empresa 3">Empresa 3</option>
+                        <?php
+                        if ($result->num_rows > 0) {
+                            // Salida de datos de cada fila
+                            while($row = $result->fetch_assoc()) {
+                                echo "<option value='" . $row["Razon_social"] . "'>" . $row["Razon_social"] . "</option>";
+                            }
+                        } else {
+                            echo "<option value=''>No hay empresas disponibles</option>";
+                        }
+                        ?>
                     </select>
                 </div>
+
                 <div class="form-group">
                     <label for="nombre-supervisor">Nombre del supervisor directo:</label>
                     <input name="nombre_super" type="text" class="form-control" id="nombre-supervisor">
@@ -117,3 +130,6 @@ if ($conn->connect_error) {
 </body>
 
 </html>
+<?php
+$conn->close();
+?>

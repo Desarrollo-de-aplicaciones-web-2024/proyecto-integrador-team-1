@@ -18,7 +18,6 @@ define('RUTA_INCLUDE', '../../../../');
 <body id="page-top">
 
 <?php getNavbar() ?>
-
 <div id="wrapper">
     <?php getSidebar($rutas) ?>
     <div id="content-wrapper">

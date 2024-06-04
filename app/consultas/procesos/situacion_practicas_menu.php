@@ -83,7 +83,7 @@ WHERE a.estado = 'pendiente'";
 
 <div id="wrapper">
 
-    <?php getSidebar() ?>
+    <?php getSidebar($rutas) ?>
 
     <div id="content-wrapper">
 
