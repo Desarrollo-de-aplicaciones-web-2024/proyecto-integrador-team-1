@@ -4,12 +4,14 @@ require_once '../../../config/db.php';
 
 define('RUTA_INCLUDE', '../../../'); //ajustar a necesidad
 
-$sql = "SELECT * FROM usuarios_alumno";
+$sqly = "SELECT * FROM usuarios_alumno";
 
 $sql2 = "SELECT a.*, ua.nombre
 FROM Archivos a
 JOIN usuarios_alumno ua ON a.matricula = ua.matricula
 WHERE a.estado = 'pendiente'";
+
+
 
 ?>
 
@@ -28,7 +30,6 @@ WHERE a.estado = 'pendiente'";
     <!-- Bootstrap 5.1 CSS -->
 
     <title><?php echo PAGE_TITLE ?></title>
-
 
     <?php getTopIncludes(RUTA_INCLUDE ) ?>
     <style>
@@ -116,17 +117,110 @@ WHERE a.estado = 'pendiente'";
                                         <tbody>
 
                                             <?php
-                                                $resultado = mysqli_query($conexion, $sql);
-                                                $encontrados = mysqli_num_rows($resultado);
+                                                $resultadoy = mysqli_query($conexion, $sqly);
+                                                $encontradosy = mysqli_num_rows($resultadoy);
 
-                                                if($encontrados > 0){
-                                                while ($fila=mysqli_fetch_assoc($resultado)){
-                                            ?>
+                                                if($encontradosy > 0){
 
-                                            <tr onclick="window.location.href='situacion_practicas_alumno.php?matricula=<?php echo $fila['matricula']; ?>'">
-                                                <td><?php echo $fila['matricula']?></td>
-                                                <td><?php echo $fila['nombre']?></td>
-                                                <td>Documentos Finales</td>
+                                                    $sqlx = "
+                                                    SELECT 
+                                                        ua.matricula, ua.nombre,
+                                                        e.Razon_social AS empresa,
+                                                        sp.Estatus AS SP_Estatus,
+                                                        pt.Estatus AS PT_Estatus,
+                                                        ca.Estatus AS CA_Estatus,
+                                                        rm1.Estatus AS RM1_Estatus,
+                                                        rm2.Estatus AS RM2_Estatus,
+                                                        rm3.Estatus AS RM3_Estatus,
+                                                        rg.estado AS RG_Estatus,
+                                                        co.estado AS CO_Estatus,
+                                                        rp.estado AS RP_Estatus
+                                                    FROM usuarios_alumno ua
+                                                    LEFT JOIN Carta_Aceptación ca ON ca.Alumno = ua.matricula
+                                                    LEFT JOIN Empresa e ON ca.Empresa = e.idEmpresa
+                                                    LEFT JOIN Solicitud_practicas sp ON sp.Alumno = ua.matricula
+                                                    LEFT JOIN Plan_Trabajo pt ON pt.Alumno = ua.matricula
+                                                    LEFT JOIN Reporte_Mensual rm1 ON rm1.Alumno = ua.matricula AND rm1.Fecha_Fin = (
+                                                        SELECT MIN(Fecha_Fin) FROM Reporte_Mensual WHERE Alumno = ua.matricula
+                                                    )
+                                                    LEFT JOIN Reporte_Mensual rm2 ON rm2.Alumno = ua.matricula AND rm2.Fecha_Fin = (
+                                                        SELECT MIN(Fecha_Fin) FROM Reporte_Mensual WHERE Alumno = ua.matricula AND Fecha_Fin > (
+                                                            SELECT MIN(Fecha_Fin) FROM Reporte_Mensual WHERE Alumno = ua.matricula
+                                                        )
+                                                    )
+                                                    LEFT JOIN Reporte_Mensual rm3 ON rm3.Alumno = ua.matricula AND rm3.Fecha_Fin = (
+                                                        SELECT MIN(Fecha_Fin) FROM Reporte_Mensual WHERE Alumno = ua.matricula AND Fecha_Fin > (
+                                                            SELECT MIN(Fecha_Fin) FROM Reporte_Mensual WHERE Alumno = ua.matricula AND Fecha_Fin > (
+                                                                SELECT MIN(Fecha_Fin) FROM Reporte_Mensual WHERE Alumno = ua.matricula
+                                                            )
+                                                        )
+                                                    )
+                                                    LEFT JOIN Archivos rg ON rg.matricula = ua.matricula AND rg.clasificacion = 'reporte' AND rg.tipo_archivo = 'final'
+                                                    LEFT JOIN Archivos co ON co.matricula = ua.matricula AND co.clasificacion = 'constancia' AND co.tipo_archivo = 'final'
+                                                    LEFT JOIN Archivos rp ON rp.matricula = ua.matricula AND rp.clasificacion = 'resena' AND rp.tipo_archivo = 'final'
+                                                    ";
+                                                    $resultadox = mysqli_query($conexion, $sqlx);
+
+                                                    while ($filax = mysqli_fetch_assoc($resultadox)) {
+                                                        $id_proposito = $filax['matricula'];
+                                                        $nombre = $filax['nombre'];
+                                                        $empresa = $filax['empresa'] ?? 'Sin Empresa';
+
+                                                        $statuses = [
+                                                            'SP_Estatus' => $filax['SP_Estatus'] ?? 'Sin subir',
+                                                            'PT_Estatus' => $filax['PT_Estatus'] ?? 'Sin subir',
+                                                            'CA_Estatus' => $filax['CA_Estatus'] ?? 'Sin subir',
+                                                            'RM1_Estatus' => $filax['RM1_Estatus'] ?? 'Sin subir',
+                                                            'RM2_Estatus' => $filax['RM2_Estatus'] ?? 'Sin subir',
+                                                            'RM3_Estatus' => $filax['RM3_Estatus'] ?? 'Sin subir',
+                                                            'RG_Estatus' => $filax['RG_Estatus'] ?? 'Sin subir',
+                                                            'CO_Estatus' => $filax['CO_Estatus'] ?? 'Sin subir',
+                                                            'RP_Estatus' => $filax['RP_Estatus'] ?? 'Sin subir',
+                                                        ];
+
+                                                        $etapa = 1;
+                                                        if ($statuses['SP_Estatus'] == 'Aceptado' && $statuses['PT_Estatus'] == 'Aceptado' && $statuses['CA_Estatus'] == 'Aceptado') {
+                                                            $etapa++;
+                                                        }
+                                                        if ($statuses['RM1_Estatus'] == "Aceptado") $etapa++;
+                                                        if ($statuses['RM2_Estatus'] == "Aceptado") $etapa++;
+                                                        if ($statuses['RM3_Estatus'] == "Aceptado") $etapa++;
+                                                        if ($statuses['RG_Estatus'] == 'aceptado' && $statuses['CO_Estatus'] == 'aceptado' && $statuses['RP_Estatus'] == 'aceptado') {
+                                                            $etapa++;
+                                                        }
+
+                                                        // Output or use the data as needed
+                                                        // Example: echo "Alumno: $nombre, Empresa: $empresa, Etapa: $etapa\n";
+
+                                                    ?>
+
+                                            <tr onclick="window.location.href='situacion_practicas_alumno.php?matricula=<?php echo $filax['matricula']; ?>'">
+                                                <td><?php echo $filax['matricula']?></td>
+                                                <td><?php echo $filax['nombre']?></td>
+                                                <td style="width: 156px;">
+                                                    <?php
+                                                    switch($etapa) {
+                                                        case 1:
+                                                            echo 'Sin iniciar proceso';
+                                                            break;
+                                                        case 2:
+                                                            echo '1er Reporte Mensual';
+                                                            break;
+                                                        case 3:
+                                                            echo '2do Reporte Mensual';
+                                                            break;
+                                                        case 4:
+                                                            echo '3er Reporte Mensual';
+                                                            break;
+                                                        case 5:
+                                                            echo 'Documentos Finales';
+                                                            break;
+                                                        case 6:
+                                                            echo 'Proceso finalizado';
+                                                            break;
+                                                    }
+                                                    ?>
+                                                </td>
                                             </tr>
 
                                             <?php } ?>

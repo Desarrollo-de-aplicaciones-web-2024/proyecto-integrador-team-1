@@ -36,7 +36,7 @@ if ($result === false) {
 
 <div id="wrapper">
 
-    <?php getSidebar() ?>
+    <?php getSidebar($rutas) ?>
 
     <div id="content-wrapper">
 
@@ -79,6 +79,10 @@ if ($result === false) {
                 <div class="form-group">
                     <label for="puesto-supervisor">Puesto del supervisor directo:</label>
                     <input name="puesto_super" type="text" class="form-control" id="puesto-supervisor">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input name="email" type="text" class="form-control" id="email">
                 </div>
                 <div class="meses">
                     <label for="duracion-practicas">Duración de las prácticas:</label>
