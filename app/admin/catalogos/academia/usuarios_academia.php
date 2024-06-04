@@ -18,9 +18,8 @@ define('RUTA_INCLUDE', '../../../../');
 <body id="page-top">
 
 <?php getNavbar() ?>
-
 <div id="wrapper">
-    <?php getSidebar(RUTA_INCLUDE) ?>
+    <?php getSidebar($rutas) ?>
     <div id="content-wrapper">
         <div class="container-fluid">
             <nav aria-label="breadcrumb">
@@ -42,6 +41,7 @@ define('RUTA_INCLUDE', '../../../../');
                         <th>Correo</th>
                         <th>Teléfono</th>
                         <th>Cargo</th>
+                        <th>Rol</th>
                         <th>Acciones</th>
                     </tr>
                     </thead>
@@ -57,8 +57,9 @@ define('RUTA_INCLUDE', '../../../../');
                                     echo "<td>" . $row['correo'] . "</td>";
                                     echo "<td>" . $row['telefono'] . "</td>";
                                     echo "<td>" . $row['cargo'] . "</td>";
+                                    echo "<td>" . $row['rol'] . "</td>";
                                     echo "<td class='text-center'>";
-                                    echo "<a href='#' class='btn btn-link btn-sm' data-toggle='modal' data-target='#editModal' data-id='" . $row['id'] . "' data-nombre_completo='" . $row['nombre_completo'] . "' data-correo='" . $row['correo'] . "' data-telefono='" . $row['telefono'] . "' data-cargo='" . $row['cargo'] . "'><img src='../../../../img/edit-30x30.png' alt='Imagen Editar'></a>";
+                                    echo "<a href='#' class='btn btn-link btn-sm' data-toggle='modal' data-target='#editModal' data-id='" . $row['id'] . "' data-nombre_completo='" . $row['nombre_completo'] . "' data-correo='" . $row['correo'] . "' data-telefono='" . $row['telefono'] . "' data-cargo='" . $row['cargo'] . "' data-rol='" . $row['rol'] . "'><img src='../../../../img/edit-30x30.png' alt='Imagen Editar'></a>";
                                     echo "<button class='btn btn-link btn-sm deleteUser' data-id='" . $row['id'] . "'>Eliminar</button>";
                                     echo "</td>";
                                     echo "</tr>";
@@ -106,6 +107,10 @@ define('RUTA_INCLUDE', '../../../../');
                                         <label for="editCargo">Cargo</label>
                                         <input type="text" class="form-control" id="editCargo" name="cargo">
                                     </div>
+                                    <div class="form-group">
+                                        <label for="editRol">Rol</label>
+                                        <input type="text" class="form-control" id="editRol" name="rol">
+                                    </div>
                                     <button type="submit" class="btn btn-primary">Guardar cambios</button>
                                 </form>
                             </div>
@@ -141,6 +146,10 @@ define('RUTA_INCLUDE', '../../../../');
                                         <label for="addCargo">Cargo</label>
                                         <input type="text" class="form-control" id="addCargo" name="cargo" required>
                                     </div>
+                                    <div class="form-group">
+                                        <label for="addRol">Rol</label>
+                                        <input type="text" class="form-control" id="addRol" name="rol" required>
+                                    </div>
                                     <button type="submit" class="btn btn-success">Agregar Usuario</button>
                                 </form>
                             </div>
@@ -173,14 +182,15 @@ define('RUTA_INCLUDE', '../../../../');
             var correo = button.data('correo');
             var telefono = button.data('telefono');
             var cargo = button.data('cargo');
+            var rol = button.data('rol');
             var modal = $(this);
             modal.find('.modal-body #editId').val(id);
             modal.find('.modal-body #editNombreCompleto').val(nombre_completo);
             modal.find('.modal-body #editCorreo').val(correo);
             modal.find('.modal-body #editTelefono').val(telefono);
             modal.find('.modal-body #editCargo').val(cargo);
+            modal.find('.modal-body #editRol').val(rol);
         });
-
         // Eliminar Usuario
         $('.deleteUser').click(function() {
             var id = $(this).data('id');

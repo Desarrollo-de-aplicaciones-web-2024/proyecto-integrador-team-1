@@ -17,14 +17,7 @@ class ModeloUsuario {
         $stmt->bindParam(':nombres', $nombres);
         $stmt->bindParam(':apellido_paterno', $apellido_paterno);
         $stmt->bindParam(':apellido_materno', $apellido_materno);
-        if ($stmt->execute()) {
-            // Redirigir a index.php si el registro fue exitoso
-            header("Location: index.php");
-            exit();
-        } else {
-            // Manejar el error si la inserción falla (opcional)
-            echo "Error al registrar el usuario.";
-        }
+        return $stmt->execute();
     }
 
     public function eliminar($id) {
