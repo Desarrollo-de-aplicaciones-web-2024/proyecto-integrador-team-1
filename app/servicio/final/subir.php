@@ -1,5 +1,14 @@
 <?php
 
+echo "<script type='text/javascript'>
+                var mensajeError = 'heeeey';
+                document.addEventListener('DOMContentLoaded', function() {
+                    var errorDiv = document.getElementById('mensaje-error');
+                    errorDiv.textContent = mensajeError;
+                    errorDiv.style.display = 'block';
+                });
+              </script>";
+
 // Conexión a la base de datos
 $conn = new mysqli("database-team1-daw.c30w0agw4764.us-east-2.rds.amazonaws.com", "admin", "S1stemas_23", "PP_TEAM1");
 if ($conn->connect_error) {
