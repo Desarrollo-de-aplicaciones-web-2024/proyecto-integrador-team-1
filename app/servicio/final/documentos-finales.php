@@ -55,6 +55,34 @@ foreach ($archivos as $archivo) {
 //    echo "<br>";
 //}
 
+function procesarEstado ($documentosPorClasificacion,$nombre)
+{
+    $encontrado = false;
+    // Realizar acciones basadas en el estado de los documentos
+    foreach ($documentosPorClasificacion as $clasificacion => $documentos) {
+        foreach ($documentos as $documento) {
+            if ($clasificacion == $nombre) {
+                $encontrado = true; // Documento encontrado
+                if ($documento['estado'] == 'pendiente') {
+                    // Acción para documentos pendientes
+                    echo '<td class="align-middle text-center"><p class="text-warning">pendiente</p></td>';
+                } elseif ($documento['estado'] == 'rechazado') {
+                    // Acción para documentos rechazados
+                    echo '<td class="align-middle text-center"><p class="text-danger">rechazado</p></td>';
+                } elseif ($documento['estado'] == 'aceptado') {
+                    // Acción para documentos aceptados
+                    echo '<td class="align-middle text-center"><p class="text-success">aceptado</p></td>';
+                }
+            }
+        }
+    }
+
+    // Si no se encontraron documentos para la clasificación 'reporte', muestra un mensaje
+    if (!$encontrado) {
+        echo '<td class="align-middle text-center"><p class="text-secondary">No hay documentos subidos</p></td>';
+    }
+}
+
 
 ?>
 
@@ -176,31 +204,10 @@ foreach ($archivos as $archivo) {
                         </td>
 
                         <?php
-                        $encontrado = false;
-                        // Realizar acciones basadas en el estado de los documentos
-                        foreach ($documentosPorClasificacion as $clasificacion => $documentos) {
-                            foreach ($documentos as $documento) {
-                                if($clasificacion == 'reporte'){
-                                    $encontrado = true; // Documento encontrado
-                                    if ($documento['estado'] == 'pendiente') {
-                                        // Acción para documentos pendientes
-                                        echo '<td class="align-middle text-center"><p class="text-warning">pendiente</p></td>';
-                                    } elseif ($documento['estado'] == 'rechazado') {
-                                        // Acción para documentos rechazados
-                                        echo '<td class="align-middle text-center"><p class="text-danger">rechazado</p></td>';
-                                    } elseif ($documento['estado'] == 'aceptado') {
-                                        // Acción para documentos aceptados
-                                        echo '<td class="align-middle text-center"><p class="text-success">aceptado</p></td>';
-                                    }
-                                }
-                            }
-                        }
-
-                        // Si no se encontraron documentos para la clasificación 'reporte', muestra un mensaje
-                        if (!$encontrado) {
-                            echo '<td class="align-middle text-center"><p class="text-secondary">vacio</p></td>';
-                        }
+                            procesarEstado($documentosPorClasificacion,'reporte');
                         ?>
+
+
 
                     </tr>
                     <tr>
@@ -218,30 +225,9 @@ foreach ($archivos as $archivo) {
 
                         </td>
                         <?php
-                        $encontrado = false;
-                        // Realizar acciones basadas en el estado de los documentos
-                        foreach ($documentosPorClasificacion as $clasificacion => $documentos) {
-                            foreach ($documentos as $documento) {
-                                if($clasificacion == 'reporte'){
-                                    $encontrado = true; // Documento encontrado
-                                    if ($documento['estado'] == 'pendiente') {
-                                        // Acción para documentos pendientes
-                                        echo '<td class="align-middle text-center"><p class="text-warning">pendiente</p></td>';
-                                    } elseif ($documento['estado'] == 'rechazado') {
-                                        // Acción para documentos rechazados
-                                        echo '<td class="align-middle text-center"><p class="text-danger">rechazado</p></td>';
-                                    } elseif ($documento['estado'] == 'aceptado') {
-                                        // Acción para documentos aceptados
-                                        echo '<td class="align-middle text-center"><p class="text-success">aceptado</p></td>';
-                                    }
-                                }
-                            }
-                        }
 
-                        // Si no se encontraron documentos para la clasificación 'reporte', muestra un mensaje
-                        if (!$encontrado) {
-                            echo '<td class="align-middle text-center"><p class="text-secondary">vacio</p></td>';
-                        }
+                        procesarEstado($documentosPorClasificacion, 'resena');
+
                         ?>
                     </tr>
                     <tr>
@@ -257,30 +243,7 @@ foreach ($archivos as $archivo) {
                             <p class="archivo-constancia"> constancia.pdf</p>
                         </td>
                         <?php
-                        $encontrado = false;
-                        // Realizar acciones basadas en el estado de los documentos
-                        foreach ($documentosPorClasificacion as $clasificacion => $documentos) {
-                            foreach ($documentos as $documento) {
-                                if($clasificacion == 'reporte'){
-                                    $encontrado = true; // Documento encontrado
-                                    if ($documento['estado'] == 'pendiente') {
-                                        // Acción para documentos pendientes
-                                        echo '<td class="align-middle text-center"><p class="text-warning">pendiente</p></td>';
-                                    } elseif ($documento['estado'] == 'rechazado') {
-                                        // Acción para documentos rechazados
-                                        echo '<td class="align-middle text-center"><p class="text-danger">rechazado</p></td>';
-                                    } elseif ($documento['estado'] == 'aceptado') {
-                                        // Acción para documentos aceptados
-                                        echo '<td class="align-middle text-center"><p class="text-success">aceptado</p></td>';
-                                    }
-                                }
-                            }
-                        }
-
-                        // Si no se encontraron documentos para la clasificación 'reporte', muestra un mensaje
-                        if (!$encontrado) {
-                            echo '<td class="align-middle text-center"><p class="text-secondary">vacio</p></td>';
-                        }
+                        procesarEstado($documentosPorClasificacion, 'constancia');
                         ?>
                     </tr>
                     </tbody>
