@@ -11,7 +11,7 @@ if ($conn->connect_error) {
 }
 
 // Obtener datos de la tabla usuarios_alumno
-$matricula = '202160171'; // Define la matrícula del alumno a buscar.
+$matricula = '202160172'; // Define la matrícula del alumno a buscar.
 $sql = "SELECT nombre, matricula, licenciatura, semestre, correo, sexo FROM usuarios_alumno WHERE matricula = '$matricula'";// Consulta SQL para obtener los datos del alumno.
 
 $result = $conn->query($sql);
@@ -28,7 +28,42 @@ if ($result->num_rows > 0) {
     die("No se encontraron datos del alumno."); // Termina la ejecución si no se encuentran datos.
 }
 
+$aseguramiento = '14';
+$jefe = '15';
+
+// Consulta SQL para el ID 14
+$sql_academia_aseguramiento = "SELECT nombre_completo FROM academia_usuarios WHERE id = '$aseguramiento'";
+$result_academia_aseguramiento = $conn->query($sql_academia_aseguramiento);
+if ($result_academia_aseguramiento->num_rows > 0) {
+    $row_academia_aseguramiento = $result_academia_aseguramiento->fetch_assoc();
+    $nombre_academia_aseguramiento = $row_academia_aseguramiento['nombre_completo'];
+} else {
+    $nombre_academia_aseguramiento = "Nombre no encontrado"; // O un mensaje adecuado si no se encuentra el nombre.
+}
+
+// Consulta SQL para el ID 15
+$sql_academia_jefe = "SELECT nombre_completo FROM academia_usuarios WHERE id = '$jefe'";
+$result_academia_jefe = $conn->query($sql_academia_jefe);
+if ($result_academia_jefe->num_rows > 0) {
+    $row_academia_jefe = $result_academia_jefe->fetch_assoc();
+    $nombre_academia_jefe = $row_academia_jefe['nombre_completo'];
+} else {
+    $nombre_academia_jefe = "Nombre no encontrado"; // O un mensaje adecuado si no se encuentra el nombre.
+}
+
 $conn->close(); // Cierra la conexión a la base de datos.
+
+// Establecer la zona horaria a Ciudad de México
+date_default_timezone_set('America/Mexico_City');
+// Definir los nombres de los meses en español
+$meses = [
+    1 => 'enero', 2 => 'febrero', 3 => 'marzo', 4 => 'abril', 5 => 'mayo', 6 => 'junio',
+    7 => 'julio', 8 => 'agosto', 9 => 'septiembre', 10 => 'octubre', 11 => 'noviembre', 12 => 'diciembre'
+];
+
+// Obtener la fecha actual en el formato deseado
+$fecha_actual = date('d') . ' de ' . $meses[date('n')] . ' de ' . date('Y');
+
 
 require_once('tcpdf_include.php'); // Incluye la librería TCPDF.
 
@@ -74,22 +109,28 @@ $html = <<<EOD
         border: 1px solid black;
         padding: 4px;
     }
+    th h3, th h4 {
+        border: none; /* Elimina los bordes de los encabezados h3 y h4 */
+    }
     .no-border {
         border: none;
     }
     .center {
         text-align: center;
     }
+    #imagen {
+        border: none; /* Elimina el borde de la imagen */
+    }
 </style>
 <table class="no-border" cellpadding="4">
     <tr>
-        <td class="no-border"><img src="path/to/logo.png" height="50"></td>
+        <td class="no-border" id="imagen"><img src="unnamed.jpg" width="200" alt="Logo Universidad Cristobal"></td> <!-- Ajusta el ancho de la imagen según tus necesidades -->
         <td class="no-border" colspan="2" class="center">
             <h3>Universidad Cristóbal Colón</h3>
             <h4>Licenciatura en Ingeniería en Sistemas Computacionales</h4>
             <h4>Solicitud para realización de Prácticas Profesionales</h4>
         </td>
-        <td class="no-border" rowspan="3" style="width: 100px; text-align: center;">
+        <td class="no-border" rowspan="3" style="width: 100px; text-align: center; border: 1px solid black;">
             <br><br>
             <p>Fotografía reciente tamaño infantil</p>
         </td>
@@ -98,7 +139,8 @@ $html = <<<EOD
 
 <p style="text-align: justify; font-weight: bold;">
     Mtro. Ramón Palet Naranjo<br>
-    Jefe Académico de las Licenciaturas en Ingeniería en Sistemas Computacionales, Ingeniería en Telecomunicaciones y Sistemas Electrónicos, Ingeniería Biónica e Ingeniería Mecatrónica.<br>
+   Jefe Académico de las Licenciaturas en Ingeniería en Sistemas Computacionales, Ingeniería en <br>
+    Telecomunicaciones y Sistemas Electrónicos, Ingeniería Biónica e Ingeniería Mecatrónica.<br>
     Universidad Cristóbal Colón</p>
 <p>Por medio de la presente hago de su conocimiento mi deseo de realizar prácticas profesionales en la empresa que a continuación se detalla. Esto con el fin de fortalecer mi formación académica y vincularme con el medio laboral.</p>
 
@@ -159,9 +201,9 @@ $html = <<<EOD
 </table>
 
 <p style="text-align: justify;">
-    Doy fe de los datos anteriores son fidedignos y me comprometo a cumplir con los lineamientos establecidos por la empresa, así como por el reglamento general de alumnos de la Universidad Cristóbal Colón.
+    <br>Doy fe de los datos anteriores son fidedignos y me comprometo a cumplir con los lineamientos establecidos por la empresa, así como por el reglamento general de alumnos de la Universidad Cristóbal Colón.
 </p>
-<p style="text-align: right;">H. Veracruz, Ver., a 9 de abril de 2024</p>
+<p style="text-align: right;">H. Veracruz, Ver., a {$fecha_actual}</p>
 <br><br>
 <table><br><br><br><br>
     <tr>
@@ -179,12 +221,12 @@ $html = <<<EOD
     <tr>
         <td class="no-border center" style="width: 50%; padding-top: 20px;">
             _______________________________<br>
-            Mtro. Ramón Palet Naranjo<br>
+            Mtro. {$nombre_academia_jefe}<br>
             Vo. Bo. Jefe de Área Académica
         </td>
         <td class="no-border center" style="width: 50%; padding-top: 20px;">
             _______________________________<br>
-            Mtra. María del Carmen Aguirre Torres<br>
+            Mtra. {$nombre_academia_aseguramiento}<br>
             Vo. Bo. Aseguramiento de la Calidad
         </td>
     </tr>

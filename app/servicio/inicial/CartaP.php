@@ -11,7 +11,7 @@ if ($conn->connect_error) {
 }
 
 // Obtener datos de la tabla usuarios_alumno
-$matricula = '202160327'; // Ajusta según sea necesario
+$matricula = '202160171'; // Ajusta según sea necesario
 $sql = "SELECT nombre, matricula, semestre, licenciatura FROM usuarios_alumno WHERE matricula = '$matricula'";
 $result = $conn->query($sql);
 
@@ -26,6 +26,17 @@ if ($result->num_rows > 0) {
 }
 
 $conn->close();
+// Establecer la zona horaria a Ciudad de México
+date_default_timezone_set('America/Mexico_City');
+// Definir los nombres de los meses en español
+$meses = [
+    1 => 'enero', 2 => 'febrero', 3 => 'marzo', 4 => 'abril', 5 => 'mayo', 6 => 'junio',
+    7 => 'julio', 8 => 'agosto', 9 => 'septiembre', 10 => 'octubre', 11 => 'noviembre', 12 => 'diciembre'
+];
+
+// Obtener la fecha actual en el formato deseado
+$fecha_actual = date('d') . ' de ' . $meses[date('n')] . ' de ' . date('Y');
+
 
 require_once('tcpdf_include.php');
 
@@ -101,14 +112,15 @@ $html = <<<EOD
         text-align: center;
     }
 </style>
-<p class="title">1 de abril de 2024</p>
-<p><b>LIC. GUILLERMO GÓMEZ FERNÁNDEZ<br>
+<p class="title">{$fecha_actual}</p>
+<p style="text-align: justify" ><b>
+       LIC. GUILLERMO GÓMEZ FERNÁNDEZ<br>
        DEPARTAMENTO DE TIC<br>
        COMPAÑÍA DE AGUA DEL MUNICIPIO DE BOCA DEL RÍO SAPI DE CV<br>
        PRESENTE</p></b>
-<p class="content">
-    Por este medio solicito de la manera más atenta su autorización para que el C. <b>{$nombre}</b>,
-    estudiante cursando el <b>{$semestre}°</b> semestre de la carrera de la Licenciatura en Ingeniería en Sistemas Computacionales con
+<p class="content" >
+    <br>Por este medio solicito de la manera más atenta su autorización para que el C. <b>{$nombre}</b>,
+    estudiante cursando el <b>{$semestre}</b> semestre de la carrera de la Licenciatura en Ingeniería en Sistemas Computacionales con
     matrícula <b>{$matricula}</b>, pueda realizar en la dependencia a su digno cargo sus prácticas profesionales, debiendo reunir
     un total de 240 horas, durante un periodo no menor a 3 meses.
 </p>
