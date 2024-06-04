@@ -65,13 +65,13 @@ function procesarEstado ($documentosPorClasificacion,$nombre)
                 $encontrado = true; // Documento encontrado
                 if ($documento['estado'] == 'pendiente') {
                     // Acción para documentos pendientes
-                    echo '<td class="align-middle text-center"><p class="text-warning">pendiente</p></td>';
+                    echo '<td class="align-middle text-center"><p class="text-warning"  id="estado-documento">Pendiente</p></td>';
                 } elseif ($documento['estado'] == 'rechazado') {
                     // Acción para documentos rechazados
-                    echo '<td class="align-middle text-center"><p class="text-danger">rechazado</p></td>';
+                    echo '<td class="align-middle text-center" ><p class="text-danger" id="estado-documento">Rechazado</p></td>';
                 } elseif ($documento['estado'] == 'aceptado') {
                     // Acción para documentos aceptados
-                    echo '<td class="align-middle text-center"><p class="text-success">aceptado</p></td>';
+                    echo '<td class="align-middle text-center" ><p class="text-success" id="estado-documento">Aceptado</p></td>';
                 }
             }
         }
@@ -79,7 +79,7 @@ function procesarEstado ($documentosPorClasificacion,$nombre)
 
     // Si no se encontraron documentos para la clasificación 'reporte', muestra un mensaje
     if (!$encontrado) {
-        echo '<td class="align-middle text-center"><p class="text-secondary">No hay documentos subidos</p></td>';
+        echo '<td class="align-middle text-center" <p class="text-secondary" id="estado-documento">No hay documentos subidos</p></td>';
     }
 }
 
@@ -156,7 +156,7 @@ function procesarEstado ($documentosPorClasificacion,$nombre)
 
 <div id="wrapper">
 
-    <?php getSidebar();?>
+    <?php getSidebar($rutas);?>
 
     <div id="content-wrapper">
 
@@ -192,7 +192,7 @@ function procesarEstado ($documentosPorClasificacion,$nombre)
                     <tr>
                         <!--REPORTE GLOBAL-->
                         <td class="align-middle" >Reporte global
-                            <a href="Solicitud.php" download="Solicitud Practicas Profesionales" class="contenedor-icono" type="button" id="boton-descarga"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-arrow-down" viewBox="0 0 16 16">
+                            <a href="Solicitud.php" download="Reporte_Global.pdf" class="contenedor-icono" type="button" id="boton-descarga"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-arrow-down" viewBox="0 0 16 16">
                                     <path d="M8.5 6.5a.5.5 0 0 0-1 0v3.793L6.354 9.146a.5.5 0 1 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0-.708-.708L8.5 10.293z"/>
                                     <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
                                 </svg></a>
@@ -213,7 +213,7 @@ function procesarEstado ($documentosPorClasificacion,$nombre)
                     <tr>
                         <!--RESEÑA DE PRACTICAS-->
                         <td class="align-middle">Reseña de practicas
-                            <a href="" download="Plan de trabajo de prácticas profesionales" class="contenedor-icono" id> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-arrow-down" viewBox="0 0 16 16">
+                            <a href="" download="Reseña_de_practicas.pdf" class="contenedor-icono" id> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-arrow-down" viewBox="0 0 16 16">
                                     <path d="M8.5 6.5a.5.5 0 0 0-1 0v3.793L6.354 9.146a.5.5 0 1 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0-.708-.708L8.5 10.293z"/>
                                     <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
                                 </svg></a>
@@ -232,7 +232,7 @@ function procesarEstado ($documentosPorClasificacion,$nombre)
                     </tr>
                     <tr>
                         <!--CONSTANCIA-->
-                        <td class="align-middle">Constancia <a href="Formulario_Registro_Dato.php" download="Carta de Aceptación" class="contenedor-icono"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-arrow-down" viewBox="0 0 16 16">
+                        <td class="align-middle">Constancia <a href="Formulario_Registro_Dato.php" download="Constancia.pdf" class="contenedor-icono"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-arrow-down" viewBox="0 0 16 16">
                                     <path d="M8.5 6.5a.5.5 0 0 0-1 0v3.793L6.354 9.146a.5.5 0 1 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0-.708-.708L8.5 10.293z"/>
                                     <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
                                 </svg></a>
@@ -364,15 +364,58 @@ function procesarEstado ($documentosPorClasificacion,$nombre)
     });
 
     document.getElementById('input-subida').addEventListener('click', function(event) {
-
         const reporte = document.getElementById('subir-reporte').files.length;
         const resena = document.getElementById('subir-resena').files.length;
         const constancia = document.getElementById('subir-constancia').files.length;
-        if (reporte === 0 || resena === 0 || constancia === 0) {
+        const estados = document.querySelectorAll("#estado-documento");
+        const estadoReporte = estados[0].textContent.trim();
+        const estadoResena = estados[1].textContent.trim();
+        const estadoConstancia = estados[2].textContent.trim();
+
+        console.log(estadoConstancia);
+        console.log(constancia);
+
+        if (
+            (estadoReporte === "Pendiente" || estadoReporte === "Aceptado") &&
+            (estadoResena === "Pendiente" || estadoResena === "Aceptado") &&
+            (estadoConstancia === "Pendiente" || estadoConstancia === "Aceptado")
+        ) {
             event.preventDefault();
             const mensajeError = document.getElementById('mensaje-error');
-            mensajeError.textContent = 'Por favor, sube todos los archivos requeridos antes de enviar el formulario.';
+            mensajeError.textContent = 'Todos tus archivos han sido subidos correctamente';
             mensajeError.style.display = 'block';
+            mensajeError.classList.remove('alert-danger');
+            mensajeError.classList.add('alert-success');
+        }
+
+        if (reporte === 0 && (estadoReporte === "Rechazado" || estadoReporte === "No hay documentos subidos")) {
+            event.preventDefault();
+            const mensajeError = document.getElementById('mensaje-error');
+            mensajeError.textContent = 'No puedes enviar el formulario si el estado del reporte es Rechazado o No hay documentos subidos sin subir un archivo.';
+            mensajeError.style.display = 'block';
+            mensajeError.classList.remove('alert-success');
+            mensajeError.classList.add('alert-danger');
+            console.log(1);
+        }
+
+        if (resena === 0 && (estadoResena === "Rechazado" || estadoResena === "No hay documentos subidos")) {
+            event.preventDefault();
+            const mensajeError = document.getElementById('mensaje-error');
+            mensajeError.textContent = 'No puedes enviar el formulario si el estado del reporte es Rechazado o No hay documentos subidos sin subir un archivo.';
+            mensajeError.style.display = 'block';
+            mensajeError.classList.remove('alert-success');
+            mensajeError.classList.add('alert-danger');
+            console.log(2);
+        }
+
+        if (constancia === 0 && (estadoConstancia === "Rechazado" || estadoConstancia === "No hay documentos subidos")) {
+            event.preventDefault();
+            const mensajeError = document.getElementById('mensaje-error');
+            mensajeError.textContent = 'No puedes enviar el formulario si el estado del reporte es Rechazado o No hay documentos subidos sin subir un archivo.';
+            mensajeError.style.display = 'block';
+            mensajeError.classList.remove('alert-success');
+            mensajeError.classList.add('alert-danger');
+            console.log(3);
         }
     });
 
