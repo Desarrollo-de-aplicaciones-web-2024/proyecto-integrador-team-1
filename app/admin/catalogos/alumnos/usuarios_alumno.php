@@ -158,11 +158,22 @@ session_start();
                                     </div>
                                     <div class="form-group">
                                         <label for="editLicenciatura">Licenciatura</label>
-                                        <input type="text" class="form-control" id="editLicenciatura" name="licenciatura">
+                                        <select class="form-control" id="editLicenciatura" name="licenciatura" required>
+                                            <option value="Ingenieria en Sistemas Computacionales">Ingenieria en Sistemas Computacionales</option>
+                                            <option value="Ingenieria en Telecomunicaciones y Sistemas Electronicos">Ingenieria en Telecomunicaciones y Sistemas Electronicos</option>
+                                            <option value="Ingenieria en Mecatronica">Ingenieria en Mecatronica</option>
+                                        </select>
+                                        <!--<input type="text" class="form-control" id="editLicenciatura" name="licenciatura">-->
                                     </div>
                                     <div class="form-group">
                                         <label for="editSemestre">Semestre</label>
-                                        <input type="text" class="form-control" id="editSemestre" name="semestre">
+                                        <select class="form-control" id="editSemestre" name="semestre" required>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="5">7</option>
+                                            <option value="6">8</option>
+                                        </select>
+                                        <!--<input type="text" class="form-control" id="editSemestre" name="semestre">-->
                                     </div>
                                     <div class="form-group">
                                         <label for="editTelefono">Teléfono</label>
@@ -182,6 +193,7 @@ session_start();
                         </div>
                     </div>
                 </div>
+                <!-- Fin Modal Editar -->
 
                 <!-- Modal Agregar -->
                 <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
@@ -209,11 +221,24 @@ session_start();
                                     </div>
                                     <div class="form-group">
                                         <label for="licenciatura">Licenciatura</label>
-                                        <input type="text" class="form-control" id="licenciatura" name="licenciatura" required>
+                                        <select class="form-control" id="licenciatura" name="licenciatura" required>
+                                            <option value=""></option>
+                                            <option value="Ingenieria en Sistemas Computacionales">Ingenieria en Sistemas Computacionales</option>
+                                            <option value="Ingenieria en Telecomunicaciones y Sistemas Electronicos">Ingenieria en Telecomunicaciones y Sistemas Electronicos</option>
+                                            <option value="Ingenieria en Mecatronica">Ingenieria en Mecatronica</option>
+                                        </select>
+                                        <!--<input type="text" class="form-control" id="licenciatura" name="licenciatura" required>-->
                                     </div>
                                     <div class="form-group">
                                         <label for="semestre">Semestre</label>
-                                        <input type="text" class="form-control" id="semestre" name="semestre" required>
+                                        <select class="form-control" id="semestre" name="semestre" required>
+                                            <option value=""></option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="5">7</option>
+                                            <option value="6">8</option>
+                                        </select>
+                                       <!-- <input type="text" class="form-control" id="semestre" name="semestre" required>-->
                                     </div>
                                     <div class="form-group">
                                         <label for="telefono">Teléfono</label>
@@ -222,8 +247,9 @@ session_start();
                                     <div class="form-group">
                                         <label for="sexo">Sexo</label>
                                         <select class="form-control" id="sexo" name="sexo" required>
-                                            <option value="M">Masculino</option>
-                                            <option value="F">Femenino</option>
+                                            <option value=""></option>
+                                            <option value="Masculino">Masculino</option>
+                                            <option value="Femenino">Femenino</option>
                                         </select>
                                     </div>
                                     <div class="modal-footer">
@@ -259,8 +285,7 @@ session_start();
                         </div>
                     </div>
                 </div>
-
-
+                <!-- Fin Modal Importar -->
 
             </div>
         <!-- /.container-fluid -->
