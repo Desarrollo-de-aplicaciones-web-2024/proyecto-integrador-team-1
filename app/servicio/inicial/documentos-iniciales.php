@@ -47,6 +47,8 @@ define('RUTA_INCLUDE', '../../../'); // ajustar a necesidad
             margin-right: 10px;
         }
 
+
+
         .contenedor-icono svg{
             width: 35px;
             height: 35px;

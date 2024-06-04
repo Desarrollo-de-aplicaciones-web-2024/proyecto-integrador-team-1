@@ -26,7 +26,6 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
 <div id="wrapper">
 
     <?php getSidebar(RUTA_INCLUDE) ?>
-
     <div id="content-wrapper">
 
         <div class="container-fluid">
@@ -45,13 +44,21 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
             <div class="alert alert-danger" role="alert">
                 <i class="fas fa-exclamation-triangle"></i> Mensaje de error
             </div> -->
-
             <div class="row my-3">
                 <div class="col text-right">
-                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addModal"><i class="fas fa-plus"></i> Agregar Usuario</button>
+                    <!-- Contenedor para los botones -->
+                    <div class="d-inline">
+                        <!-- Botón para importar usuarios -->
+                        <button type="button" class="btn btn-primary d-inline-block" data-toggle="modal" data-target="#importModal">
+                            <i class="fas fa-file-import"></i> Importar Usuarios
+                        </button>
+                        <!-- Botón para agregar usuario -->
+                        <button type="button" class="btn btn-success d-inline-block ml-2" data-toggle="modal" data-target="#addModal">
+                            <i class="fas fa-plus"></i> Agregar Usuario
+                        </button>
+                    </div>
                 </div>
             </div>
-
             <div class="table-responsive mb-3">
                 <table class="table table-bordered table-striped dataTable">
                     <thead>
@@ -162,6 +169,7 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
+
                             <div class="modal-body">
                                 <form id="addForm" method="post" action="agregar_usuario.php">
                                     <div class="form-group">
@@ -201,6 +209,24 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
                         </div>
                     </div>
                 </div>
+
+                <!-- Modal Importar -->
+                <div class="modal fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="importModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="importModalLabel">Importar Usuarios</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <!-- Aquí puedes agregar un formulario para seleccionar el archivo CSV y enviarlo -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         <!-- /.container-fluid -->
 
@@ -218,11 +244,27 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
 </a>
 
 <?php getModalLogout() ?>
+    <script>
+        document.getElementById('addForm').addEventListener('submit', function(event) {
+            var matricula = document.getElementById('addMatricula').value;
+            var correo = document.getElementById('addCorreo').value;
 
-    <!-- Incluir jQuery y Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+            // Validar que la matrícula sea solo números
+            if (!/^\d+$/.test(matricula)) {
+                alert('La matrícula debe contener solo números.');
+                event.preventDefault();
+                return;
+            }
+
+            // Validar que el correo termine en "@ucc.mx"
+            if (!correo.endsWith('@ucc.mx')) {
+                alert('El correo debe finalizar con "@ucc.mx".');
+                event.preventDefault();
+                return;
+            }
+        });
+    </script>
+<?php getBottomIncudes( RUTA_INCLUDE ) ?>
     <script>
         $(document).ready(function() {
             $('#editModal').on('show.bs.modal', function (event) {
@@ -243,21 +285,35 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
                 modal.find('.modal-body #editSemestre').val(semestre);
                 modal.find('.modal-body #editTelefono').val(telefono);
                 modal.find('.modal-body #editSexo').val(sexo);
-                modal.find('.modal-footer #deleteUser').data('matricula', matricula);
+
+                modal.find('.modal-body #deleteUser').data('matricula', matricula);
             });
 
-            $('#deleteUser').click(function () {
+            $('#deleteUser').click(function() {
                 var matricula = $(this).data('matricula');
-                if(confirm('¿Estás seguro de que deseas eliminar este usuario?')) {
-                    $.post('eliminar_usuario.php', { matricula: matricula }, function(result) {
-                        alert('Usuario eliminado');
-                        window.location.href = 'usuarios_alumno.php'; // Redirigir a la página principal
+                if (confirm('¿Estás seguro de que deseas eliminar este usuario?')) {
+                    $.ajax({
+                        url: 'eliminar_usuario.php',
+                        type: 'POST',
+                        data: { matricula: matricula },
+                        dataType: 'json',
+                        success: function(response) {
+                            if (response.success) {
+                                alert('Usuario eliminado correctamente.');
+                                $('#editModal').modal('hide'); // Cerrar el modal
+                                location.reload(); // Recargar la página
+                            } else {
+                                alert('Error al eliminar usuario: ' + response.error);
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            alert('Error al eliminar usuario: ' + xhr.responseText);
+                        }
                     });
                 }
             });
         });
     </script>
-<?php getBottomIncudes( RUTA_INCLUDE ) ?>
 
 </body>
 

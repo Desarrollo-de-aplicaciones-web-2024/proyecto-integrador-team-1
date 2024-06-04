@@ -1,6 +1,17 @@
 <?php
 require_once '../../../config/global.php';
+require_once '../../../config/db.php';
+
 define('RUTA_INCLUDE', '../../../'); //ajustar a necesidad
+
+$sql = "SELECT * FROM usuarios_alumno";
+
+$sql2 = "SELECT * 
+FROM Reporte_Mensual JOIN usuarios_alumno ON Reporte_Mensual.Alumno = usuarios_alumno.matricula 
+WHERE Reporte_Mensual.Estatus = 'Pendiente';
+
+
+";
 ?>
 
 <!DOCTYPE html>
@@ -95,32 +106,41 @@ define('RUTA_INCLUDE', '../../../'); //ajustar a necesidad
                             </div>
                             <div class="card-body p-0">
                                 <div class="table-responsive mt-3 mb-3">
-                                    <table class="table dataTable">
+                                    <table class="table table-hover dataTable">
                                         <thead>
-                                        <tr>
-                                            <th>Nombre</th>
-                                            <th>Empresa</th>
-                                            <th>Etapa</th>
-                                        </tr>
+                                            <tr>
+                                                <th>Matrícula</th>
+                                                <th>Nombre</th>
+                                                <th>Etapa</th>
+                                            </tr>
                                         </thead>
                                         <tbody>
-                                        <tr>
-                                            <td>Elvis Gamboa Quiroz</td>
-                                            <td>TENARIS TAMSA</td>
-                                            <td>Documentos finales</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Irving López García</td>
-                                            <td>Grupo Mimpo</td>
-                                            <td>Documentos finales</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Bruno Rangel Zuñiga</td>
-                                            <td>Grupo MAS</td>
-                                            <td>2do Reporte Mensual</td>
-                                        </tr>
+
+                                            <?php
+                                                $resultado = mysqli_query($conexion, $sql);
+                                                $encontrados = mysqli_num_rows($resultado);
+
+                                                if($encontrados > 0){
+                                                while ($fila=mysqli_fetch_assoc($resultado)){
+                                            ?>
+
+                                            <tr onclick="window.location.href='situacion_practicas_alumno.php?matricula=<?php echo $fila['matricula']; ?>'">
+                                                <td><?php echo $fila['matricula']?></td>
+                                                <td><?php echo $fila['nombre']?></td>
+                                                <td>Documentos Finales</td>
+                                            </tr>
+
+                                            <?php } ?>
+
                                         </tbody>
                                     </table>
+
+                                    <?php
+                                    }else{
+                                        echo "<div class='alert alert-warning mt-5'>No hay alumnos</div>";
+                                    }
+                                    ?>
+
                                 </div>
                             </div>
                         </div>
@@ -129,16 +149,21 @@ define('RUTA_INCLUDE', '../../../'); //ajustar a necesidad
                     <div class="col-md-6">
                         <div class="card">
                             <div class="card-header">
-                                <h5>Documentos recientes</h5>
-
-                            </div>
+                                <h5>Pendientes de revisar<span class="badge ml-2" style="color: #ffffff; background-color: #1c81f8;">
+                                        <?php
+                                            $resultado2 = mysqli_query($conexion, $sql2);
+                                            $encontrados2 = mysqli_num_rows($resultado2);
+                                            echo $encontrados2
+                                        ?>
+                                    </span></h5>
+                            </div
                             <div class="card-body p-0">
                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
 
                                 </ul>
                                 <div class="tab-content" id="myTabContent">
                                     <div class="tab-pane fade show active" id="content-items" role="tabpanel" aria-labelledby="content-items-tab">
-                                        <table class="table mb-0">
+                                        <table class="table table-hover mb-0">
                                             <thead>
                                             <tr>
                                                 <th>Nombre</th>
@@ -147,22 +172,30 @@ define('RUTA_INCLUDE', '../../../'); //ajustar a necesidad
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr>
-                                                <td>Irving de Jesús López García</td>
-                                                <td>Reporte Final</td>
-                                                <td>5/31/2024</td>
+
+                                            <?php
+
+                                            if($encontrados2 > 0){
+                                            while ($fila2=mysqli_fetch_assoc($resultado2)){
+                                                $first_key = key($fila2);
+                                                $first_value = current($fila2);
+                                            ?>
+                                                <tr onclick="window.location.href='revision_documento.php?id=<?php echo $first_value; ?>&tipo=<?php echo $fila2['Tipo_Doc']; ?>&nombre=<?php echo $fila2['nombre']; ?>'">
+                                                <td><?php echo $fila2['nombre']?></td>
+                                                <td><?php echo $fila2['Tipo_Doc']?></td>
+                                                <td><?php echo $fila2['Fecha']?></td>
                                             </tr>
-                                            <tr>
-                                                <td>Elvis Gamboa Quiroz</td>
-                                                <td>Reporte Final</td>
-                                                <td>5/31/2024</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Bruno Rangel Zuñiga</td>
-                                                <td>2do Reporte Mensual</td>
-                                                <td>5/31/2024</td>
-                                            </tr>
+
+                                            <?php } ?>
+
                                         </table>
+
+                                        <?php
+                                        }else{
+                                            echo "<div class='alert alert-warning mt-5'>No hay alumnos</div>";
+                                        }
+                                        ?>
+
                                     </div>
                                     <div class="tab-pane fade" id="editions" role="tabpanel" aria-labelledby="editions-tab">
                                         <!-- Content for editions tab -->
