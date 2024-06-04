@@ -409,7 +409,8 @@ if(!empty($_GET['matricula'])){
                             ['1er Reporte', 'Mensual'],
                             ['2do Reporte', 'Mensual'],
                             ['3er Reporte', 'Mensual'],
-                            ['Documentos', 'Finales']
+                            ['Documentos', 'Finales'],
+                            ['Finalización', 'de Prácticas']
                         ];
 
                         foreach ($steps as $index => $step) {
@@ -781,6 +782,15 @@ if(!empty($_GET['matricula'])){
                                             </table>
                                         </div>
                                     <?php } ?>
+                                </div>
+
+                                <div id="collapse6" class="panel-collapse collapse" data-parent="#myGroup">
+
+                                    <?php
+                                    if($etapa < 6) {
+                                        echo '<div class="alert alert-danger" role="alert">El alumno no ha completado un proceso anterior</div>';
+                                    }else echo '<div class="alert alert-success" role="alert">El alumno ya terminó su proceso existosamente</div>';
+                                    ?>
                                 </div>
 
                             </div>
