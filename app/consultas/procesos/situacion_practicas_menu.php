@@ -6,12 +6,11 @@ define('RUTA_INCLUDE', '../../../'); //ajustar a necesidad
 
 $sql = "SELECT * FROM usuarios_alumno";
 
-$sql2 = "SELECT * 
-FROM Reporte_Mensual JOIN usuarios_alumno ON Reporte_Mensual.Alumno = usuarios_alumno.matricula 
-WHERE Reporte_Mensual.Estatus = 'Pendiente';
+$sql2 = "SELECT a.*, ua.nombre
+FROM Archivos a
+JOIN usuarios_alumno ua ON a.matricula = ua.matricula
+WHERE a.estado = 'pendiente'";
 
-
-";
 ?>
 
 <!DOCTYPE html>
@@ -163,6 +162,11 @@ WHERE Reporte_Mensual.Estatus = 'Pendiente';
                                 </ul>
                                 <div class="tab-content" id="myTabContent">
                                     <div class="tab-pane fade show active" id="content-items" role="tabpanel" aria-labelledby="content-items-tab">
+
+                                        <?php
+                                            if($encontrados2 > 0){
+                                        ?>
+
                                         <table class="table table-hover mb-0">
                                             <thead>
                                             <tr>
@@ -174,16 +178,19 @@ WHERE Reporte_Mensual.Estatus = 'Pendiente';
                                             <tbody>
 
                                             <?php
-
-                                            if($encontrados2 > 0){
                                             while ($fila2=mysqli_fetch_assoc($resultado2)){
                                                 $first_key = key($fila2);
                                                 $first_value = current($fila2);
                                             ?>
-                                                <tr onclick="window.location.href='revision_documento.php?id=<?php echo $first_value; ?>&tipo=<?php echo $fila2['Tipo_Doc']; ?>&nombre=<?php echo $fila2['nombre']; ?>'">
+                                                <tr onclick="window.location.href='revision_documento2.php?id=<?php echo $fila2['id']; ?>'">
                                                 <td><?php echo $fila2['nombre']?></td>
-                                                <td><?php echo $fila2['Tipo_Doc']?></td>
-                                                <td><?php echo $fila2['Fecha']?></td>
+                                                <td><?php echo $fila2['clasificacion']?></td>
+                                                <td>
+                                                    <?php
+                                                    date_default_timezone_set('America/New_York');
+                                                    $todays_date = date('Y-m-d');
+                                                    echo $todays_date;?>
+                                                </td>
                                             </tr>
 
                                             <?php } ?>
@@ -192,16 +199,20 @@ WHERE Reporte_Mensual.Estatus = 'Pendiente';
 
                                         <?php
                                         }else{
-                                            echo "<div class='alert alert-warning mt-5'>No hay alumnos</div>";
-                                        }
+
                                         ?>
 
                                     </div>
+
                                     <div class="tab-pane fade" id="editions" role="tabpanel" aria-labelledby="editions-tab">
                                         <!-- Content for editions tab -->
                                     </div>
                                 </div>
                             </div>
+
+                            <?php
+                            echo "<div class='alert alert-info mt-3'>Ningún documento por revisar</div>";
+                            }?>
                         </div>
                     </div>
                 </div>
