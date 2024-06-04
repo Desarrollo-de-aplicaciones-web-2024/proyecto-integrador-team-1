@@ -22,7 +22,7 @@ function getSidebar($rutas) {
     <li class="nav-item">
         <a class="nav-link" href="{$rutaDocumentosIniciales}">
             <i class="fa fa-archive"></i>
-            <span>Pagina de Inicio</span>
+            <span>Documentos Iniciales</span>
         </a>
     </li>
     <li class="nav-item">
