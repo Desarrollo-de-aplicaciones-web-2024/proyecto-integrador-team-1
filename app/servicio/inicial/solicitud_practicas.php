@@ -31,7 +31,7 @@ if ($result->num_rows > 0) {
 $aseguramiento = '14';
 $jefe = '15';
 
-// Consulta SQL para el ID 14
+// Consulta SQL para el ID 14 (aseguramiento de calidad)
 $sql_academia_aseguramiento = "SELECT nombre_completo FROM academia_usuarios WHERE id = '$aseguramiento'";
 $result_academia_aseguramiento = $conn->query($sql_academia_aseguramiento);
 if ($result_academia_aseguramiento->num_rows > 0) {
@@ -41,7 +41,7 @@ if ($result_academia_aseguramiento->num_rows > 0) {
     $nombre_academia_aseguramiento = "Nombre no encontrado"; // O un mensaje adecuado si no se encuentra el nombre.
 }
 
-// Consulta SQL para el ID 15
+// Consulta SQL para el ID 15 (jefe de academia)
 $sql_academia_jefe = "SELECT nombre_completo FROM academia_usuarios WHERE id = '$jefe'";
 $result_academia_jefe = $conn->query($sql_academia_jefe);
 if ($result_academia_jefe->num_rows > 0) {
@@ -49,6 +49,28 @@ if ($result_academia_jefe->num_rows > 0) {
     $nombre_academia_jefe = $row_academia_jefe['nombre_completo'];
 } else {
     $nombre_academia_jefe = "Nombre no encontrado"; // O un mensaje adecuado si no se encuentra el nombre.
+}
+
+// Definir el ID de la empresa que deseas buscar
+$id_empresa = 1; // Cambia este valor al ID numérico deseado
+
+// Consulta SQL para obtener la información de la empresa según su ID
+$sql_empresa_por_id = "SELECT nombre, telefono, direccion FROM Catalogo_empresas WHERE id = $id_empresa";
+$result_empresa_por_id = $conn->query($sql_empresa_por_id);
+
+// Verificar si se encontraron resultados
+if ($result_empresa_por_id->num_rows > 0) {
+    // Obtener los datos del primer resultado (asumiendo que el ID es único)
+    $row_empresa_por_id = $result_empresa_por_id->fetch_assoc();
+
+    // Almacenar la información en variables
+    $nombre_empresa = $row_empresa_por_id['nombre'];
+    $telefono_empresa = $row_empresa_por_id['telefono'];
+    $direccion_empresa = $row_empresa_por_id['direccion'];
+
+    // Aquí puedes usar la información como desees, por ejemplo, imprimir en pantalla o almacenar en variables para usar en tu documento PDF
+} else {
+    echo "No se encontró ninguna empresa con el ID especificado."; // O un mensaje adecuado si no se encuentra ninguna empresa con ese ID.
 }
 
 $conn->close(); // Cierra la conexión a la base de datos.
@@ -170,15 +192,15 @@ $html = <<<EOD
 <table>
     <tr>
         <th>1. Nombre o razón social:</th>
-        <td colspan="3">Compañía de Agua del Municipio de Boca del Río SAPI de CV</td>
+        <td colspan="3">{$nombre_empresa}</td>
     </tr>
     <tr>
         <th>2. Domicilio:</th>
-        <td colspan="3">Calz. Juan Pablo II 1600 Fraccionamiento Galaxia, Boca del Río, Veracruz CP 94294</td>
+        <td colspan="3">{$direccion_empresa}</td>
     </tr>
     <tr>
         <th>3. Teléfono:</th>
-        <td>(229)-986-2052</td>
+        <td>{$telefono_empresa}</td>
         <th>4. E-mail:</th>
         <td>rmartinez@grupomasagua.com</td>
     </tr>

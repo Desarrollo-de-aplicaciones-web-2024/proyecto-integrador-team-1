@@ -4,12 +4,14 @@ require_once '../../../config/db.php';
 
 define('RUTA_INCLUDE', '../../../'); //ajustar a necesidad
 
-$sql = "SELECT * FROM usuarios_alumno";
+$sqlx = "SELECT * FROM usuarios_alumno";
 
 $sql2 = "SELECT a.*, ua.nombre
 FROM Archivos a
 JOIN usuarios_alumno ua ON a.matricula = ua.matricula
 WHERE a.estado = 'pendiente'";
+
+
 
 ?>
 
@@ -28,7 +30,6 @@ WHERE a.estado = 'pendiente'";
     <!-- Bootstrap 5.1 CSS -->
 
     <title><?php echo PAGE_TITLE ?></title>
-
 
     <?php getTopIncludes(RUTA_INCLUDE ) ?>
     <style>
@@ -116,17 +117,209 @@ WHERE a.estado = 'pendiente'";
                                         <tbody>
 
                                             <?php
-                                                $resultado = mysqli_query($conexion, $sql);
-                                                $encontrados = mysqli_num_rows($resultado);
+                                                $resultadox = mysqli_query($conexion, $sqlx);
+                                                $encontradosx = mysqli_num_rows($resultadox);
 
-                                                if($encontrados > 0){
-                                                while ($fila=mysqli_fetch_assoc($resultado)){
+                                                if($encontradosx > 0){
+                                                while ($filax=mysqli_fetch_assoc($resultadox)){
+
+                                                    $id_proposito = $filax['matricula'];
+
+                                                    $sql_empresa = "SELECT Empresa.Razon_social
+                                                    FROM Carta_Aceptación
+                                                    JOIN Empresa ON Carta_Aceptación.Empresa = Empresa.idEmpresa
+                                                    WHERE Carta_Aceptación.Alumno = $id_proposito;
+                                                    ";
+                                                    $sql = "select * from usuarios_alumno where matricula = $id_proposito";
+
+                                                    $resultado = mysqli_query($conexion, $sql);
+                                                    $resultado2 = mysqli_query($conexion, $sql_empresa);
+
+                                                    if($resultado){
+                                                        $fila = mysqli_fetch_assoc($resultado);
+                                                        $matricula = $fila['matricula'];
+                                                        $nombre = $fila['nombre'];
+                                                    }
+                                                    if($resultado2){
+                                                        $encontrados = mysqli_num_rows($resultado2);
+                                                        if($encontrados > 0) {
+                                                            $fila2 = mysqli_fetch_assoc($resultado2);
+                                                            $empresa = $fila2['Razon_social'];
+                                                        }else{
+                                                            $empresa = 'Sin Empresa';
+                                                        }
+                                                    }
+
+                                                    $etapa = 1;
+
+                                                    // 1
+                                                    $sql_SP = "select * from Solicitud_practicas where Alumno = $id_proposito";   $resultado_SP = mysqli_query($conexion, $sql_SP);
+                                                    $sql_PT = "select * from Plan_Trabajo where Alumno = $id_proposito";          $resultado_PT = mysqli_query($conexion, $sql_PT);
+                                                    $sql_CA = "select * from Carta_Aceptación where Alumno = $id_proposito";      $resultado_CA = mysqli_query($conexion, $sql_CA);
+
+                                                    if($resultado_SP){
+                                                        $encontrados_SP = mysqli_num_rows($resultado_SP);
+                                                        if($encontrados_SP > 0) {
+                                                            $fila_SP = mysqli_fetch_assoc($resultado_SP);
+
+                                                            $SP_Estatus = $fila_SP['Estatus'];
+                                                        }else{
+                                                            $SP_Estatus = 'Sin subir';
+                                                        }
+                                                    }
+
+                                                    if($resultado_PT){
+                                                        $encontrados_PT = mysqli_num_rows($resultado_PT);
+                                                        if($encontrados_PT > 0) {
+                                                            $fila_PT = mysqli_fetch_assoc($resultado_PT);
+                                                            $PT_Estatus = $fila_PT['Estatus'];
+                                                        }else{
+                                                            $PT_Estatus = 'Sin subir';
+                                                        }
+                                                    }
+
+                                                    if($resultado_CA){
+                                                        $encontrados_CA = mysqli_num_rows($resultado_CA);
+                                                        if($encontrados_CA > 0) {
+                                                            $fila_CA = mysqli_fetch_assoc($resultado_CA);
+
+                                                            $CA_Estatus = $fila_CA['Estatus'];
+                                                        }else{
+                                                            $CA_Estatus = 'Sin subir';
+                                                        }
+                                                    }
+
+                                                    if($SP_Estatus == 'Aceptado' && $PT_Estatus == 'Aceptado' && $CA_Estatus == 'Aceptado')$etapa++;
+
+                                                    // 2
+                                                    $sql_RM = $sql = "select * from Reporte_Mensual where Alumno = $id_proposito order by Fecha_Fin";
+                                                    $resultado_RM = mysqli_query($conexion, $sql_RM);
+
+                                                    $all_rows_data = [];
+
+                                                    if($resultado_RM){
+                                                        $encontrados_RM = mysqli_num_rows($resultado_RM);
+
+                                                        while ($row = mysqli_fetch_assoc($resultado_RM)){
+                                                            $all_rows_data[] = $row;
+                                                        }
+
+                                                        if($encontrados_RM > 0){
+
+                                                            $first_row = $all_rows_data[0];
+
+                                                            $RM1_Estatus = $first_row['Estatus'];
+
+                                                            if($encontrados_RM > 1){
+
+                                                                $second_row = $all_rows_data[1];
+
+                                                                $RM2_Estatus = $second_row['Estatus'];
+
+                                                                if($encontrados_RM > 2){
+
+                                                                    $third_row = $all_rows_data[2];
+
+
+                                                                    $RM3_Estatus = $third_row['Estatus'];
+
+                                                                }else{
+
+                                                                    $RM3_Estatus = 'Sin subir';
+                                                                }
+
+                                                            }else{
+                                                                $RM2_Estatus = 'Sin subir';
+                                                                $RM3_Estatus = 'Sin subir';
+                                                            }
+
+                                                        }else{
+
+                                                            $RM1_Estatus = 'Sin subir';
+
+                                                            $RM2_Estatus = 'Sin subir';
+
+                                                            $RM3_Estatus = 'Sin subir';
+                                                        }
+
+                                                        if($RM1_Estatus == "Aceptado")$etapa++;
+                                                        if($RM2_Estatus == "Aceptado")$etapa++;
+                                                        if($RM3_Estatus == "Aceptado")$etapa++;
+                                                    }
+
+                                                    $sql_RG = "select * from Archivos where matricula = $id_proposito and clasificacion = 'reporte' and tipo_archivo = 'final'";        $resultado_RG = mysqli_query($conexion, $sql_RG);
+                                                    $sql_CO = "select * from Archivos where matricula = $id_proposito and clasificacion = 'constancia' and tipo_archivo = 'final'";     $resultado_CO = mysqli_query($conexion, $sql_CO);
+                                                    $sql_RP = "select * from Archivos where matricula = $id_proposito and clasificacion = 'resena' and tipo_archivo = 'final'";         $resultado_RP = mysqli_query($conexion, $sql_RP);
+
+                                                    if($resultado_RG){
+                                                        $encontrados_RG = mysqli_num_rows($resultado_RG);
+                                                        if($encontrados_RG > 0) {
+                                                            $fila_RG = mysqli_fetch_assoc($resultado_RG);
+
+                                                            $estado_RG = $fila_RG['estado'];;
+
+                                                        }else{
+                                                            $estado_RG = 'Sin subir';
+
+                                                        }
+                                                    }
+
+                                                    if($resultado_CO){
+                                                        $encontrados_CO = mysqli_num_rows($resultado_CO);
+                                                        if($encontrados_CO > 0) {
+                                                            $fila_CO = mysqli_fetch_assoc($resultado_CO);
+                                                            $estado_CO = $fila_CO['estado'];
+
+                                                        }else{
+
+                                                            $estado_CO = 'Sin subir';
+
+                                                        }
+                                                    }
+
+                                                    if($resultado_RP){
+                                                        $encontrados_RP = mysqli_num_rows($resultado_RP);
+                                                        if($encontrados_RP > 0) {
+                                                            $fila_RP = mysqli_fetch_assoc($resultado_RP);
+
+                                                            $estado_RP = $fila_RP['estado'];
+
+                                                        }else{
+
+                                                            $estado_RP = 'Sin subir';
+                                                        }
+                                                    }
+
+                                                    if($estado_RP === 'aceptado' && $estado_CO === 'aceptado' && $estado_RG === 'aceptado')$etapa++;
                                             ?>
 
-                                            <tr onclick="window.location.href='situacion_practicas_alumno.php?matricula=<?php echo $fila['matricula']; ?>'">
-                                                <td><?php echo $fila['matricula']?></td>
-                                                <td><?php echo $fila['nombre']?></td>
-                                                <td>Documentos Finales</td>
+                                            <tr onclick="window.location.href='situacion_practicas_alumno.php?matricula=<?php echo $filax['matricula']; ?>'">
+                                                <td><?php echo $filax['matricula']?></td>
+                                                <td><?php echo $filax['nombre']?></td>
+                                                <td>
+                                                    <?php
+                                                    switch($etapa) {
+                                                        case 1:
+                                                            echo 'Sin iniciar';
+                                                            break;
+                                                        case 2:
+                                                            echo '1er Reporte Mensual';
+                                                            break;
+                                                        case 3:
+                                                            echo '2do Reporte Mensual';
+                                                            break;
+                                                        case 4:
+                                                            echo '3er Reporte Mensual';
+                                                            break;
+                                                        case 5:
+                                                            echo 'Documento Finales';
+                                                            break;
+                                                        case 6:
+                                                            echo 'Proceso finalizado';
+                                                            break;
+                                                    }
+                                                    ?>
+                                                </td>
                                             </tr>
 
                                             <?php } ?>
