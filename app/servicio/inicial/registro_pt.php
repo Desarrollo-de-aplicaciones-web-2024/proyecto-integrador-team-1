@@ -25,7 +25,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Asociar los parámetros a la consulta y ejecutarla
     $stmt->bind_param("ssss", $fecha, $asistencia, $horario, $descripcion);
     if ($stmt->execute()) {
-        echo "Los datos se han guardado correctamente.";
+        header("Location: documentos-inciales.php");
+        exit();
     } else {
         echo "Error al guardar los datos: " . $stmt->error;
     }

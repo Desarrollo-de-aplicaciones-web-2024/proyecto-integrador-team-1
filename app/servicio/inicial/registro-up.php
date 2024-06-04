@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $puestotentativo = $_POST["puesto_tentativo"];
 
     // Preparar la consulta SQL para insertar los datos
-    $sql = "INSERT INTO solicitud_practicas (empresa, nombre_super, puesto_super,email, duracion_practicas, departamento, puesto_tentativo) VALUES (?, ?, ?, ?, ?, ?,?)";
+    $sql = "INSERT INTO solicitud_practicas (empresa, nombre_super, puesto_super,email, duracion_practicas, departamento, puesto_tentativo) VALUES (?, ?, ?, ?, ?, ?,?<)";
     $stmt = $conn->prepare($sql);
 
     if ($stmt === false) {
