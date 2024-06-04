@@ -36,7 +36,7 @@ if ($result === false) {
 
 <div id="wrapper">
 
-    <?php getSidebar() ?>
+    <?php getSidebar($rutas) ?>
 
     <div id="content-wrapper">
 

@@ -32,7 +32,7 @@ if ($conn->connect_error) {
 
 <div id="wrapper">
 
-    <?php getSidebar() ?>
+    <?php getSidebar($rutas) ?>
 
     <div id="content-wrapper">
 
