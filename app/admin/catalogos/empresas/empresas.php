@@ -89,7 +89,21 @@ define('RUTA_INCLUDE', '../../../../'); // ajustar a necesidad
                             echo "<td>" . $row['telefono'] . "</td>";
                             echo "<td>" . $row['direccion'] . "</td>";
                             echo "<td>" . $row['disponibilidad'] . "</td>";
-                            echo "<td><a href='#' class='btn btn-link btn-sm' data-toggle='modal' data-target='#editCompanyModal'data-id='" . $row['id'] . "'data-nombreempresa='" . $row['nombre'] . "'data-sector='" . $row['sector_id'] . "'data-telefono='" . $row['telefono'] . "'data-direccion='" . $row['direccion'] . "'data-disponibilidad='" . $row['disponibilidad'] . "'data-logo='" . $row['logo'] . "'>Editar</a><a href='#' class='btn btn-link btn-sm desactivar-empresa'>Desactivar</a></td>";
+                            echo "<td><a href='#' class='btn btn-link btn-sm' data-toggle='modal' data-target='#editCompanyModal'data-id='" . $row['id'] . "'data-nombreempresa='" . $row['nombre'] . "'data-sector='" . $row['sector_id'] . "'data-telefono='" . $row['telefono'] . "'data-direccion='" . $row['direccion'] . "'data-disponibilidad='" . $row['disponibilidad'] . "'data-logo='" . $row['logo'] . "'>Editar</a>";
+                            if ($row['disponibilidad'] == 'Disponible') {
+                                // Si la empresa está disponible, mostrar botón de Desactivar
+                                echo "<form action='Desactivar_empresa.php' method='GET' style='display: inline;'>";
+                                echo "<input type='hidden' name='id' value='" . $row['id'] . "'>";
+                                echo "<button type='submit' class='btn btn-link btn-sm' name='desactivar' value='true'>Desactivar</button>";
+                                echo "</form>";
+                            } else {
+                                // Si la empresa no está disponible, mostrar botón de Activar
+                                echo "<form action='Activar_empresa.php' method='GET' style='display: inline;'>";
+                                echo "<input type='hidden' name='id' value='" . $row['id'] . "'>";
+                                echo "<button type='submit' class='btn btn-link btn-sm' name='activar' value='true'>Activar</button>";
+                                echo "</form>";
+                            }
+                            echo "</td>";
                             echo "</tr>";
                         }
                     } else {
