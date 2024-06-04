@@ -1,5 +1,6 @@
 <?php
 require_once '../../../config/global.php';
+require_once '../../../config/db.php';
 define('RUTA_INCLUDE', '../../../'); //ajustar a necesidad
 ?>
 
@@ -40,7 +41,7 @@ define('RUTA_INCLUDE', '../../../'); //ajustar a necesidad
 
 <div id="wrapper">
 
-    <?php getSidebar() ?>
+    <?php getSidebar($rutas)?>
 
     <div id="content-wrapper">
 

@@ -2,7 +2,19 @@
 require_once '../../../config/global.php';
 
 define('RUTA_INCLUDE', '../../../'); //ajustar a necesidad
+// Conexión a la base de datos
+$conn = new mysqli("database-team1-daw.c30w0agw4764.us-east-2.rds.amazonaws.com", "admin", "S1stemas_23", "PP_TEAM1");
+if ($conn->connect_error) {
+    die("Conexión fallida: " . $conn->connect_error);
+}
+    $sql = "SELECT Razon_social FROM Empresa";
+    $result = $conn->query($sql);
+
+if ($result === false) {
+    die("Error en la consulta SQL: " . $conn->error);
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -42,59 +54,59 @@ define('RUTA_INCLUDE', '../../../'); //ajustar a necesidad
 
         <!-- /.container-fluid -->
 
-        <div class="container">
-            <form>
-                <div class="form-group">
-                    <label for="inputAddress2">Empresa:    </label>
+        <div class="container ">
+            <form id="formulario-subida" action="registro-up.php" method="post" enctype="multipart/form-data">
+                <div class="empresa">
+                    <label for="empresa">Empresa:</label>
+                    <select name="empresa" class="form-control" aria-label="Default select example">
+                        <?php
+                        if ($result->num_rows > 0) {
+                            // Salida de datos de cada fila
+                            while($row = $result->fetch_assoc()) {
+                                echo "<option value='" . $row["Razon_social"] . "'>" . $row["Razon_social"] . "</option>";
+                            }
+                        } else {
+                            echo "<option value=''>No hay empresas disponibles</option>";
+                        }
+                        ?>
+                    </select>
+                </div>
 
-                <select class="form-select" aria-label="Default select example">
-                <option selected>Nombre de la empresa</option>
-                <option value="1">Empresa 1</option>
-                <option value="2">Empresa 2</option>
-                <option value="3">Empresa 3</option>
-                </select>
+                <div class="form-group">
+                    <label for="nombre-supervisor">Nombre del supervisor directo:</label>
+                    <input name="nombre_super" type="text" class="form-control" id="nombre-supervisor">
                 </div>
                 <div class="form-group">
-                    <label for="inputAddress2">Nombre del supervisor directo</label>
-                    <input type="text" class="form-control" id="inputAddress2">
+                    <label for="puesto-supervisor">Puesto del supervisor directo:</label>
+                    <input name="puesto_super" type="text" class="form-control" id="puesto-supervisor">
+                </div>
+                <div class="meses">
+                    <label for="duracion-practicas">Duración de las prácticas:</label>
+                    <select name="duracion_practicas" class="form-control" aria-label="Default select example">
+                        <option value=""># meses</option>
+                        <option value="3 meses">3 meses</option>
+                        <option value="4 meses">4 meses</option>
+                        <option value="5 meses">5 meses</option>
+                        <option value="6 meses">6 meses</option>
+                    </select>
                 </div>
                 <div class="form-group">
-                <label for="inputAddress2">Puesto del supervisor directo</label>
-                <input type="text" class="form-control" id="inputAddress2">
-                 </div>
-            <div class="form-group">
-                <label for="inputEmail4">Email:</label>
-                <input type="email" class="form-control" id="inputEmail4">
-            </div>
-
-            <div class="form-group">
-                <label for="inputAddress2">Duración de las prácticas:    </label>
-
-                <select class="form-select" aria-label="Default select example">
-                    <option selected> # meses</option>
-                    <option value="1">3 meses</option>
-                    <option value="2">4 meses</option>
-                    <option value="3">5 meses</option>
-                    <option value="3">6 meses</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="inputEmail4">Departamento:</label>
-                <input type="text" class="form-control" id="inputEmail4">
-            </div>
-            <div class="form-group">
-                <label for="inputEmail4">Puesto tentativo a desempeñar:</label>
-                <input type="text" class="form-control" id="inputEmail4">
-            </div>
+                    <label for="departamento">Departamento:</label>
+                    <input name="departamento" type="text" class="form-control" id="departamento">
+                </div>
+                <div class="form-group">
+                    <label for="puesto-tentativo">Puesto tentativo a desempeñar:</label>
+                    <input name="puesto_tentativo" type="text" class="form-control" id="puesto-tentativo">
+                </div>
+                <div class="row mb-5">
+                    <div class="col">
+                        <input type="submit" value="Guardar" class="btn btn-primary" id="input-subida">
+                    </div>
+                    <div class="col text-right">
+                        <button type="button" class="btn btn-danger">Cancelar</button>
+                    </div>
+                </div>
             </form>
-            <div class="row mb-5">
-                <div class="col">
-                    <button onclick="window.location.href='plan_trabajo.php'" class="btn btn-primary">Guardar</button>
-                </div>
-                <div class="col text-right">
-                    <button type="button" class="btn btn-danger">Cancelar</button>
-                </div>
-            </div>
         </div>
 
         <!-- /.container -->
@@ -118,3 +130,6 @@ define('RUTA_INCLUDE', '../../../'); //ajustar a necesidad
 </body>
 
 </html>
+<?php
+$conn->close();
+?>
