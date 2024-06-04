@@ -95,8 +95,9 @@ session_start();
                                 // Si la empresa está disponible, mostrar botón de Desactivar
                                 echo "<button class='btn btn-link btn-sm' onclick='confirmarAccion(" . $row['id'] . ", \"desactivar\")'>Desactivar</button>";
                             } else {
-                                // Si la empresa no está disponible, mostrar botón de Activar
+                                // Si la empresa no está disponible, mostrar botón de Activar y Elimnar.
                                 echo "<button class='btn btn-link btn-sm' onclick='confirmarAccion(" . $row['id'] . ", \"activar\")'>Activar</button>";
+                                echo "<a href='#' class='btn btn-link btn-sm text-danger' onclick='confirmarEliminar(" . $row['id'] . ")'>Eliminar</a>";
                             }
                             echo "</td>";
                             echo "</tr>";
@@ -276,7 +277,12 @@ session_start();
             window.location.href = accion + "_empresa.php?id=" + id;
         }
     }
-
+    function confirmarEliminar(id) {
+        var mensaje = "¿Estás seguro que deseas eliminar esta empresa?";
+        if (confirm(mensaje)) {
+            window.location.href = "Eliminar_empresa.php?id=" + id;
+        }
+    }
 </script>
 <?php
 // Agregar un mensaje de error si hay alguno
@@ -290,5 +296,6 @@ if(isset($_SESSION['response'])) {
     unset($_SESSION['response']);
 }
 ?>
-
+</body>
+</html>
 
