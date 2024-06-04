@@ -278,7 +278,27 @@ WHERE a.estado = 'pendiente'";
                                             ?>
                                                 <tr onclick="window.location.href='revision_documento2.php?id=<?php echo $fila2['id']; ?>'">
                                                 <td><?php echo $fila2['nombre']?></td>
-                                                <td><?php echo $fila2['clasificacion']?></td>
+                                                <td>
+                                                    <?php
+                                                    switch ($fila2['clasificacion']) {
+                                                        case "resena":
+                                                            echo 'Reseña Practicantes';
+                                                            break;
+                                                        case "reporte":
+                                                            echo 'Reporte Global';
+                                                            break;
+                                                        case "constancia":
+                                                            echo 'Constancia de finalización';
+                                                            break;
+                                                        case "solicitud":
+                                                            echo 'Solicitud de Prácticas';
+                                                            break;
+                                                        case "carta_presentacion":
+                                                            echo 'Carta de presentación';
+                                                            break;
+                                                    }
+                                                    ?>
+                                                </td>
                                                 <td>
                                                     <?php
                                                     date_default_timezone_set('America/New_York');
