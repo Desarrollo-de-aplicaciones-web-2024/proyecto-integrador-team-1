@@ -54,7 +54,7 @@ if(!empty($_GET['id'])) {
 
 <div id="wrapper">
 
-    <?php getSidebar() ?>
+    <?php getSidebar($rutas) ?>
 
     <div id="content-wrapper">
 
