@@ -1,20 +1,22 @@
 <?php
-session_start();
 require_once '../../../../config/db.php';
-
+session_start();
 $response = array();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Validar que los campos no estén vacíos
     if (
-        isset($_POST['companyName'], $_POST['sector'], $_POST['phone'], $_POST['address'], $_POST['availability']) &&
+        isset($_POST['companyName'], $_POST['sector'], $_POST['phone'], $_POST['address'], $_POST['city'], $_POST['state'], $_POST['availability']) &&
         !empty($_POST['companyName']) && !empty($_POST['sector']) && !empty($_POST['phone']) &&
-        !empty($_POST['address']) && !empty($_POST['availability']) && isset($_FILES['logo']) && $_FILES['logo']['error'] == UPLOAD_ERR_OK
+        !empty($_POST['address']) && !empty($_POST['city']) && !empty($_POST['state']) && !empty($_POST['availability']) &&
+        isset($_FILES['logo']) && $_FILES['logo']['error'] == UPLOAD_ERR_OK
     ) {
         $nombre = $_POST['companyName'];
         $sector_id = intval($_POST['sector']); // Convertir a entero
         $telefono = $_POST['phone'];
         $direccion = $_POST['address'];
+        $ciudad = $_POST['city'];
+        $estado = $_POST['state'];
         $disponibilidad = $_POST['availability'];
 
         // Validar que el teléfono sea un número válido
@@ -23,8 +25,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $response['message'] = 'El número de teléfono debe contener solo números.';
         } else {
             // Insertar datos preliminares en la base de datos sin el logo
-            $sql = "INSERT INTO Catalogo_empresas (nombre, sector_id, telefono, direccion, disponibilidad) 
-                    VALUES ('$nombre', $sector_id, '$telefono', '$direccion', '$disponibilidad')";
+            $sql = "INSERT INTO Catalogo_empresas (nombre, sector_id, telefono, direccion, ciudad, estado, disponibilidad) 
+                    VALUES ('$nombre', $sector_id, '$telefono', '$direccion', '$ciudad', '$estado', '$disponibilidad')";
 
             if (mysqli_query($conexion, $sql)) {
                 $empresa_id = mysqli_insert_id($conexion); // Obtener el ID de la empresa insertada
@@ -32,71 +34,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 // Manejar la carga del archivo
                 $uploadDir = '../../../../img/';
 
-                // Construir la ruta del logo para PNG
-                $logoPath_png = $uploadDir . "empresa_$empresa_id.png";
-                // Construir la ruta del logo para JPG
-                $logoPath_jpg = $uploadDir . "empresa_$empresa_id.jpg";
-                // Construir la ruta del logo para JPEG
-                $logoPath_jpeg = $uploadDir . "empresa_$empresa_id.jpeg";
-                // Construir la ruta del logo para GIF
-                $logoPath_gif = $uploadDir . "empresa_$empresa_id.gif";
-                // Construir la ruta del logo para SVG
-                $logoPath_svg = $uploadDir . "empresa_$empresa_id.svg";
-
-                // Seleccionar la ruta adecuada según la extensión del archivo subido
-                switch ($_FILES['logo']['type']) {
-                    case "image/png":
-                        $logoPath = $logoPath_png;
-                        break;
-                    case "image/jpeg":
-                        $logoPath = $logoPath_jpg;
-                        break;
-                    case "image/jpg":
-                        $logoPath = $logoPath_jpeg;
-                        break;
-                    case "image/gif":
-                        $logoPath = $logoPath_gif;
-                        break;
-                    case "image/svg+xml":
-                        $logoPath = $logoPath_svg;
-                        break;
-                    default:
-                        $response['success'] = false;
-                        $response['message'] = 'Tipo de archivo no válido.';
-                        mysqli_close($conexion);
-                        $_SESSION['response'] = $response;
-                        header("Location: empresas.php");
-                        exit();
-                }
+                // Construir la ruta del logo según la extensión del archivo subido
+                $extension = pathinfo($_FILES['logo']['name'], PATHINFO_EXTENSION);
+                $logoPath = $uploadDir . "empresa_$empresa_id.$extension";
 
                 // Validar el tipo de archivo
-                $check = getimagesize($_FILES['logo']['tmp_name']);
-                if ($check === false) {
+                $allowed_types = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif', 'image/svg+xml'];
+                if (!in_array($_FILES['logo']['type'], $allowed_types)) {
                     $response['success'] = false;
-                    $response['message'] = 'El archivo no es una imagen.';
+                    $response['message'] = 'Tipo de archivo no válido.';
                 } elseif ($_FILES['logo']['size'] > 500000) {
                     $response['success'] = false;
                     $response['message'] = 'El archivo es demasiado grande.';
                 } else {
                     if (move_uploaded_file($_FILES['logo']['tmp_name'], $logoPath)) {
-                        // Actualizar la empresa con la ruta del logo según la extensión del archivo
-                        switch ($_FILES['logo']['type']) {
-                            case "image/png":
-                                $logo = '/img/' . "empresa_$empresa_id.png";
-                                break;
-                            case "image/jpeg":
-                                $logo = '/img/' . "empresa_$empresa_id.jpg";
-                                break;
-                            case "image/jpg":
-                                $logo = '/img/' . "empresa_$empresa_id.jpeg";
-                                break;
-                            case "image/gif":
-                                $logo = '/img/' . "empresa_$empresa_id.gif";
-                                break;
-                            case "image/svg+xml":
-                                $logo = '/img/' . "empresa_$empresa_id.svg";
-                                break;
-                        }
+                        // Actualizar la empresa con la ruta del logo
+                        $logo = '/img/' . "empresa_$empresa_id.$extension";
 
                         $updateSql = "UPDATE Catalogo_empresas SET logo = '$logo' WHERE id = $empresa_id";
 

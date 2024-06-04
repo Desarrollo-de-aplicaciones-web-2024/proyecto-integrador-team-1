@@ -13,6 +13,21 @@ define('RUTA_INCLUDE', '../../../../');
     <meta name="author" content="">
     <title><?php echo PAGE_TITLE ?></title>
     <?php getTopIncludes(RUTA_INCLUDE) ?>
+    <style>
+        th, td {
+            text-align: center;
+        }
+
+        th {
+            background-color: #016CA1;
+            color: white;
+        }
+
+        .btn-secondary {
+            margin: 0 auto;
+            display: block;
+        }
+    </style>
 </head>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
@@ -53,8 +68,8 @@ define('RUTA_INCLUDE', '../../../../');
                     <tbody>
                     <?php
                     if ($conexion) {
-                        // Obtener la matrícula del usuario (cambia esto por la matrícula real del estudiante)
-                        $nombre_completo = 'Maria del Carmen Aguirre Torres';
+                        //Obtener el nombre del usuario
+                        $nombre_completo = 'María del Carmen Aguirre Torres';
 
                         // Consulta SQL para obtener los archivos subidos por el nombre completo especificado
                         $sql = "SELECT rol FROM academia_usuarios WHERE nombre_completo = ?";
@@ -134,8 +149,8 @@ define('RUTA_INCLUDE', '../../../../');
                                     <div class="form-group">
                                         <label for="addRol">Rol</label>
                                         <select id="addRol" name="rol">
-                                            <option value="administrador">Administrador</option>
-                                            <option value="vinculador">Vinculador</option>
+                                            <option value="Administrador">Administrador</option>
+                                            <option value="Vizualizador">Vizualizador</option>
                                         </select>
                                     </div>
                                     <button type="submit" class="btn btn-primary">Guardar cambios</button>
@@ -176,8 +191,8 @@ define('RUTA_INCLUDE', '../../../../');
                                     <div class="form-group">
                                         <label for="addRol">Rol</label>
                                         <select id="addRol" name="rol">
-                                            <option value="administrador">Administrador</option>
-                                            <option value="vinculador">Vinculador</option>
+                                            <option value="Administrador">Administrador</option>
+                                            <option value="Vizualizador">Vizualizador</option>
                                         </select>
                                     </div>
                                     <button type="submit" class="btn btn-success">Agregar Usuario</button>

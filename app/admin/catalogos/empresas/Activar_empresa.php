@@ -1,6 +1,6 @@
 <?php
 require_once '../../../../config/db.php';
-
+session_start();
 // Verificar si se ha recibido un ID de empresa para activar
 if(isset($_GET['id'])) {
     $empresa_id = $_GET['id'];

@@ -2,28 +2,26 @@
 require_once '../../../config/global.php';
 require_once '../../../config/db.php';
 
-define('RUTA_INCLUDE', '../../../'); //ajustar a necesidad
+define('RUTA_INCLUDE', '../../../'); // ajustar a necesidad
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Check if action and id are set
-    if (isset($_POST["action"]) && isset($_POST["id"])) {
+    if (isset($_POST["action"]) && isset($_POST["id"]) && isset($_POST["comment"])) {
         $action = $_POST["action"];
-        $id = $_POST["id"];
+        $id = intval($_POST["id"]); // Ensure ID is an integer
+        $comentarios = mysqli_real_escape_string($conexion, $_POST["comment"]); // Escape the comment
 
-        // Process the action
         if ($action === "accept") {
-
-            $sql = "UPDATE Archivos set estado = 'aceptado' WHERE id = $id;";
-            $resultado = mysqli_query($conexion, $sql);
-
+            $sql = "UPDATE Archivos SET estado = 'aceptado', Comentarios = '$comentarios' WHERE id = $id";
         } elseif ($action === "reject") {
-
-            $sql = "UPDATE Archivos set estado = 'rechazado' WHERE id = $id;";
-            $resultado = mysqli_query($conexion, $sql);
-
+            $sql = "UPDATE Archivos SET estado = 'rechazado', Comentarios = '$comentarios' WHERE id = $id";
         }
 
+        $resultado = mysqli_query($conexion, $sql);
+        if ($resultado) {
+            echo "Success";
+        } else {
+            echo "Error: " . mysqli_error($conexion);
+        }
     }
 }
-
 ?>
