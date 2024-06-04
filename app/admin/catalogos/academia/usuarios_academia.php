@@ -53,8 +53,8 @@ define('RUTA_INCLUDE', '../../../../');
                     <tbody>
                     <?php
                     if ($conexion) {
-                        // Obtener la matrícula del usuario (cambia esto por la matrícula real del estudiante)
-                        $nombre_completo = 'Maria del Carmen Aguirre Torres';
+                        // Obtener el nombre del usuario
+                        $nombre_completo = 'María del Carmen Aguirre Torres';
 
                         // Consulta SQL para obtener los archivos subidos por el nombre completo especificado
                         $sql = "SELECT rol FROM academia_usuarios WHERE nombre_completo = ?";
@@ -134,8 +134,8 @@ define('RUTA_INCLUDE', '../../../../');
                                     <div class="form-group">
                                         <label for="addRol">Rol</label>
                                         <select id="addRol" name="rol">
-                                            <option value="administrador">Administrador</option>
-                                            <option value="vinculador">Vinculador</option>
+                                            <option value="Administrador">Administrador</option>
+                                            <option value="Vizualizador">Vizualizador</option>
                                         </select>
                                     </div>
                                     <button type="submit" class="btn btn-primary">Guardar cambios</button>
@@ -176,8 +176,8 @@ define('RUTA_INCLUDE', '../../../../');
                                     <div class="form-group">
                                         <label for="addRol">Rol</label>
                                         <select id="addRol" name="rol">
-                                            <option value="administrador">Administrador</option>
-                                            <option value="vinculador">Vinculador</option>
+                                            <option value="Administrador">Administrador</option>
+                                            <option value="Vizualizador">Vizualizador</option>
                                         </select>
                                     </div>
                                     <button type="submit" class="btn btn-success">Agregar Usuario</button>

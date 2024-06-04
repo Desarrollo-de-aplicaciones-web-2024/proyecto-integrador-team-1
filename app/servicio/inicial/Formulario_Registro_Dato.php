@@ -80,6 +80,10 @@ if ($result === false) {
                     <label for="puesto-supervisor">Puesto del supervisor directo:</label>
                     <input name="puesto_super" type="text" class="form-control" id="puesto-supervisor">
                 </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input name="email" type="text" class="form-control" id="email">
+                </div>
                 <div class="meses">
                     <label for="duracion-practicas">Duración de las prácticas:</label>
                     <select name="duracion_practicas" class="form-control" aria-label="Default select example">
