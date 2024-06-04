@@ -1,6 +1,5 @@
 <?php
 require_once '../../../config/global.php';
-require_once '../../../config/db.php';
 
 define('RUTA_INCLUDE', '../../../'); // ajustar a necesidad
 
@@ -66,13 +65,13 @@ function procesarEstado ($documentosPorClasificacion,$nombre)
                 $encontrado = true; // Documento encontrado
                 if ($documento['estado'] == 'pendiente') {
                     // Acción para documentos pendientes
-                    echo '<td class="align-middle text-center"><p class="text-warning">pendiente</p></td>';
+                    echo '<td class="align-middle text-center"><p class="text-warning"  id="estado-documento">Pendiente</p></td>';
                 } elseif ($documento['estado'] == 'rechazado') {
                     // Acción para documentos rechazados
-                    echo '<td class="align-middle text-center"><p class="text-danger">rechazado</p></td>';
+                    echo '<td class="align-middle text-center" ><p class="text-danger" id="estado-documento">Rechazado</p></td>';
                 } elseif ($documento['estado'] == 'aceptado') {
                     // Acción para documentos aceptados
-                    echo '<td class="align-middle text-center"><p class="text-success">aceptado</p></td>';
+                    echo '<td class="align-middle text-center" ><p class="text-success" id="estado-documento">Aceptado</p></td>';
                 }
             }
         }
@@ -80,7 +79,7 @@ function procesarEstado ($documentosPorClasificacion,$nombre)
 
     // Si no se encontraron documentos para la clasificación 'reporte', muestra un mensaje
     if (!$encontrado) {
-        echo '<td class="align-middle text-center"><p class="text-secondary">No hay documentos subidos</p></td>';
+        echo '<td class="align-middle text-center" <p class="text-secondary" id="estado-documento">No hay documentos subidos</p></td>';
     }
 }
 
@@ -166,7 +165,7 @@ function procesarEstado ($documentosPorClasificacion,$nombre)
             <!-- Page Content -->
             <h1>Documentos Iniciales</h1>
             <hr>
-            <p><b>En este espacio descargarás los documentos necesarios para el final de tus prácticas profesionales, así como llenar todos los documentos necesarios
+            <p><b>En este espacio descargarás los documentos necesarios para el inicio de tus prácticas profesionales, así como llenar todos los documentos necesarios.
             </p></b>
             <div class="alert alert-info" role="alert">
                 <strong>Nota:</strong>
@@ -193,7 +192,7 @@ function procesarEstado ($documentosPorClasificacion,$nombre)
                     <tr>
                         <!--REPORTE GLOBAL-->
                         <td class="align-middle" >Solicitud Practicas Profesionales
-                            <a href="solicitud_practicas.php" download="Solicitud Practicas Profesionales" class="contenedor-icono" type="button" id="boton-descarga"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-arrow-down" viewBox="0 0 16 16">
+                            <a href="solicitud_practicas.php" download="solicitud_practicas.pdf" class="contenedor-icono" type="button" id="boton-descarga"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-arrow-down" viewBox="0 0 16 16">
                                     <path d="M8.5 6.5a.5.5 0 0 0-1 0v3.793L6.354 9.146a.5.5 0 1 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0-.708-.708L8.5 10.293z"/>
                                     <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
                                 </svg></a>
@@ -201,7 +200,7 @@ function procesarEstado ($documentosPorClasificacion,$nombre)
                                     <path d="M8.5 11.5a.5.5 0 0 1-1 0V7.707L6.354 8.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 7.707z"/>
                                     <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
                                 </svg> </button>
-                            <p class="archivo-reporte"> constancia.pdf</p>
+                            <p class="archivo-reporte"> </p>
                         </td>
 
                         <?php
@@ -214,7 +213,7 @@ function procesarEstado ($documentosPorClasificacion,$nombre)
                     <tr>
                         <!--RESEÑA DE PRACTICAS-->
                         <td class="align-middle">Plan de Trabajo
-                            <a href="plan_trabajo.php" download="Plan de trabajo de prácticas profesionales" class="contenedor-icono" id> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-arrow-down" viewBox="0 0 16 16">
+                            <a href="PlanDeTrabajo.php" download="PlanDeTrabajo.pdf" class="contenedor-icono" id> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-arrow-down" viewBox="0 0 16 16">
                                     <path d="M8.5 6.5a.5.5 0 0 0-1 0v3.793L6.354 9.146a.5.5 0 1 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0-.708-.708L8.5 10.293z"/>
                                     <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
                                 </svg></a>
@@ -222,7 +221,7 @@ function procesarEstado ($documentosPorClasificacion,$nombre)
                                     <path d="M8.5 11.5a.5.5 0 0 1-1 0V7.707L6.354 8.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 7.707z"/>
                                     <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
                                 </svg></button>
-                            <p class="archivo-resena"> constancia.pdf</p>
+                            <p class="archivo-resena"> </p>
 
                         </td>
                         <?php
@@ -233,7 +232,7 @@ function procesarEstado ($documentosPorClasificacion,$nombre)
                     </tr>
                     <tr>
                         <!--CONSTANCIA-->
-                        <td class="align-middle">Carta de Presentación <a href="CartaP.php" download="Carta de Aceptación" class="contenedor-icono"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-arrow-down" viewBox="0 0 16 16">
+                        <td class="align-middle">Carta de Presentacion <a href="CartaP.php" download="CartaP.pdf" class="contenedor-icono"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-arrow-down" viewBox="0 0 16 16">
                                     <path d="M8.5 6.5a.5.5 0 0 0-1 0v3.793L6.354 9.146a.5.5 0 1 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0-.708-.708L8.5 10.293z"/>
                                     <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
                                 </svg></a>
