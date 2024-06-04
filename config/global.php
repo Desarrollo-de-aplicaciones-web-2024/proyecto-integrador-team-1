@@ -62,7 +62,6 @@ EOD;
 
     echo $html;
 }
-
 function getNavbar($ruta = ''){
     $html = <<<EOD
 <nav class="navbar navbar-expand navbar-dark  custom-bg static-top">
