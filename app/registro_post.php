@@ -1,4 +1,7 @@
 <?php
+
+ob_start();
+
 require 'ModelUsuario.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -10,9 +13,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $modelo = new ModeloUsuario();
     if ($modelo->insertar($correo, $pwd, $nombres, $apellido_paterno, $apellido_materno)) {
-        echo "Registro exitoso";
+        header('Location: index.php');
+        exit();
     } else {
         echo "Error al registrar";
     }
 }
+
+
+ob_end_flush();
 ?>

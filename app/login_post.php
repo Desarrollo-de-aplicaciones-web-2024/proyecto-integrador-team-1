@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($usuario) {
         echo "Login exitoso";
     } else {
-        echo "Correo o contraseña incorrectos";
+        echo "Correo o contraseña incorrecto";
     }
 }
 ?>
