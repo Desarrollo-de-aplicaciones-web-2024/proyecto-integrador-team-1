@@ -9,6 +9,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sector_id = $_POST['sector'];
     $telefono = $_POST['telefono'];
     $direccion = $_POST['direccion'];
+    $ciudad = $_POST['ciudad']; // Nueva columna: Ciudad
+    $estado = $_POST['estado']; // Nueva columna: Estado
     $disponibilidad = $_POST['disponibilidad'];
     $logo = $_POST['logo'];
 
@@ -18,17 +20,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     error_log("Sector ID: $sector_id");
     error_log("Teléfono: $telefono");
     error_log("Dirección: $direccion");
+    error_log("Ciudad: $ciudad"); // Nuevo
+    error_log("Estado: $estado"); // Nuevo
     error_log("Disponibilidad: $disponibilidad");
     error_log("Logo: $logo");
 
-    if(!empty($nombre) && !empty($sector_id) && !empty($telefono) && !empty($direccion) && !empty($disponibilidad) && !empty($logo)) {
+    if(!empty($nombre) && !empty($sector_id) && !empty($telefono) && !empty($direccion) && !empty($ciudad) && !empty($estado) && !empty($disponibilidad) && !empty($logo)) {
         // Consulta SQL para actualizar los datos de la empresa en la base de datos
-        $sql = "UPDATE Catalogo_empresas SET nombre=?, sector_id=?, telefono=?, direccion=?, disponibilidad=?, logo=? WHERE id=?";
+        $sql = "UPDATE Catalogo_empresas SET nombre=?, sector_id=?, telefono=?, direccion=?, ciudad=?, estado=?, disponibilidad=?, logo=? WHERE id=?";
 
         // Preparar la consulta
         if ($stmt = $conexion->prepare($sql)) {
             // Vincular parámetros a la consulta
-            $stmt->bind_param("sissssi", $nombre, $sector_id, $telefono, $direccion, $disponibilidad, $logo, $empresa_id);
+            $stmt->bind_param("sissssssi", $nombre, $sector_id, $telefono, $direccion, $ciudad, $estado, $disponibilidad, $logo, $empresa_id);
 
             // Ejecutar la consulta
             if ($stmt->execute()) {

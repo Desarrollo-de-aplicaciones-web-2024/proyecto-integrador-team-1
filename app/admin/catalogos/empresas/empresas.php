@@ -69,6 +69,8 @@ session_start();
                         <th>Sector</th>
                         <th>Número de Teléfono</th>
                         <th>Dirección</th>
+                        <th>Ciudad</th>
+                        <th>Estado</th>
                         <th>Disponibilidad</th>
                         <th>Acciones</th>
                     </tr>
@@ -89,14 +91,17 @@ session_start();
                             echo "<td>" . $row['sector_nombre'] . "</td>";
                             echo "<td>" . $row['telefono'] . "</td>";
                             echo "<td>" . $row['direccion'] . "</td>";
+                            echo "<td>" . $row['ciudad'] . "</td>";
+                            echo "<td>" . $row['estado'] . "</td>";
                             echo "<td>" . $row['disponibilidad'] . "</td>";
-                            echo "<td><a href='#' class='btn btn-link btn-sm' data-toggle='modal' data-target='#editCompanyModal'data-id='" . $row['id'] . "'data-nombreempresa='" . $row['nombre'] . "'data-sector='" . $row['sector_id'] . "'data-telefono='" . $row['telefono'] . "'data-direccion='" . $row['direccion'] . "'data-disponibilidad='" . $row['disponibilidad'] . "'data-logo='" . $row['logo'] . "'>Editar</a>";
+                            echo "<td><a href='#' class='btn btn-link btn-sm' data-toggle='modal' data-target='#editCompanyModal'data-id='" . $row['id'] . "'data-nombreempresa='" . $row['nombre'] . "'data-sector='" . $row['sector_id'] . "'data-telefono='" . $row['telefono'] . "'data-direccion='" . $row['direccion'] . "'data-ciudad='" . $row['ciudad'] . "'data-estado='" . $row['estado'] . "'data-disponibilidad='" . $row['disponibilidad'] . "'data-logo='" . $row['logo'] . "'>Editar</a>";
                             if ($row['disponibilidad'] == 'Disponible') {
                                 // Si la empresa está disponible, mostrar botón de Desactivar
                                 echo "<button class='btn btn-link btn-sm' onclick='confirmarAccion(" . $row['id'] . ", \"desactivar\")'>Desactivar</button>";
                             } else {
-                                // Si la empresa no está disponible, mostrar botón de Activar
+                                // Si la empresa no está disponible, mostrar botón de Activar y Elimnar.
                                 echo "<button class='btn btn-link btn-sm' onclick='confirmarAccion(" . $row['id'] . ", \"activar\")'>Activar</button>";
+                                echo "<a href='#' class='btn btn-link btn-sm text-danger' onclick='confirmarEliminar(" . $row['id'] . ")'>Eliminar</a>";
                             }
                             echo "</td>";
                             echo "</tr>";
@@ -170,6 +175,14 @@ session_start();
                         <input type="text" class="form-control" id="address" name="address" required>
                     </div>
                     <div class="form-group">
+                        <label for="city">Ciudad</label>
+                        <input type="text" class="form-control" id="city" name="city" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="state">Estado</label>
+                        <input type="text" class="form-control" id="state" name="state" required>
+                    </div>
+                    <div class="form-group">
                         <label for="availability">Disponibilidad</label>
                         <select class="form-control" id="availability" name="availability" required>
                             <option value="Disponible">Disponible</option>
@@ -229,6 +242,14 @@ session_start();
                         <input type="text" class="form-control" id="editAddress" name="direccion" required>
                     </div>
                     <div class="form-group">
+                        <label for="editCity">Ciudad</label>
+                        <input type="text" class="form-control" id="editCity" name="ciudad" required>  <!-- Nueva columna -->
+                    </div>
+                    <div class="form-group">
+                        <label for="editState">Estado</label>
+                        <input type="text" class="form-control" id="editState" name="estado" required>  <!-- Nueva columna -->
+                    </div>
+                    <div class="form-group">
                         <label for="editAvailability">Disponibilidad</label>
                         <select class="form-control" id="editAvailability" name="disponibilidad" required>
                             <option value="Disponible">Disponible</option>
@@ -257,6 +278,8 @@ session_start();
             var sector = button.data('sector');
             var telefono = button.data('telefono');
             var direccion = button.data('direccion');
+            var ciudad = button.data('ciudad');
+            var estado = button.data('estado');
             var disponibilidad = button.data('disponibilidad');
             var logo = button.data('logo');
 
@@ -266,6 +289,8 @@ session_start();
             modal.find('.modal-body #editSector').val(sector);
             modal.find('.modal-body #editPhone').val(telefono);
             modal.find('.modal-body #editAddress').val(direccion);
+            modal.find('.modal-body #editCity').val(ciudad);
+            modal.find('.modal-body #editState').val(estado);
             modal.find('.modal-body #editAvailability').val(disponibilidad);
             modal.find('.modal-body #editLogo').val(logo);
         });
@@ -276,7 +301,12 @@ session_start();
             window.location.href = accion + "_empresa.php?id=" + id;
         }
     }
-
+    function confirmarEliminar(id) {
+        var mensaje = "¿Estás seguro que deseas eliminar esta empresa?";
+        if (confirm(mensaje)) {
+            window.location.href = "Eliminar_empresa.php?id=" + id;
+        }
+    }
 </script>
 <?php
 // Agregar un mensaje de error si hay alguno
@@ -290,5 +320,6 @@ if(isset($_SESSION['response'])) {
     unset($_SESSION['response']);
 }
 ?>
-
+</body>
+</html>
 
