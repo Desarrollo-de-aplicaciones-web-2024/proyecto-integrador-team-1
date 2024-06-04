@@ -3,18 +3,31 @@ define('PAGE_TITLE', 'Universidad Cristóbal Colón');
 
 // Define las rutas específicas para cada enlace
 $rutas = [
-    'documentos-iniciales' => '/proyecto-integrador-team-1/app/admin/catalogos/alumnos/paginainicio.php',
+    'pagina-inicio' => '/proyecto-integrador-team-1/app/admin/catalogos/alumnos/paginainicio.php',
     'index' => '/proyecto-integrador-team-1/app/admin/catalogos/vacantes/listavacantes.php',
-    'charts' => '/proyecto-integrador-team-1/proyecto-integrador-team-1/app/consultas/procesos/situacion_practicas_alumno.php',
-    'tables' => '/proyecto-integrador-team-1/tables.php'
+    'charts' => '/proyecto-integrador-team-1/app/servicio/final/documentos-finales.php',
+    'tables' => '/proyecto-integrador-team-1/app/servicio/inicial/Formulario_Registro_Dato.php',
+    'usuario-academia' => '/proyecto-integrador-team-1/app/admin/catalogos/academia/usuarios_academia.php', // Ruta para usuarios de academia
+    'usuario-alumno' => '/proyecto-integrador-team-1/app/admin/catalogos/alumnos/usuarios_alumno.php', // Ruta para usuarios de alumnos
+    'empresa' => '/proyecto-integrador-team-1/app/admin/catalogos/empresas/empresas.php', // Ruta para empresas
+    'consultas' => '/proyecto-integrador-team-1/app/consultas/procesos/consultas_y_reportes.php', // Ruta para vacantes
+    'documentos-iniciales' => '/proyecto-integrador-team-1/app/servicio/inicial/documentos-iniciales.php', // Ruta para vacantes
+    'situacion-practicas' => '/proyecto-integrador-team-1/app/consultas/procesos/situacion_practicas_menu.php', // Ruta para vacantes
+
 ];
 
 // Función para generar el sidebar
 function getSidebar($rutas) {
-    $rutaDocumentosIniciales = isset($rutas['documentos-iniciales']) ? $rutas['documentos-iniciales'] : '';
+    $rutaDocumentosIniciales = isset($rutas['pagina-inicio']) ? $rutas['pagina-inicio'] : '';
     $rutaIndex = isset($rutas['index']) ? $rutas['index'] : '';
     $rutaCharts = isset($rutas['charts']) ? $rutas['charts'] : '';
     $rutaTables = isset($rutas['tables']) ? $rutas['tables'] : '';
+    $rutaEmpresa = isset($rutas['empresa']) ? $rutas['empresa'] : '';
+    $rutaUserAca = isset($rutas['usuario-academia']) ? $rutas['usuario-academia'] : '';
+    $rutaUsersAlum = isset($rutas['usuario-alumno']) ? $rutas['usuario-alumno'] : '';
+    $rutaConsults = isset($rutas['consultas']) ? $rutas['consultas'] : '';
+    $rutaIniDoc = isset($rutas['documentos-iniciales']) ? $rutas['documentos-iniciales'] : '';
+    $rutasitupract = isset($rutas['situacion-practicas']) ? $rutas['situacion-practicas'] : '';
 
     $html = <<<EOD
 <!-- Sidebar -->
@@ -38,23 +51,35 @@ function getSidebar($rutas) {
             <span>Catálogos</span>
         </a>
         <div class="dropdown-menu" aria-labelledby="pagesDropdown">                        
-            <a class="dropdown-item" href="#">Usuarios Academia</a>
-            <a class="dropdown-item" href="#">Usuarios Alumnos</a>            
+            <a class="dropdown-item" href="{$rutaUserAca}">Usuarios Academia</a>
+            <a class="dropdown-item" href="{$rutaUsersAlum}">Usuarios Alumnos</a>            
             <div class="dropdown-divider"></div>        
-            <a class="dropdown-item" href="#">Empresas</a>            
-            <a class="dropdown-item" href="#">Vacantes</a>         
+            <a class="dropdown-item" href="{$rutaEmpresa}">Empresas</a>            
+            <a class="dropdown-item" href="{$rutasitupract}">Situación de prácticas</a>         
         </div>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="{$rutaCharts}">
+        <a class="nav-link" href="{$rutaConsults}">
             <i class="fas fa-fw fa-chart-area"></i>
-            <span>Documentos Iniciales</span>
+            <span>Consultas y reportes</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{$rutaIniDoc}">
+            <i class="fas fa-fw fa-paper-plane"></i>
+            <span>Documentos iniciales</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{$rutaCharts}">
+            <i class="fas fa-fw fa-paperclip"></i>
+            <span>Documentos Finales</span>
         </a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="{$rutaTables}">
             <i class="fas fa-fw fa-table"></i>
-            <span>Tablas</span>
+            <span>Formulario de Registro de datos</span>
         </a>
     </li>
 </ul>

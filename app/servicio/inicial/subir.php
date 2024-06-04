@@ -1,14 +1,5 @@
 <?php
 
-echo "<script type='text/javascript'>
-                var mensajeError = 'heeeey';
-                document.addEventListener('DOMContentLoaded', function() {
-                    var errorDiv = document.getElementById('mensaje-error');
-                    errorDiv.textContent = mensajeError;
-                    errorDiv.style.display = 'block';
-                });
-              </script>";
-
 // Conexión a la base de datos
 $conn = new mysqli("database-team1-daw.c30w0agw4764.us-east-2.rds.amazonaws.com", "admin", "S1stemas_23", "PP_TEAM1");
 if ($conn->connect_error) {
@@ -61,16 +52,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // Procesa cada archivo individualmente
-    procesarArchivo('archivo-reporte', 'reporte');
-    procesarArchivo('archivo-resena', 'resena');
-    procesarArchivo('archivo-constancia', 'constancia');
+    procesarArchivo('archivo-solicitud', 'solicitud');
+    procesarArchivo('archivo-plan_trabajo', 'plan_trabajo');
+    procesarArchivo('archivo-carta_presentacion', 'carta_presentacion');
 
     // Muestra el mensaje final basado en los resultados de la subida
     echo $mensaje;
-    header("Location: documentos-finales.php?upload=success");
+    header("Location: documentos-iniciales.php?upload=success");
     exit();
 } else {
-    header("Location: documentos-finales.php?upload=failure");
+    header("Location: documentos-iniciales.php?upload=failure");
     exit();
 }
 ?>

@@ -14,7 +14,7 @@ function sendPasswordByEmail($email, $password) {
         $mail->isSMTP();
         $mail->Host = 'smtp.hostinger.com';
         $mail->SMTPAuth = true;
-        $mail->Username = 'recuperar_contrasena@proyectolibrosminerva.com';
+        $mail->Username = 'recuperar_contrasena@proyectolibrosminerva.com'; //
         $mail->Password = 'Adri1391-';
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587;
@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($usuario) {
         $password = $usuario['pwd'];
         if (sendPasswordByEmail($correo, $password)) {
-            header("Location: index.php");
+            header('Location: index.php');
             exit();
         } else {
             echo "No se pudo enviar el correo. Inténtalo de nuevo.";

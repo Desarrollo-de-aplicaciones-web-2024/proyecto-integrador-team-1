@@ -1,4 +1,5 @@
 <?php
+
 require 'ModelUsuario.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -9,9 +10,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $usuario = $modelo->login($correo, $pwd);
 
     if ($usuario) {
-        echo "Login exitoso";
+        header('Location: admin/catalogos/alumnos/paginainicio.php');
+        exit();
     } else {
-        echo "Correo o contraseña incorrecto";
+        header('Location: index.php');
+        exit();
     }
 }
 ?>

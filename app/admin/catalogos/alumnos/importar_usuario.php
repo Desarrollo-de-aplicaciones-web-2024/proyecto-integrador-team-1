@@ -1,64 +1,40 @@
 <?php
-// Función para agregar un usuario a la base de datos
-function agregarUsuario($conexion, $matricula, $nombre, $correo, $licenciatura, $semestre, $telefono, $sexo) {
-    $sql = "INSERT INTO usuarios_alumno (matricula, nombre, correo, licenciatura, semestre, telefono, sexo) 
-            VALUES ('$matricula', '$nombre', '$correo', '$licenciatura', '$semestre', '$telefono', '$sexo')";
+require_once '../../../../config/global.php';
+require_once '../../../../config/db.php';
 
-    return mysqli_query($conexion, $sql);
-}
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['csvFile']) && $_FILES['csvFile']['error'] == 0) {
+    $file = $_FILES['csvFile']['tmp_name'];
+    $handle = fopen($file, "r");
 
-// Manejar la importación de usuarios desde un archivo CSV
-$response = array();
+    if ($handle !== FALSE) {
+        while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+            $matricula = $data[0];
+            $nombre = $data[1];
+            $correo = $data[2];
+            $licenciatura = $data[3];
+            $semestre = $data[4];
+            $telefono = $data[5];
+            $sexo = $data[6];
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_FILES['csvFile']) && !empty($_FILES['csvFile']['name'])) {
-        $csvFile = $_FILES['csvFile'];
+            $stmt = $conexion->prepare("INSERT INTO usuarios_alumno (matricula, nombre, correo, licenciatura, semestre, telefono, sexo) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("sssssss", $matricula, $nombre, $correo, $licenciatura, $semestre, $telefono, $sexo);
+            $stmt->execute();
 
-        // Verificar que sea un archivo CSV
-        $fileType = pathinfo($csvFile['name'], PATHINFO_EXTENSION);
-        if ($fileType !== 'csv') {
-            $response['success'] = false;
-            $response['message'] = 'El archivo debe ser un CSV.';
-        } else {
-            // Leer el contenido del archivo CSV
-            $csvData = file_get_contents($csvFile['tmp_name']);
-            $lines = explode(PHP_EOL, $csvData);
-
-            // Iterar sobre cada línea del archivo CSV
-            foreach ($lines as $line) {
-                // Obtener los campos de cada línea
-                $fields = str_getcsv($line);
-                if (count($fields) === 7) {
-                    // Asignar los valores a variables
-                    list($matricula, $nombre, $correo, $licenciatura, $semestre, $telefono, $sexo) = $fields;
-
-                    // Agregar el usuario a la base de datos
-                    if (agregarUsuario($conexion, $matricula, $nombre, $correo, $licenciatura, $semestre, $telefono, $sexo)) {
-                        // Éxito al agregar el usuario
-                        $response['success'] = true;
-                        $response['message'] = 'Usuarios importados correctamente.';
-                    } else {
-                        // Error al agregar el usuario
-                        $response['success'] = false;
-                        $response['message'] = 'Error al importar usuarios.';
-                        break; // Salir del bucle si hay un error
-                    }
-                } else {
-                    // El número de campos no es el esperado
-                    $response['success'] = false;
-                    $response['message'] = 'El archivo CSV no tiene el formato correcto.';
-                    break; // Salir del bucle si hay un error
-                }
+            if ($stmt->error) {
+                echo "Error al insertar usuario: " . $stmt->error;
+                exit;
             }
         }
+        fclose($handle);
+        // Redirigir a la página principal después de importar los usuarios
+        header("Location: usuarios_alumno.php");
+        exit;
     } else {
-        $response['success'] = false;
-        $response['message'] = 'No se proporcionó ningún archivo CSV.';
+        echo "Error al abrir el archivo.";
     }
 } else {
-    $response['success'] = false;
-    $response['message'] = 'Método de solicitud no válido.';
+    echo "No se recibió ningún archivo CSV o hubo un error al cargarlo.";
 }
 
-echo json_encode($response);
+$conexion->close();
 ?>
