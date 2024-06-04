@@ -3,6 +3,7 @@ require_once '../../../../config/global.php';
 require_once '../../../../config/db.php';
 
 define('RUTA_INCLUDE', '../../../../'); // ajustar a necesidad
+session_start();
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -199,7 +200,7 @@ define('RUTA_INCLUDE', '../../../../'); // ajustar a necesidad
                 </button>
             </div>
             <div class="modal-body">
-                <form id="editCompanyForm" action="editar_empresa.php" method="post">
+                <form id="editCompanyForm" method="post" action="Editar_empresa.php">
                     <input type="hidden" id="editCompanyId" name="id">
                     <div class="form-group">
                         <label for="editCompanyName">Nombre</label>
@@ -251,6 +252,7 @@ define('RUTA_INCLUDE', '../../../../'); // ajustar a necesidad
     $(document).ready(function() {
         $('#editCompanyModal').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget);
+            var id = button.data('id');
             var nombreEmpresa = button.data('nombreempresa');
             var sector = button.data('sector');
             var telefono = button.data('telefono');
@@ -259,6 +261,7 @@ define('RUTA_INCLUDE', '../../../../'); // ajustar a necesidad
             var logo = button.data('logo');
 
             var modal = $(this);
+            modal.find('.modal-body #editCompanyId').val(id);
             modal.find('.modal-body #editCompanyName').val(nombreEmpresa);
             modal.find('.modal-body #editSector').val(sector);
             modal.find('.modal-body #editPhone').val(telefono);
