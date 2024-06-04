@@ -4,7 +4,7 @@ require_once '../../../config/db.php';
 
 define('RUTA_INCLUDE', '../../../'); //ajustar a necesidad
 
-$sqlx = "SELECT * FROM usuarios_alumno";
+$sqly = "SELECT * FROM usuarios_alumno";
 
 $sql2 = "SELECT a.*, ua.nombre
 FROM Archivos a
@@ -117,10 +117,10 @@ WHERE a.estado = 'pendiente'";
                                         <tbody>
 
                                             <?php
-                                                $resultadox = mysqli_query($conexion, $sqlx);
-                                                $encontradosx = mysqli_num_rows($resultadox);
+                                                $resultadoy = mysqli_query($conexion, $sqly);
+                                                $encontradosy = mysqli_num_rows($resultadoy);
 
-                                                if($encontradosx > 0){
+                                                if($encontradosy > 0){
 
                                                     $sqlx = "
                                                     SELECT 
@@ -213,7 +213,7 @@ WHERE a.estado = 'pendiente'";
                                                             echo '3er Reporte Mensual';
                                                             break;
                                                         case 5:
-                                                            echo 'Documento Finales';
+                                                            echo 'Documentos Finales';
                                                             break;
                                                         case 6:
                                                             echo 'Proceso finalizado';

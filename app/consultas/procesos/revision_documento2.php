@@ -86,9 +86,10 @@ if (!empty($_GET['id'])) {
                     </nav>
                 </div>
                 <div class="col-md-4 d-flex justify-content-end align-items-center">
-                    <!-- Previous and Next buttons -->
+                    <!-- Previous and Next buttons
                     <button type="button" class="btn btn-primary mr-2">Anterior</button>
                     <button type="button" class="btn btn-primary">Siguiente</button>
+                    -->
                 </div>
             </div>
         </div>
