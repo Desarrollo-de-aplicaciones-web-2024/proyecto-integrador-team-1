@@ -52,9 +52,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // Procesa cada archivo individualmente
-    procesarArchivo('archivo-reporte', 'reporte');
-    procesarArchivo('archivo-resena', 'resena');
-    procesarArchivo('archivo-constancia', 'constancia');
+    procesarArchivo('archivo-solicitud', 'solicitud');
+    procesarArchivo('archivo-plan_trabajo', 'plan_trabajo');
+    procesarArchivo('archivo-carta_presentacion', 'carta_presentacion');
 
     // Muestra el mensaje final basado en los resultados de la subida
     echo $mensaje;

@@ -106,7 +106,7 @@ function procesarEstado ($documentosPorClasificacion,$nombre)
 
     <style>
 
-        #subir-reporte,#subir-constancia,#subir-resena {
+        #subir-solicitud,#subir-plan_trabajo,#subir-carta_presentacion {
             display: none; /* Oculta el input de tipo file */
         }
 
@@ -200,15 +200,15 @@ function procesarEstado ($documentosPorClasificacion,$nombre)
                                     <path d="M8.5 6.5a.5.5 0 0 0-1 0v3.793L6.354 9.146a.5.5 0 1 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0-.708-.708L8.5 10.293z"/>
                                     <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
                                 </svg></a>
-                            <button class="contenedor-icono" id="boton-subida-reporte"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-arrow-up" viewBox="0 0 16 16">
+                            <button class="contenedor-icono" id="boton-subida-solicitud"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-arrow-up" viewBox="0 0 16 16">
                                     <path d="M8.5 11.5a.5.5 0 0 1-1 0V7.707L6.354 8.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 7.707z"/>
                                     <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
                                 </svg> </button>
-                            <p class="archivo-reporte"> </p>
+                            <p class="archivo-solicitud"> </p>
                         </td>
 
                         <?php
-                        procesarEstado($documentosPorClasificacion,'reporte');
+                        procesarEstado($documentosPorClasificacion,'solicitud');
                         ?>
 
 
@@ -221,16 +221,16 @@ function procesarEstado ($documentosPorClasificacion,$nombre)
                                     <path d="M8.5 6.5a.5.5 0 0 0-1 0v3.793L6.354 9.146a.5.5 0 1 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0-.708-.708L8.5 10.293z"/>
                                     <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
                                 </svg></a>
-                            <button class="contenedor-icono" id="boton-subida-resena"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-arrow-up" viewBox="0 0 16 16">
+                            <button class="contenedor-icono" id="boton-subida-plan_trabajo"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-arrow-up" viewBox="0 0 16 16">
                                     <path d="M8.5 11.5a.5.5 0 0 1-1 0V7.707L6.354 8.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 7.707z"/>
                                     <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
                                 </svg></button>
-                            <p class="archivo-resena"> </p>
+                            <p class="archivo-plan_trabajo">  </p>
 
                         </td>
                         <?php
 
-                        procesarEstado($documentosPorClasificacion, 'resena');
+                        procesarEstado($documentosPorClasificacion, 'plan_trabajo');
 
                         ?>
                     </tr>
@@ -240,14 +240,14 @@ function procesarEstado ($documentosPorClasificacion,$nombre)
                                     <path d="M8.5 6.5a.5.5 0 0 0-1 0v3.793L6.354 9.146a.5.5 0 1 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0-.708-.708L8.5 10.293z"/>
                                     <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
                                 </svg></a>
-                            <button href="" class="contenedor-icono" id="boton-subida-constancia"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-arrow-up" viewBox="0 0 16 16">
+                            <button href="" class="contenedor-icono" id="boton-subida-carta_presentacion"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-arrow-up" viewBox="0 0 16 16">
                                     <path d="M8.5 11.5a.5.5 0 0 1-1 0V7.707L6.354 8.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 7.707z"/>
                                     <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
                                 </svg></button>
-                            <p class="archivo-constancia"> constancia.pdf</p>
+                            <p class="archivo-carta_presentacion"> </p>
                         </td>
                         <?php
-                        procesarEstado($documentosPorClasificacion, 'constancia');
+                        procesarEstado($documentosPorClasificacion, 'carta_presentacion');
                         ?>
                     </tr>
                     </tbody>
@@ -255,9 +255,9 @@ function procesarEstado ($documentosPorClasificacion,$nombre)
             </div>
 
             <form id="formulario-subida" action="subir.php" method="post" enctype="multipart/form-data">
-                <input class="archivo" type="file" name="archivo-reporte" id="subir-reporte" accept="application/pdf">
-                <input class="archivo" type="file" name="archivo-resena" id="subir-resena" accept="application/pdf">
-                <input class="archivo" type="file" name="archivo-constancia" id="subir-constancia" accept="application/pdf">
+                <input class="archivo" type="file" name="archivo-solicitud" id="subir-solicitud" accept="application/pdf">
+                <input class="archivo" type="file" name="archivo-plan_trabajo" id="subir-plan_trabajo" accept="application/pdf">
+                <input class="archivo" type="file" name="archivo-carta_presentacion" id="subir-carta_presentacion" accept="application/pdf">
 
                 <div class="archivos_subidos">
 
@@ -318,67 +318,67 @@ function procesarEstado ($documentosPorClasificacion,$nombre)
 
 
     document.addEventListener('DOMContentLoaded', function() {
-        const reporteInput = document.getElementById('subir-reporte');
-        const resenaInput = document.getElementById('subir-resena');
-        const constanciaInput = document.getElementById('subir-constancia');
+        const SolicitudInput = document.getElementById('subir-solicitud');
+        const PlanTrabajoInput = document.getElementById('subir-plan_trabajo');
+        const CartaPInput = document.getElementById('subir-carta_presentacion');
 
-        const botonSubidaReporte = document.getElementById('boton-subida-reporte');
-        const botonSubidaResena = document.getElementById('boton-subida-resena');
-        const botonSubidaConstancia = document.getElementById('boton-subida-constancia');
+        const botonSubidaSolicitud = document.getElementById('boton-subida-solicitud');
+        const botonSubidaPlanTrabajo = document.getElementById('boton-subida-plan_trabajo');
+        const botonSubidaCartaP = document.getElementById('boton-subida-carta_presentacion');
 
-        const archivoSubidoReporte = document.querySelector('.archivo-reporte');
-        const archivoSubidoResena = document.querySelector('.archivo-resena');
-        const archivoSubidoConstancia = document.querySelector('.archivo-constancia');
+        const archivoSubidoSolicitud = document.querySelector('.archivo-solicitud');
+        const archivoSubidoPlanTrabajo = document.querySelector('.archivo-plan_trabajo');
+        const archivoSubidoCartaP = document.querySelector('.archivo-carta_presentacion');
 
         //BOTONES SUBIDA
-        botonSubidaReporte.addEventListener('click', () => {
-            reporteInput.click();
+        botonSubidaSolicitud.addEventListener('click', () => {
+            SolicitudInput.click();
         });
 
-        botonSubidaResena.addEventListener('click', () => {
-            resenaInput.click();
+        botonSubidaPlanTrabajo.addEventListener('click', () => {
+            PlanTrabajoInput.click();
         });
 
-        botonSubidaConstancia.addEventListener('click', () => {
-            constanciaInput.click();
+        botonSubidaCartaP.addEventListener('click', () => {
+            CartaPInput.click();
         });
 
         //MOSTRAR ARCHIVOS
-        reporteInput.addEventListener('change', function() {
+        SolicitudInput.addEventListener('change', function() {
             const fileName = this.files[0].name;
-            archivoSubidoReporte.textContent = fileName;
-            archivoSubidoReporte.style.display = 'block';
+            archivoSubidoSolicitud.textContent = fileName;
+            archivoSubidoSolicitud.style.display = 'block';
         });
 
-        resenaInput.addEventListener('change', function() {
+        PlanTrabajoInput.addEventListener('change', function() {
             const fileName = this.files[0].name;
-            archivoSubidoResena.textContent = fileName;
-            archivoSubidoResena.style.display = 'block';
+            archivoSubidoPlanTrabajo.textContent = fileName;
+            archivoSubidoPlanTrabajo.style.display = 'block';
         });
 
-        constanciaInput.addEventListener('change', function() {
+        CartaPInput.addEventListener('change', function() {
             const fileName = this.files[0].name;
-            archivoSubidoConstancia.textContent = fileName;
-            archivoSubidoConstancia.style.display = 'block';
+            archivoSubidoCartaP.textContent = fileName;
+            archivoSubidoCartaP.style.display = 'block';
         });
     });
 
     document.getElementById('input-subida').addEventListener('click', function(event) {
-        const reporte = document.getElementById('subir-reporte').files.length;
-        const resena = document.getElementById('subir-resena').files.length;
-        const constancia = document.getElementById('subir-constancia').files.length;
+        const solicitud = document.getElementById('subir-solicitud').files.length;
+        const PlanTrabajo = document.getElementById('subir-plan_trabajo').files.length;
+        const CartaP = document.getElementById('subir-constancia').files.length;
         const estados = document.querySelectorAll("#estado-documento");
-        const estadoReporte = estados[0].textContent.trim();
-        const estadoResena = estados[1].textContent.trim();
-        const estadoConstancia = estados[2].textContent.trim();
+        const estadoSolicitud = estados[0].textContent.trim();
+        const estadoPlanTrabajo = estados[1].textContent.trim();
+        const estadoCartaP = estados[2].textContent.trim();
 
         console.log(estadoConstancia);
         console.log(constancia);
 
         if (
-            (estadoReporte === "Pendiente" || estadoReporte === "Aceptado") &&
-            (estadoResena === "Pendiente" || estadoResena === "Aceptado") &&
-            (estadoConstancia === "Pendiente" || estadoConstancia === "Aceptado")
+            (estadoSolicitud === "Pendiente" || estadoSolicitud === "Aceptado") &&
+            (estadoPlanTrabajo === "Pendiente" || estadoPlanTrabajo === "Aceptado") &&
+            (estadoCartaP === "Pendiente" || estadoCartaP === "Aceptado")
         ) {
             event.preventDefault();
             const mensajeError = document.getElementById('mensaje-error');
@@ -388,7 +388,7 @@ function procesarEstado ($documentosPorClasificacion,$nombre)
             mensajeError.classList.add('alert-success');
         }
 
-        if (reporte === 0 && (estadoReporte === "Rechazado" || estadoReporte === "No hay documentos subidos")) {
+        if (solicitud === 0 && (estadoSolicitud === "Rechazado" || estadoSolicitud === "No hay documentos subidos")) {
             event.preventDefault();
             const mensajeError = document.getElementById('mensaje-error');
             mensajeError.textContent = 'No puedes enviar el formulario si el estado del reporte es Rechazado o No hay documentos subidos sin subir un archivo.';
@@ -398,7 +398,7 @@ function procesarEstado ($documentosPorClasificacion,$nombre)
             console.log(1);
         }
 
-        if (resena === 0 && (estadoResena === "Rechazado" || estadoResena === "No hay documentos subidos")) {
+        if (PlanTrabajo === 0 && (estadoPlanTrabajo === "Rechazado" || estadoPlanTrabajo === "No hay documentos subidos")) {
             event.preventDefault();
             const mensajeError = document.getElementById('mensaje-error');
             mensajeError.textContent = 'No puedes enviar el formulario si el estado del reporte es Rechazado o No hay documentos subidos sin subir un archivo.';
@@ -408,7 +408,7 @@ function procesarEstado ($documentosPorClasificacion,$nombre)
             console.log(2);
         }
 
-        if (constancia === 0 && (estadoConstancia === "Rechazado" || estadoConstancia === "No hay documentos subidos")) {
+        if (CartaP === 0 && (estadoCartaP === "Rechazado" || estadoCartaP === "No hay documentos subidos")) {
             event.preventDefault();
             const mensajeError = document.getElementById('mensaje-error');
             mensajeError.textContent = 'No puedes enviar el formulario si el estado del reporte es Rechazado o No hay documentos subidos sin subir un archivo.';
