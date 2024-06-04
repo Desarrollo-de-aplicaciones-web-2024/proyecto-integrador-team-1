@@ -26,6 +26,28 @@ if ($result->num_rows > 0) {
 } else {
     die("No se encontraron datos del alumno."); // Mostrar error si no se encuentran datos
 }
+
+$aseguramiento = '14';
+$jefe = '15';
+// Consulta SQL para el ID 14 (aseguramiento de calidad)
+$sql_academia_aseguramiento = "SELECT nombre_completo FROM academia_usuarios WHERE id = '$aseguramiento'";
+$result_academia_aseguramiento = $conn->query($sql_academia_aseguramiento);
+if ($result_academia_aseguramiento->num_rows > 0) {
+    $row_academia_aseguramiento = $result_academia_aseguramiento->fetch_assoc();
+    $nombre_academia_aseguramiento = $row_academia_aseguramiento['nombre_completo'];
+} else {
+    $nombre_academia_aseguramiento = "Nombre no encontrado"; // O un mensaje adecuado si no se encuentra el nombre.
+}
+
+// Consulta SQL para el ID 15 (jefe de academia)
+$sql_academia_jefe = "SELECT nombre_completo FROM academia_usuarios WHERE id = '$jefe'";
+$result_academia_jefe = $conn->query($sql_academia_jefe);
+if ($result_academia_jefe->num_rows > 0) {
+    $row_academia_jefe = $result_academia_jefe->fetch_assoc();
+    $nombre_academia_jefe = $row_academia_jefe['nombre_completo'];
+} else {
+    $nombre_academia_jefe = "Nombre no encontrado"; // O un mensaje adecuado si no se encuentra el nombre.
+}
 // Definir el ID de la empresa que deseas buscar
 $id_empresa = 1; // Cambia este valor al ID numérico deseado
 
@@ -45,6 +67,32 @@ if ($result_empresa_por_id->num_rows > 0) {
 } else {
     echo "No se encontró ninguna empresa con el ID especificado."; // O un mensaje adecuado si no se encuentra ninguna empresa con ese ID.
 }
+
+// Obtener datos de la tabla plan_trabajo
+$id_plan_trabajo = 1; // Define el ID del plan de trabajo a buscar.
+$sql_plan_trabajo = "SELECT fecha_inicio, horario, descripcion FROM plan_trabajo WHERE id_plan_trabajo = $id_plan_trabajo";
+$result_plan_trabajo = $conn->query($sql_plan_trabajo);
+if ($result_plan_trabajo->num_rows > 0) {
+    $row_plan_trabajo = $result_plan_trabajo->fetch_assoc();
+    $fecha_inicio = $row_plan_trabajo['fecha_inicio'];
+    $horario = $row_plan_trabajo['horario'];
+    $descripcion = $row_plan_trabajo['descripcion'];
+} else {
+    echo "No se encontró ningún plan de trabajo con el ID especificado.";
+}
+
+// Obtener datos de la tabla solicitud_practicas
+$id_solicitud_practicas = 2; // Define el ID de la solicitud de prácticas a buscar.
+$sql_solicitud_practicas = "SELECT duracion_practicas, nombre_super FROM solicitud_practicas WHERE id_solicitud = $id_solicitud_practicas";
+$result_solicitud_practicas = $conn->query($sql_solicitud_practicas);
+if ($result_solicitud_practicas->num_rows > 0) {
+    $row_solicitud_practicas = $result_solicitud_practicas->fetch_assoc();
+    $duracion_practicas = $row_solicitud_practicas['duracion_practicas'];
+    $supervisor = $row_solicitud_practicas['nombre_super'];
+} else {
+    echo "No se encontró ninguna solicitud de prácticas con el ID especificado.";
+}
+
 $conn->close(); // Cerrar la conexión a la base de datos
 
 // Establecer la zona horaria a Ciudad de México
@@ -171,26 +219,19 @@ $html = <<<EOD
     </tr>
     <tr>
         <td class="header-cell">6. Fecha de inicio de las prácticas:</td>
-        <td colspan="3"> / / </td>
+        <td colspan="3">{$fecha_inicio}</td>
     </tr>
     <tr>
         <td class="header-cell">7. Duración en horas (estimadas):</td>
-        <td colspan="3"></td>
+        <td colspan="3">{$duracion_practicas}</td>
     </tr>
     <tr>
         <td class="header-cell">8. Horario:</td>
-        <td colspan="3"></td>
+        <td colspan="3">{$horario}</td>
     </tr>
     <tr>
         <td class="header-cell">10. Descripción general de las actividades a realizar:</td>
-        <td colspan="3">
-            <ol>
-                <li>ashdfkahsdfklahsdflaksdfhalksdfjhalskfhlaksjdfhalksjdfhalksjdfhalksdhfalksdfhalksdfhalksdfhalksdfhaj.</li>
-                <li>.jskdfhalkjdsfhalksdfhalksdjfhalkjsdfhalkjsdfhalksdjfhalkjsdfhalkjdfshaj</li>
-                <li></li>
-                <li></li>
-            </ol>
-        </td>
+               <td colspan="3">{$descripcion}</td>
     </tr>
 </table>
 
@@ -201,11 +242,11 @@ $html = <<<EOD
 <table>
     <tr>
         <br><br><br><td class="no-border signature">___________________________________<br>$nombre<br>Alumno</td>
-        <td class="no-border signature">_____________________________________<br>Nombre y firma del supervisor<br>Supervisor</td>
+        <td class="no-border signature">_____________________________________<br>{$supervisor}<br>Supervisor</td>
     </tr>
     <tr>
-        <br><br><br><br><td class="no-border signature">_____________________________________<br>Mtro. Ramón Palet Naranjo<br>Vo. Bo. Jefe de Área Académica</td>
-        <td class="no-border signature">_____________________________________<br>Mtra. María del Carmen Aguirre Torres<br>Vo. Bo. Aseguramiento de la Calidad</td>
+        <br><br><br><br><td class="no-border signature">_____________________________________<br>Mtro.{$nombre_academia_jefe}<br>Vo. Bo. Jefe de Área Académica</td>
+        <td class="no-border signature">_____________________________________<br>Mtra.{$nombre_academia_aseguramiento}<br>Vo. Bo. Aseguramiento de la Calidad</td>
     </tr>
 </table>
 EOD;
