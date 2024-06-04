@@ -11,11 +11,12 @@ if ($conn->connect_error) {
 
 // Obtener la matrícula del usuario (cambia esto por la matrícula real del estudiante)
 $matricula = 202160177;
+$tipo_archivo = "final";
 
 // Consulta SQL para obtener los archivos subidos por la matrícula especificada
-$sql = "SELECT nombre_archivo, estado, clasificacion FROM Archivos WHERE matricula = ?";
+$sql = "SELECT nombre_archivo, estado, clasificacion FROM Archivos WHERE matricula = ? && tipo_archivo = ?";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $matricula);
+$stmt->bind_param("is", $matricula, $tipo_archivo);
 $stmt->execute();
 $result = $stmt->get_result();
 
@@ -192,7 +193,7 @@ function procesarEstado ($documentosPorClasificacion,$nombre)
                     <tr>
                         <!--REPORTE GLOBAL-->
                         <td class="align-middle" >Reporte global
-                            <a href="Reporte_global.php" download="Reporte_Global.pdf" class="contenedor-icono" type="button" id="boton-descarga"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-arrow-down" viewBox="0 0 16 16">
+                            <a href="Ejemplo_reporte_GLOBAL_de_practicas.pdf" download="Ejemplo_reporte_GLOBAL_de_practicas.pdf" class="contenedor-icono" type="button" id="boton-descarga"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-arrow-down" viewBox="0 0 16 16">
                                     <path d="M8.5 6.5a.5.5 0 0 0-1 0v3.793L6.354 9.146a.5.5 0 1 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0-.708-.708L8.5 10.293z"/>
                                     <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
                                 </svg></a>
@@ -213,7 +214,7 @@ function procesarEstado ($documentosPorClasificacion,$nombre)
                     <tr>
                         <!--RESEÑA DE PRACTICAS-->
                         <td class="align-middle">Reseña de practicas
-                            <a href="" download="Reseña_de_practicas.pdf" class="contenedor-icono" id> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-arrow-down" viewBox="0 0 16 16">
+                            <a href="resena.php" download="Reseña_de_practicas.pdf" class="contenedor-icono" id> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-arrow-down" viewBox="0 0 16 16">
                                     <path d="M8.5 6.5a.5.5 0 0 0-1 0v3.793L6.354 9.146a.5.5 0 1 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0-.708-.708L8.5 10.293z"/>
                                     <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
                                 </svg></a>
@@ -232,7 +233,7 @@ function procesarEstado ($documentosPorClasificacion,$nombre)
                     </tr>
                     <tr>
                         <!--CONSTANCIA-->
-                        <td class="align-middle">Constancia <a href="Formulario_Registro_Dato.php" download="Constancia.pdf" class="contenedor-icono"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-arrow-down" viewBox="0 0 16 16">
+                        <td class="align-middle">Constancia <a href="constancia.php" download="Constancia.pdf" class="contenedor-icono"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-arrow-down" viewBox="0 0 16 16">
                                     <path d="M8.5 6.5a.5.5 0 0 0-1 0v3.793L6.354 9.146a.5.5 0 1 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0-.708-.708L8.5 10.293z"/>
                                     <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
                                 </svg></a>

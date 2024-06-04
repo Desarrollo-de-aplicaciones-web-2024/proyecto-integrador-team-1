@@ -12,7 +12,7 @@ if ($conn->connect_error) {
 }
 
 // Obtener datos de la tabla usuarios_alumno
-$matricula = '202160327'; // Ajustar según sea necesario
+$matricula = '202160171'; // Ajustar según sea necesario
 $sql = "SELECT nombre, matricula, semestre, licenciatura FROM usuarios_alumno WHERE matricula = '$matricula'";
 $result = $conn->query($sql);
 
