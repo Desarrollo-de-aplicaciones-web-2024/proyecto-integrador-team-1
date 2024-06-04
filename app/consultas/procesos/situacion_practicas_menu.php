@@ -121,177 +121,78 @@ WHERE a.estado = 'pendiente'";
                                                 $encontradosx = mysqli_num_rows($resultadox);
 
                                                 if($encontradosx > 0){
-                                                while ($filax=mysqli_fetch_assoc($resultadox)){
 
-                                                    $id_proposito = $filax['matricula'];
-
-                                                    $sql_empresa = "SELECT Empresa.Razon_social
-                                                    FROM Carta_Aceptación
-                                                    JOIN Empresa ON Carta_Aceptación.Empresa = Empresa.idEmpresa
-                                                    WHERE Carta_Aceptación.Alumno = $id_proposito;
+                                                    $sqlx = "
+                                                    SELECT 
+                                                        ua.matricula, ua.nombre,
+                                                        e.Razon_social AS empresa,
+                                                        sp.Estatus AS SP_Estatus,
+                                                        pt.Estatus AS PT_Estatus,
+                                                        ca.Estatus AS CA_Estatus,
+                                                        rm1.Estatus AS RM1_Estatus,
+                                                        rm2.Estatus AS RM2_Estatus,
+                                                        rm3.Estatus AS RM3_Estatus,
+                                                        rg.estado AS RG_Estatus,
+                                                        co.estado AS CO_Estatus,
+                                                        rp.estado AS RP_Estatus
+                                                    FROM usuarios_alumno ua
+                                                    LEFT JOIN Carta_Aceptación ca ON ca.Alumno = ua.matricula
+                                                    LEFT JOIN Empresa e ON ca.Empresa = e.idEmpresa
+                                                    LEFT JOIN Solicitud_practicas sp ON sp.Alumno = ua.matricula
+                                                    LEFT JOIN Plan_Trabajo pt ON pt.Alumno = ua.matricula
+                                                    LEFT JOIN Reporte_Mensual rm1 ON rm1.Alumno = ua.matricula AND rm1.Fecha_Fin = (
+                                                        SELECT MIN(Fecha_Fin) FROM Reporte_Mensual WHERE Alumno = ua.matricula
+                                                    )
+                                                    LEFT JOIN Reporte_Mensual rm2 ON rm2.Alumno = ua.matricula AND rm2.Fecha_Fin = (
+                                                        SELECT MIN(Fecha_Fin) FROM Reporte_Mensual WHERE Alumno = ua.matricula AND Fecha_Fin > (
+                                                            SELECT MIN(Fecha_Fin) FROM Reporte_Mensual WHERE Alumno = ua.matricula
+                                                        )
+                                                    )
+                                                    LEFT JOIN Reporte_Mensual rm3 ON rm3.Alumno = ua.matricula AND rm3.Fecha_Fin = (
+                                                        SELECT MIN(Fecha_Fin) FROM Reporte_Mensual WHERE Alumno = ua.matricula AND Fecha_Fin > (
+                                                            SELECT MIN(Fecha_Fin) FROM Reporte_Mensual WHERE Alumno = ua.matricula AND Fecha_Fin > (
+                                                                SELECT MIN(Fecha_Fin) FROM Reporte_Mensual WHERE Alumno = ua.matricula
+                                                            )
+                                                        )
+                                                    )
+                                                    LEFT JOIN Archivos rg ON rg.matricula = ua.matricula AND rg.clasificacion = 'reporte' AND rg.tipo_archivo = 'final'
+                                                    LEFT JOIN Archivos co ON co.matricula = ua.matricula AND co.clasificacion = 'constancia' AND co.tipo_archivo = 'final'
+                                                    LEFT JOIN Archivos rp ON rp.matricula = ua.matricula AND rp.clasificacion = 'resena' AND rp.tipo_archivo = 'final'
                                                     ";
-                                                    $sql = "select * from usuarios_alumno where matricula = $id_proposito";
+                                                    $resultadox = mysqli_query($conexion, $sqlx);
 
-                                                    $resultado = mysqli_query($conexion, $sql);
-                                                    $resultado2 = mysqli_query($conexion, $sql_empresa);
+                                                    while ($filax = mysqli_fetch_assoc($resultadox)) {
+                                                        $id_proposito = $filax['matricula'];
+                                                        $nombre = $filax['nombre'];
+                                                        $empresa = $filax['empresa'] ?? 'Sin Empresa';
 
-                                                    if($resultado){
-                                                        $fila = mysqli_fetch_assoc($resultado);
-                                                        $matricula = $fila['matricula'];
-                                                        $nombre = $fila['nombre'];
-                                                    }
-                                                    if($resultado2){
-                                                        $encontrados = mysqli_num_rows($resultado2);
-                                                        if($encontrados > 0) {
-                                                            $fila2 = mysqli_fetch_assoc($resultado2);
-                                                            $empresa = $fila2['Razon_social'];
-                                                        }else{
-                                                            $empresa = 'Sin Empresa';
+                                                        $statuses = [
+                                                            'SP_Estatus' => $filax['SP_Estatus'] ?? 'Sin subir',
+                                                            'PT_Estatus' => $filax['PT_Estatus'] ?? 'Sin subir',
+                                                            'CA_Estatus' => $filax['CA_Estatus'] ?? 'Sin subir',
+                                                            'RM1_Estatus' => $filax['RM1_Estatus'] ?? 'Sin subir',
+                                                            'RM2_Estatus' => $filax['RM2_Estatus'] ?? 'Sin subir',
+                                                            'RM3_Estatus' => $filax['RM3_Estatus'] ?? 'Sin subir',
+                                                            'RG_Estatus' => $filax['RG_Estatus'] ?? 'Sin subir',
+                                                            'CO_Estatus' => $filax['CO_Estatus'] ?? 'Sin subir',
+                                                            'RP_Estatus' => $filax['RP_Estatus'] ?? 'Sin subir',
+                                                        ];
+
+                                                        $etapa = 1;
+                                                        if ($statuses['SP_Estatus'] == 'Aceptado' && $statuses['PT_Estatus'] == 'Aceptado' && $statuses['CA_Estatus'] == 'Aceptado') {
+                                                            $etapa++;
                                                         }
-                                                    }
-
-                                                    $etapa = 1;
-
-                                                    // 1
-                                                    $sql_SP = "select * from Solicitud_practicas where Alumno = $id_proposito";   $resultado_SP = mysqli_query($conexion, $sql_SP);
-                                                    $sql_PT = "select * from Plan_Trabajo where Alumno = $id_proposito";          $resultado_PT = mysqli_query($conexion, $sql_PT);
-                                                    $sql_CA = "select * from Carta_Aceptación where Alumno = $id_proposito";      $resultado_CA = mysqli_query($conexion, $sql_CA);
-
-                                                    if($resultado_SP){
-                                                        $encontrados_SP = mysqli_num_rows($resultado_SP);
-                                                        if($encontrados_SP > 0) {
-                                                            $fila_SP = mysqli_fetch_assoc($resultado_SP);
-
-                                                            $SP_Estatus = $fila_SP['Estatus'];
-                                                        }else{
-                                                            $SP_Estatus = 'Sin subir';
-                                                        }
-                                                    }
-
-                                                    if($resultado_PT){
-                                                        $encontrados_PT = mysqli_num_rows($resultado_PT);
-                                                        if($encontrados_PT > 0) {
-                                                            $fila_PT = mysqli_fetch_assoc($resultado_PT);
-                                                            $PT_Estatus = $fila_PT['Estatus'];
-                                                        }else{
-                                                            $PT_Estatus = 'Sin subir';
-                                                        }
-                                                    }
-
-                                                    if($resultado_CA){
-                                                        $encontrados_CA = mysqli_num_rows($resultado_CA);
-                                                        if($encontrados_CA > 0) {
-                                                            $fila_CA = mysqli_fetch_assoc($resultado_CA);
-
-                                                            $CA_Estatus = $fila_CA['Estatus'];
-                                                        }else{
-                                                            $CA_Estatus = 'Sin subir';
-                                                        }
-                                                    }
-
-                                                    if($SP_Estatus == 'Aceptado' && $PT_Estatus == 'Aceptado' && $CA_Estatus == 'Aceptado')$etapa++;
-
-                                                    // 2
-                                                    $sql_RM = $sql = "select * from Reporte_Mensual where Alumno = $id_proposito order by Fecha_Fin";
-                                                    $resultado_RM = mysqli_query($conexion, $sql_RM);
-
-                                                    $all_rows_data = [];
-
-                                                    if($resultado_RM){
-                                                        $encontrados_RM = mysqli_num_rows($resultado_RM);
-
-                                                        while ($row = mysqli_fetch_assoc($resultado_RM)){
-                                                            $all_rows_data[] = $row;
+                                                        if ($statuses['RM1_Estatus'] == "Aceptado") $etapa++;
+                                                        if ($statuses['RM2_Estatus'] == "Aceptado") $etapa++;
+                                                        if ($statuses['RM3_Estatus'] == "Aceptado") $etapa++;
+                                                        if ($statuses['RG_Estatus'] == 'aceptado' && $statuses['CO_Estatus'] == 'aceptado' && $statuses['RP_Estatus'] == 'aceptado') {
+                                                            $etapa++;
                                                         }
 
-                                                        if($encontrados_RM > 0){
+                                                        // Output or use the data as needed
+                                                        // Example: echo "Alumno: $nombre, Empresa: $empresa, Etapa: $etapa\n";
 
-                                                            $first_row = $all_rows_data[0];
-
-                                                            $RM1_Estatus = $first_row['Estatus'];
-
-                                                            if($encontrados_RM > 1){
-
-                                                                $second_row = $all_rows_data[1];
-
-                                                                $RM2_Estatus = $second_row['Estatus'];
-
-                                                                if($encontrados_RM > 2){
-
-                                                                    $third_row = $all_rows_data[2];
-
-
-                                                                    $RM3_Estatus = $third_row['Estatus'];
-
-                                                                }else{
-
-                                                                    $RM3_Estatus = 'Sin subir';
-                                                                }
-
-                                                            }else{
-                                                                $RM2_Estatus = 'Sin subir';
-                                                                $RM3_Estatus = 'Sin subir';
-                                                            }
-
-                                                        }else{
-
-                                                            $RM1_Estatus = 'Sin subir';
-
-                                                            $RM2_Estatus = 'Sin subir';
-
-                                                            $RM3_Estatus = 'Sin subir';
-                                                        }
-
-                                                        if($RM1_Estatus == "Aceptado")$etapa++;
-                                                        if($RM2_Estatus == "Aceptado")$etapa++;
-                                                        if($RM3_Estatus == "Aceptado")$etapa++;
-                                                    }
-
-                                                    $sql_RG = "select * from Archivos where matricula = $id_proposito and clasificacion = 'reporte' and tipo_archivo = 'final'";        $resultado_RG = mysqli_query($conexion, $sql_RG);
-                                                    $sql_CO = "select * from Archivos where matricula = $id_proposito and clasificacion = 'constancia' and tipo_archivo = 'final'";     $resultado_CO = mysqli_query($conexion, $sql_CO);
-                                                    $sql_RP = "select * from Archivos where matricula = $id_proposito and clasificacion = 'resena' and tipo_archivo = 'final'";         $resultado_RP = mysqli_query($conexion, $sql_RP);
-
-                                                    if($resultado_RG){
-                                                        $encontrados_RG = mysqli_num_rows($resultado_RG);
-                                                        if($encontrados_RG > 0) {
-                                                            $fila_RG = mysqli_fetch_assoc($resultado_RG);
-
-                                                            $estado_RG = $fila_RG['estado'];;
-
-                                                        }else{
-                                                            $estado_RG = 'Sin subir';
-
-                                                        }
-                                                    }
-
-                                                    if($resultado_CO){
-                                                        $encontrados_CO = mysqli_num_rows($resultado_CO);
-                                                        if($encontrados_CO > 0) {
-                                                            $fila_CO = mysqli_fetch_assoc($resultado_CO);
-                                                            $estado_CO = $fila_CO['estado'];
-
-                                                        }else{
-
-                                                            $estado_CO = 'Sin subir';
-
-                                                        }
-                                                    }
-
-                                                    if($resultado_RP){
-                                                        $encontrados_RP = mysqli_num_rows($resultado_RP);
-                                                        if($encontrados_RP > 0) {
-                                                            $fila_RP = mysqli_fetch_assoc($resultado_RP);
-
-                                                            $estado_RP = $fila_RP['estado'];
-
-                                                        }else{
-
-                                                            $estado_RP = 'Sin subir';
-                                                        }
-                                                    }
-
-                                                    if($estado_RP === 'aceptado' && $estado_CO === 'aceptado' && $estado_RG === 'aceptado')$etapa++;
-                                            ?>
+                                                    ?>
 
                                             <tr onclick="window.location.href='situacion_practicas_alumno.php?matricula=<?php echo $filax['matricula']; ?>'">
                                                 <td><?php echo $filax['matricula']?></td>

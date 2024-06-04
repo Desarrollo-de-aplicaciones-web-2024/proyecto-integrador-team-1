@@ -19,11 +19,27 @@ if(!empty($_GET['id'])) {
         $encontrados = mysqli_num_rows($resultado);
         if ($encontrados > 0) {
             $fila = mysqli_fetch_assoc($resultado);
+            $matricula = $fila['matricula'];
             $nombre = $fila['nombre'];
             $tipo_archivo = $fila['tipo_archivo'];
             $nombre_archivo = $fila['nombre_archivo'];
             $estado = $fila['estado'];
             $ruta = $fila['ruta_archivo'];
+        }
+    }
+
+    $sql2 = "SELECT Empresa.Razon_social
+    FROM Carta_Aceptación
+    JOIN Empresa ON Carta_Aceptación.Empresa = Empresa.idEmpresa
+    WHERE Carta_Aceptación.Alumno = $matricula";
+
+    $resultado2 = mysqli_query($conexion, $sql2);
+
+    if ($resultado2) {
+        $encontrados2 = mysqli_num_rows($resultado2);
+        if ($encontrados2 > 0) {
+            $fila2 = mysqli_fetch_assoc($resultado2);
+            $empresa = $fila2['Razon_social'];
         }
     }
 }
@@ -82,7 +98,15 @@ if(!empty($_GET['id'])) {
             <div class="row">
                 <div class="col-md-8">
                     <div class="embed-responsive embed-responsive-4by3">
-                        <iframe class="embed-responsive-item" src="../../servicio/final/uploads/<?php echo $nombre_archivo?>" style="width: 100%; height: 100%;"></iframe>
+                        <?php
+                        if($tipo_archivo === 'inicial'){
+                            echo '<iframe class="embed-responsive-item" src="../../servicio/inicial/uploads/' . $nombre_archivo . '" style="width: 100%; height: 100%;"></iframe>';
+                        }
+                        elseif($tipo_archivo === 'final'){
+                            echo '<iframe class="embed-responsive-item" src="../../servicio/final/uploads/' . $nombre_archivo . '" style="width: 100%; height: 100%;"></iframe>';
+                        }
+                        ?>
+
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -109,7 +133,7 @@ if(!empty($_GET['id'])) {
                                 <h5 class="card-title">Información</h5>
 
                                 <p>Alumno:  <?php echo $nombre ?></p>
-                                <p>Empresa: Grupo Mimpo</p>
+                                <p>Empresa: <?php echo $empresa ?></p>
                                 <p>Periodo: 29/01/2024-06/02/2024</p>
                                 <p>Horas reportadas: 30 horas</p>
 
