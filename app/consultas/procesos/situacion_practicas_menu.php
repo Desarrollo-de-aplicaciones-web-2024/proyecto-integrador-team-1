@@ -197,11 +197,11 @@ WHERE a.estado = 'pendiente'";
                                             <tr onclick="window.location.href='situacion_practicas_alumno.php?matricula=<?php echo $filax['matricula']; ?>'">
                                                 <td><?php echo $filax['matricula']?></td>
                                                 <td><?php echo $filax['nombre']?></td>
-                                                <td>
+                                                <td style="width: 156px;">
                                                     <?php
                                                     switch($etapa) {
                                                         case 1:
-                                                            echo 'Sin iniciar';
+                                                            echo 'Sin iniciar proceso';
                                                             break;
                                                         case 2:
                                                             echo '1er Reporte Mensual';

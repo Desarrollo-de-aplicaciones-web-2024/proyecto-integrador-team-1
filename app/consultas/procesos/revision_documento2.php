@@ -2,10 +2,9 @@
 require_once '../../../config/global.php';
 require_once '../../../config/db.php';
 
-define('RUTA_INCLUDE', '../../../'); //ajustar a necesidad
+define('RUTA_INCLUDE', '../../../'); // ajustar a necesidad
 
-if(!empty($_GET['id'])) {
-
+if (!empty($_GET['id'])) {
     $id = $_GET['id'];
 
     $sql = "SELECT a.*, ua.nombre
@@ -29,9 +28,9 @@ if(!empty($_GET['id'])) {
     }
 
     $sql2 = "SELECT Empresa.Razon_social
-    FROM Carta_Aceptación
-    JOIN Empresa ON Carta_Aceptación.Empresa = Empresa.idEmpresa
-    WHERE Carta_Aceptación.Alumno = $matricula";
+            FROM Carta_Aceptación
+            JOIN Empresa ON Carta_Aceptación.Empresa = Empresa.idEmpresa
+            WHERE Carta_Aceptación.Alumno = $matricula";
 
     $resultado2 = mysqli_query($conexion, $sql2);
 
@@ -49,7 +48,6 @@ if(!empty($_GET['id'])) {
 <html lang="es">
 
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -60,7 +58,7 @@ if(!empty($_GET['id'])) {
 
     <title><?php echo PAGE_TITLE ?></title>
 
-    <?php getTopIncludes(RUTA_INCLUDE ) ?>
+    <?php getTopIncludes(RUTA_INCLUDE) ?>
 
 </head>
 
@@ -99,18 +97,15 @@ if(!empty($_GET['id'])) {
                 <div class="col-md-8">
                     <div class="embed-responsive embed-responsive-4by3">
                         <?php
-                        if($tipo_archivo === 'inicial'){
+                        if ($tipo_archivo === 'inicial') {
                             echo '<iframe class="embed-responsive-item" src="../../servicio/inicial/uploads/' . $nombre_archivo . '" style="width: 100%; height: 100%;"></iframe>';
-                        }
-                        elseif($tipo_archivo === 'final'){
+                        } elseif ($tipo_archivo === 'final') {
                             echo '<iframe class="embed-responsive-item" src="../../servicio/final/uploads/' . $nombre_archivo . '" style="width: 100%; height: 100%;"></iframe>';
                         }
                         ?>
-
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <!-- Content for the right column can be added here -->
                     <div class="overflow-auto" style="max-height: 650px;">
                         <h5 class="mt-3">Datos de envío</h5>
                         <p class="mb-2 text-success">Enviado para revisión</p>
@@ -131,34 +126,17 @@ if(!empty($_GET['id'])) {
                         <div class="card mt-3 align-content-center">
                             <div class="card-body">
                                 <h5 class="card-title">Información</h5>
-
-                                <p>Alumno:  <?php echo $nombre ?></p>
+                                <p>Alumno: <?php echo $nombre ?></p>
                                 <p>Empresa: <?php echo $empresa ?></p>
-                                <p>Periodo: 29/01/2024-06/02/2024</p>
-                                <p>Horas reportadas: 30 horas</p>
-
-                                <p>Actividades realizadas:</p>
-                                <div data-mdb-input-init class="form-outline">
-                                    <textarea class="form-control" id="textAreaExample1" rows="4" readonly>Se realizó la localización de monitores con cierto número de servicio en las diversas oficinas de la empresa para ser reemplazados por unos nuevos con motivo de problemas de resolución por el tipo de entrada (DisplayPort). Acomodo de inventario y equipo en el almacén de tecnología
-                                    </textarea>
-                                </div>
-                                <!-- Empty container to maintain layout
-                                <p class="mt-3">Observaciones:</p>
-                                <div data-mdb-input-init class="form-outline">
-                                    <textarea class="form-control" id="textAreaExample1" rows="4" readonly>Se realiza explicación de los procesos a seguir para la correcta preparación del equipo de cómputo con las características mínimas necesarias para la organización. Realizó el correcto proceso en los equipos asignados y cumplió en tiempo y forma la recolección y cambio de monitores.
-                                    </textarea>
-                                </div>
-                                 -->
                             </div>
                         </div>
+
                         <div class="card mt-3 align-content-center">
                             <div class="card-body">
                                 <h5 class="card-title">Comentarios</h5>
-
                                 <div data-mdb-input-init class="form-outline">
                                     <textarea class="form-control" id="textAreaExample1" rows="4"></textarea>
                                 </div>
-                                </form>
                             </div>
                         </div>
                     </div>
@@ -166,39 +144,24 @@ if(!empty($_GET['id'])) {
             </div>
         </div>
 
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-8">
-                    <!-- Empty container to maintain layout -->
-                </div>
-                <div class="col-md-4">
-                    <!-- Empty container to maintain layout -->
-                </div>
-            </div>
-        </div>
-
-        <!-- White space row -->
         <div class="container-fluid bg-white fixed-bottom border-top">
             <div class="row">
                 <div class="col-md-12">
-                    <!-- Bottom Section -->
                     <div class="container mt-4 mb-4">
                         <div class="text-center">
-
                             <?php
-                            if($estado === 'pendiente'){
+                            if ($estado === 'pendiente') {
                                 echo '
-                                    <button id="acceptButton" type="button" class="btn btn-primary"
-                                    style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
-                                Aceptar
-                            </button>
-                            <button id="rejectButton" type="button" class="btn btn-secondary"
-                                    style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
-                                Rechazar
-                            </button>
-                                
-                                ';
-                            }?>
+                                        <button id="acceptButton" type="button" class="btn btn-primary"
+                                        style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
+                                            Aceptar
+                                        </button>
+                                        <button id="rejectButton" type="button" class="btn btn-secondary"
+                                        style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
+                                            Rechazar
+                                        </button>
+                                    ';
+                            } ?>
                         </div>
                     </div>
                 </div>
@@ -257,52 +220,49 @@ if(!empty($_GET['id'])) {
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
         <script>
-            // Handle click event for accept button
+            function sendComment(action) {
+                var comment = document.getElementById('textAreaExample1').value;
+
+                $.ajax({
+                    url: 'update.php',
+                    type: 'POST',
+                    data: {
+                        action: action,
+                        id: <?php echo $id; ?>,
+                        comment: comment
+                    },
+                    success: function (response) {
+                        if (action === 'accept') {
+                            $('#acceptModal').modal('hide');
+                        } else if (action === 'reject') {
+                            $('#rejectModal').modal('hide');
+                        }
+                        window.location.href = 'situacion_practicas_menu.php';
+                    }
+                });
+            }
+
             $('#acceptButton').on('click', function () {
                 $('#acceptModal').modal('show');
             });
 
-            // Handle click event for reject button
             $('#rejectButton').on('click', function () {
                 $('#rejectModal').modal('show');
             });
 
-            // Handle click event for confirm accept button
             $('#confirmAcceptButton').on('click', function () {
-                $.ajax({
-                    url: 'update.php',
-                    type: 'POST',
-                    data: { action: 'accept', id: <?php echo $id; ?> },
-                    success: function (response) {
-                        // Optionally, handle success response
-                        $('#acceptModal').modal('hide');
-                        window.location.href = 'situacion_practicas_menu.php';
-                    }
-                });
+                sendComment('accept');
             });
 
-            // Handle click event for confirm reject button
             $('#confirmRejectButton').on('click', function () {
-                $.ajax({
-                    url: 'update.php',
-                    type: 'POST',
-                    data: { action: 'reject', id: <?php echo $id; ?> },
-                    success: function (response) {
-                        // Optionally, handle success response
-                        $('#rejectModal').modal('hide');
-                        window.location.href = 'situacion_practicas_menu.php';
-                    }
-                });
+                sendComment('reject');
             });
         </script>
 
         <?php getFooter() ?>
 
     </div>
-    <!-- /.content-wrapper -->
-
 </div>
-<!-- /#wrapper -->
 
 <!-- Scroll to Top Button-->
 <a class="scroll-to-top rounded" href="#page-top">
@@ -311,7 +271,7 @@ if(!empty($_GET['id'])) {
 
 <?php getModalLogout() ?>
 
-<?php getBottomIncudes( RUTA_INCLUDE ) ?>
+<?php getBottomIncudes(RUTA_INCLUDE) ?>
 </body>
 
 </html>
