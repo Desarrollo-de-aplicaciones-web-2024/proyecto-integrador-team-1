@@ -11,10 +11,7 @@
 
     <title>Universidad Cristóbal Colón</title>
 
-
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-
-
     <link href="../css/sb-admin.css" rel="stylesheet">
     <link href="../img/favicon.ico" rel="shortcut icon" type="image/png"/>
     <style>
@@ -61,6 +58,21 @@
             width: 100px;
             height: auto;
         }
+        .btn-recuperar {
+            display: block;
+            width: 100%;
+            padding: 0.75rem;
+            font-size: 1rem;
+            color: white;
+            background-color: #0056b3;
+            border: none;
+            border-radius: 0.25rem;
+            transition: background-color 0.3s;
+            text-align: center;
+        }
+        .btn-recuperar:hover {
+            background-color: #004494;
+        }
     </style>
 </head>
 
@@ -75,14 +87,14 @@
                 <h4>¿Olvidó su contraseña?</h4>
                 <p>Se enviará un correo electrónico con instrucciones para recuperar el acceso a su cuenta.</p>
             </div>
-            <form>
+            <form action="recuperar_password.php" method="post">
                 <div class="form-group">
                     <div class="form-label-group">
-                        <input type="email" id="inputEmail" class="form-control" placeholder="Correo electrónico" required="required" autofocus="autofocus">
+                        <input type="email" name="correo" id="inputEmail" class="form-control" placeholder="Correo electrónico" required="required" autofocus="autofocus">
                         <label for="inputEmail">Correo electrónico</label>
                     </div>
                 </div>
-                <a class="btn btn-primary btn-block" href="login.php">Recuperar</a>
+                <input type="submit" value="Recuperar" class="btn-recuperar">
             </form>
             <div class="text-center">
                 <a class="d-block small mt-3" href="index.php">Página de inicio</a>

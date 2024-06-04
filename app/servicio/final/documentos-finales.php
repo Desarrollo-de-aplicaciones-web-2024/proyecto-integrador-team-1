@@ -2,7 +2,93 @@
 require_once '../../../config/global.php';
 
 define('RUTA_INCLUDE', '../../../'); // ajustar a necesidad
+
+// Conexión a la base de datos
+$conn = new mysqli("database-team1-daw.c30w0agw4764.us-east-2.rds.amazonaws.com", "admin", "S1stemas_23", "PP_TEAM1");
+if ($conn->connect_error) {
+    die("Conexión fallida: " . $conn->connect_error);
+}
+
+// Obtener la matrícula del usuario (cambia esto por la matrícula real del estudiante)
+$matricula = 202160177;
+
+// Consulta SQL para obtener los archivos subidos por la matrícula especificada
+$sql = "SELECT nombre_archivo, estado, clasificacion FROM Archivos WHERE matricula = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $matricula);
+$stmt->execute();
+$result = $stmt->get_result();
+
+// Crear una matriz bidimensional para almacenar los datos de los archivos subidos
+$archivos = array();
+
+// Iterar sobre los resultados y almacenarlos en la matriz bidimensional
+while ($row = $result->fetch_assoc()) {
+    $archivos[] = array(
+        'nombre_archivo' => $row['nombre_archivo'],
+        'estado' => $row['estado'],
+        'clasificacion' => isset($row['clasificacion']) ? $row['clasificacion'] : 'sin_clasificacion' // Manejar el caso en que 'clasificacion' sea NULL o no exista
+    );
+}
+
+// Cerrar la consulta y la conexión
+$stmt->close();
+$conn->close();
+
+// Crear matrices para clasificar los documentos por su clasificación
+$documentosPorClasificacion = array();
+
+// Clasificar los documentos según su clasificación
+foreach ($archivos as $archivo) {
+    $documentosPorClasificacion[$archivo['clasificacion']][] = array(
+        'nombre_archivo' => $archivo['nombre_archivo'],
+        'estado' => $archivo['estado']
+    );
+}
+
+//// Imprimir los documentos según su clasificación y estado
+//foreach ($documentosPorClasificacion as $clasificacion => $documentos) {
+//    echo "Clasificación: $clasificacion<br>";
+//    foreach ($documentos as $documento) {
+//        echo "Nombre del archivo: " . $documento['nombre_archivo'] . " - Estado: " . $documento['estado'] . "<br>";
+//    }
+//    echo "<br>";
+//}
+
+function procesarEstado ($documentosPorClasificacion,$nombre)
+{
+    $encontrado = false;
+    // Realizar acciones basadas en el estado de los documentos
+    foreach ($documentosPorClasificacion as $clasificacion => $documentos) {
+        foreach ($documentos as $documento) {
+            if ($clasificacion == $nombre) {
+                $encontrado = true; // Documento encontrado
+                if ($documento['estado'] == 'pendiente') {
+                    // Acción para documentos pendientes
+                    echo '<td class="align-middle text-center"><p class="text-warning">pendiente</p></td>';
+                } elseif ($documento['estado'] == 'rechazado') {
+                    // Acción para documentos rechazados
+                    echo '<td class="align-middle text-center"><p class="text-danger">rechazado</p></td>';
+                } elseif ($documento['estado'] == 'aceptado') {
+                    // Acción para documentos aceptados
+                    echo '<td class="align-middle text-center"><p class="text-success">aceptado</p></td>';
+                }
+            }
+        }
+    }
+
+    // Si no se encontraron documentos para la clasificación 'reporte', muestra un mensaje
+    if (!$encontrado) {
+        echo '<td class="align-middle text-center"><p class="text-secondary">No hay documentos subidos</p></td>';
+    }
+}
+
+
 ?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -19,32 +105,6 @@ define('RUTA_INCLUDE', '../../../'); // ajustar a necesidad
     <?php getTopIncludes(RUTA_INCLUDE) ?>
 
     <style>
-        .circle-pendiente{
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background-color: 	#FF8000;
-            display: inline-block;
-            margin-right: 10px;
-        }
-
-        .circle-aprobado{
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background-color: #008000;
-            display: inline-block;
-            margin-right: 10px;
-        }
-
-        .circle-rechazado{
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background-color: #FF0000;
-            display: inline-block;
-            margin-right: 10px;
-        }
 
         #subir-reporte,#subir-constancia,#subir-resena {
             display: none; /* Oculta el input de tipo file */
@@ -143,7 +203,12 @@ define('RUTA_INCLUDE', '../../../'); // ajustar a necesidad
                             <p class="archivo-reporte"> constancia.pdf</p>
                         </td>
 
-                        <td class="align-middle text-center" ><p class="text-danger">Rechazado</p></td>
+                        <?php
+                            procesarEstado($documentosPorClasificacion,'reporte');
+                        ?>
+
+
+
                     </tr>
                     <tr>
                         <!--RESEÑA DE PRACTICAS-->
@@ -159,7 +224,11 @@ define('RUTA_INCLUDE', '../../../'); // ajustar a necesidad
                             <p class="archivo-resena"> constancia.pdf</p>
 
                         </td>
-                        <td class="align-middle text-center" ><p class="text-success">Aceptado</p></td>
+                        <?php
+
+                        procesarEstado($documentosPorClasificacion, 'resena');
+
+                        ?>
                     </tr>
                     <tr>
                         <!--CONSTANCIA-->
@@ -173,7 +242,9 @@ define('RUTA_INCLUDE', '../../../'); // ajustar a necesidad
                                 </svg></button>
                             <p class="archivo-constancia"> constancia.pdf</p>
                         </td>
-                        <td class="align-middle text-center" ><p class="text-warning">Pendiente</p></td>
+                        <?php
+                        procesarEstado($documentosPorClasificacion, 'constancia');
+                        ?>
                     </tr>
                     </tbody>
                 </table>
@@ -198,6 +269,26 @@ define('RUTA_INCLUDE', '../../../'); // ajustar a necesidad
             </div>
             </form>
 
+            <!-- Ventana emergente de éxito -->
+            <div class="modal fade" id="modalExito" tabindex="-1" role="dialog" aria-labelledby="modalExitoLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalExitoLabel">Subida Exitosa</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            ¡Todos los archivos se han subido con éxito!
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
 
         </div>
         <!-- /.container-fluid -->
@@ -218,6 +309,10 @@ define('RUTA_INCLUDE', '../../../'); // ajustar a necesidad
 <?php getModalLogout() ?>
 
 <?php getBottomIncudes(RUTA_INCLUDE) ?>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 <script>
 
@@ -285,7 +380,7 @@ define('RUTA_INCLUDE', '../../../'); // ajustar a necesidad
     window.addEventListener('load', function() {
         const params = new URLSearchParams(window.location.search);
         if (params.get('upload') === 'success') {
-            alert('¡Todos los archivos se han subido con éxito!');
+            $('#modalExito').modal('show');
         }
     });
 
