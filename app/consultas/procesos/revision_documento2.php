@@ -24,6 +24,7 @@ if (!empty($_GET['id'])) {
             $nombre_archivo = $fila['nombre_archivo'];
             $estado = $fila['estado'];
             $ruta = $fila['ruta_archivo'];
+            $comentario = $fila['Comentarios'];
         }
     }
 
@@ -108,13 +109,25 @@ if (!empty($_GET['id'])) {
                 <div class="col-md-4">
                     <div class="overflow-auto" style="max-height: 650px;">
                         <h5 class="mt-3">Datos de envío</h5>
-                        <p class="mb-2 text-success">Enviado para revisión</p>
+                            <?php
+                            switch($estado) {
+                                case "aceptado":
+                                    echo '<p class="mb-2 text-success"><td>Se ha aceptado</td></p>';
+                                    break;
+                                case "rechazado":
+                                    echo '<p class="mb-2 text-danger"><td>Se ha rechazado</td></p>';
+                                    break;
+                                case "pendiente":
+                                    echo '<p class="mb-2 text-warning"><td>Enviado para revisión</td></p>';
+                                    break;
+                            }
+                            ?>
                         <div class="d-flex align-items-center">
                             <i class="far fa-file-pdf mr-2"></i>
                             <p class="mb-0"> <?php echo $nombre_archivo ?>.pdf</p>
                         </div>
-                        <div class="text-right">
-                            <p class="mt-3 mb-0">
+                        <div class="text">
+                            <p class="mt-3 mb-0">Fecha:
                                 <?php
                                 date_default_timezone_set('America/New_York');
                                 $todays_date = date('Y-m-d');
@@ -133,10 +146,21 @@ if (!empty($_GET['id'])) {
 
                         <div class="card mt-3 align-content-center">
                             <div class="card-body">
+
                                 <h5 class="card-title">Comentarios</h5>
-                                <div data-mdb-input-init class="form-outline">
-                                    <textarea class="form-control" id="textAreaExample1" rows="4"></textarea>
-                                </div>
+
+                                <?php
+                                if ($estado === 'pendiente') {
+                                    echo '<div data-mdb-input-init class="form-outline">
+                                            <textarea class="form-control" id="textAreaExample1" rows="4"></textarea>
+                                          </div>';
+                                } else {
+                                    echo '<div data-mdb-input-init class="form-outline">
+                                        <textarea disabled class="form-control" id="textAreaExample1" rows="4">' . $comentario . '</textarea>
+                                        </div>';
+                                }
+                                ?>
+
                             </div>
                         </div>
                     </div>

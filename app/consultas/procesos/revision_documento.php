@@ -37,7 +37,7 @@ if(!empty($_GET['id']) && !empty($_GET['tipo'])) {
 
 <div id="wrapper">
 
-    <?php getSidebar() ?>
+    <?php getSidebar($rutas) ?>
 
     <div id="content-wrapper">
 
