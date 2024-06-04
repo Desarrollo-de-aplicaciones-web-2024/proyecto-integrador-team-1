@@ -6,7 +6,11 @@ $rutas = [
     'documentos-iniciales' => '/proyecto-integrador-team-1/app/admin/catalogos/alumnos/paginainicio.php',
     'index' => '/proyecto-integrador-team-1/app/admin/catalogos/vacantes/listavacantes.php',
     'charts' => '/proyecto-integrador-team-1/proyecto-integrador-team-1/app/consultas/procesos/situacion_practicas_alumno.php',
-    'tables' => '/proyecto-integrador-team-1/tables.php'
+    'tables' => '/proyecto-integrador-team-1/tables.php',
+    'usuarios-academia' => '/ruta/a/usuarios-academia.php', // Ruta para usuarios de academia
+    'usuarios-alumnos' => '/ruta/a/usuarios-alumnos.php', // Ruta para usuarios de alumnos
+    'empresas' => '/ruta/a/empresas.php', // Ruta para empresas
+    'vacantes' => '/ruta/a/vacantes.php', // Ruta para vacantes
 ];
 
 // Función para generar el sidebar
