@@ -2,7 +2,93 @@
 require_once '../../../config/global.php';
 
 define('RUTA_INCLUDE', '../../../'); // ajustar a necesidad
+
+// Conexión a la base de datos
+$conn = new mysqli("database-team1-daw.c30w0agw4764.us-east-2.rds.amazonaws.com", "admin", "S1stemas_23", "PP_TEAM1");
+if ($conn->connect_error) {
+    die("Conexión fallida: " . $conn->connect_error);
+}
+
+// Obtener la matrícula del usuario (cambia esto por la matrícula real del estudiante)
+$matricula = 202160177;
+
+// Consulta SQL para obtener los archivos subidos por la matrícula especificada
+$sql = "SELECT nombre_archivo, estado, clasificacion FROM Archivos WHERE matricula = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $matricula);
+$stmt->execute();
+$result = $stmt->get_result();
+
+// Crear una matriz bidimensional para almacenar los datos de los archivos subidos
+$archivos = array();
+
+// Iterar sobre los resultados y almacenarlos en la matriz bidimensional
+while ($row = $result->fetch_assoc()) {
+    $archivos[] = array(
+        'nombre_archivo' => $row['nombre_archivo'],
+        'estado' => $row['estado'],
+        'clasificacion' => isset($row['clasificacion']) ? $row['clasificacion'] : 'sin_clasificacion' // Manejar el caso en que 'clasificacion' sea NULL o no exista
+    );
+}
+
+// Cerrar la consulta y la conexión
+$stmt->close();
+$conn->close();
+
+// Crear matrices para clasificar los documentos por su clasificación
+$documentosPorClasificacion = array();
+
+// Clasificar los documentos según su clasificación
+foreach ($archivos as $archivo) {
+    $documentosPorClasificacion[$archivo['clasificacion']][] = array(
+        'nombre_archivo' => $archivo['nombre_archivo'],
+        'estado' => $archivo['estado']
+    );
+}
+
+//// Imprimir los documentos según su clasificación y estado
+//foreach ($documentosPorClasificacion as $clasificacion => $documentos) {
+//    echo "Clasificación: $clasificacion<br>";
+//    foreach ($documentos as $documento) {
+//        echo "Nombre del archivo: " . $documento['nombre_archivo'] . " - Estado: " . $documento['estado'] . "<br>";
+//    }
+//    echo "<br>";
+//}
+
+function procesarEstado ($documentosPorClasificacion,$nombre)
+{
+    $encontrado = false;
+    // Realizar acciones basadas en el estado de los documentos
+    foreach ($documentosPorClasificacion as $clasificacion => $documentos) {
+        foreach ($documentos as $documento) {
+            if ($clasificacion == $nombre) {
+                $encontrado = true; // Documento encontrado
+                if ($documento['estado'] == 'pendiente') {
+                    // Acción para documentos pendientes
+                    echo '<td class="align-middle text-center"><p class="text-warning"  id="estado-documento">Pendiente</p></td>';
+                } elseif ($documento['estado'] == 'rechazado') {
+                    // Acción para documentos rechazados
+                    echo '<td class="align-middle text-center" ><p class="text-danger" id="estado-documento">Rechazado</p></td>';
+                } elseif ($documento['estado'] == 'aceptado') {
+                    // Acción para documentos aceptados
+                    echo '<td class="align-middle text-center" ><p class="text-success" id="estado-documento">Aceptado</p></td>';
+                }
+            }
+        }
+    }
+
+    // Si no se encontraron documentos para la clasificación 'reporte', muestra un mensaje
+    if (!$encontrado) {
+        echo '<td class="align-middle text-center" <p class="text-secondary" id="estado-documento">No hay documentos subidos</p></td>';
+    }
+}
+
+
 ?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -19,32 +105,6 @@ define('RUTA_INCLUDE', '../../../'); // ajustar a necesidad
     <?php getTopIncludes(RUTA_INCLUDE) ?>
 
     <style>
-        .circle-pendiente{
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background-color: 	#FF8000;
-            display: inline-block;
-            margin-right: 10px;
-        }
-
-        .circle-aprobado{
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background-color: #008000;
-            display: inline-block;
-            margin-right: 10px;
-        }
-
-        .circle-rechazado{
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background-color: #FF0000;
-            display: inline-block;
-            margin-right: 10px;
-        }
 
         #subir-reporte,#subir-constancia,#subir-resena {
             display: none; /* Oculta el input de tipo file */
@@ -96,7 +156,7 @@ define('RUTA_INCLUDE', '../../../'); // ajustar a necesidad
 
 <div id="wrapper">
 
-    <?php getSidebar();?>
+    <?php getSidebar($rutas);?>
 
     <div id="content-wrapper">
 
@@ -132,7 +192,7 @@ define('RUTA_INCLUDE', '../../../'); // ajustar a necesidad
                     <tr>
                         <!--REPORTE GLOBAL-->
                         <td class="align-middle" >Reporte global
-                            <a href="Solicitud.php" download="Solicitud Practicas Profesionales" class="contenedor-icono" type="button" id="boton-descarga"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-arrow-down" viewBox="0 0 16 16">
+                            <a href="Solicitud.php" download="Reporte_Global.pdf" class="contenedor-icono" type="button" id="boton-descarga"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-arrow-down" viewBox="0 0 16 16">
                                     <path d="M8.5 6.5a.5.5 0 0 0-1 0v3.793L6.354 9.146a.5.5 0 1 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0-.708-.708L8.5 10.293z"/>
                                     <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
                                 </svg></a>
@@ -143,12 +203,17 @@ define('RUTA_INCLUDE', '../../../'); // ajustar a necesidad
                             <p class="archivo-reporte"> constancia.pdf</p>
                         </td>
 
-                        <td class="align-middle text-center" ><p class="text-danger">Rechazado</p></td>
+                        <?php
+                            procesarEstado($documentosPorClasificacion,'reporte');
+                        ?>
+
+
+
                     </tr>
                     <tr>
                         <!--RESEÑA DE PRACTICAS-->
                         <td class="align-middle">Reseña de practicas
-                            <a href="" download="Plan de trabajo de prácticas profesionales" class="contenedor-icono" id> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-arrow-down" viewBox="0 0 16 16">
+                            <a href="" download="Reseña_de_practicas.pdf" class="contenedor-icono" id> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-arrow-down" viewBox="0 0 16 16">
                                     <path d="M8.5 6.5a.5.5 0 0 0-1 0v3.793L6.354 9.146a.5.5 0 1 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0-.708-.708L8.5 10.293z"/>
                                     <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
                                 </svg></a>
@@ -159,11 +224,15 @@ define('RUTA_INCLUDE', '../../../'); // ajustar a necesidad
                             <p class="archivo-resena"> constancia.pdf</p>
 
                         </td>
-                        <td class="align-middle text-center" ><p class="text-success">Aceptado</p></td>
+                        <?php
+
+                        procesarEstado($documentosPorClasificacion, 'resena');
+
+                        ?>
                     </tr>
                     <tr>
                         <!--CONSTANCIA-->
-                        <td class="align-middle">Constancia <a href="Formulario_Registro_Dato.php" download="Carta de Aceptación" class="contenedor-icono"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-arrow-down" viewBox="0 0 16 16">
+                        <td class="align-middle">Constancia <a href="Formulario_Registro_Dato.php" download="Constancia.pdf" class="contenedor-icono"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-arrow-down" viewBox="0 0 16 16">
                                     <path d="M8.5 6.5a.5.5 0 0 0-1 0v3.793L6.354 9.146a.5.5 0 1 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0-.708-.708L8.5 10.293z"/>
                                     <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
                                 </svg></a>
@@ -173,7 +242,9 @@ define('RUTA_INCLUDE', '../../../'); // ajustar a necesidad
                                 </svg></button>
                             <p class="archivo-constancia"> constancia.pdf</p>
                         </td>
-                        <td class="align-middle text-center" ><p class="text-warning">Pendiente</p></td>
+                        <?php
+                        procesarEstado($documentosPorClasificacion, 'constancia');
+                        ?>
                     </tr>
                     </tbody>
                 </table>
@@ -198,6 +269,26 @@ define('RUTA_INCLUDE', '../../../'); // ajustar a necesidad
             </div>
             </form>
 
+            <!-- Ventana emergente de éxito -->
+            <div class="modal fade" id="modalExito" tabindex="-1" role="dialog" aria-labelledby="modalExitoLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalExitoLabel">Subida Exitosa</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            ¡Todos los archivos se han subido con éxito!
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
 
         </div>
         <!-- /.container-fluid -->
@@ -218,6 +309,10 @@ define('RUTA_INCLUDE', '../../../'); // ajustar a necesidad
 <?php getModalLogout() ?>
 
 <?php getBottomIncudes(RUTA_INCLUDE) ?>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 <script>
 
@@ -269,15 +364,58 @@ define('RUTA_INCLUDE', '../../../'); // ajustar a necesidad
     });
 
     document.getElementById('input-subida').addEventListener('click', function(event) {
-
         const reporte = document.getElementById('subir-reporte').files.length;
         const resena = document.getElementById('subir-resena').files.length;
         const constancia = document.getElementById('subir-constancia').files.length;
-        if (reporte === 0 || resena === 0 || constancia === 0) {
+        const estados = document.querySelectorAll("#estado-documento");
+        const estadoReporte = estados[0].textContent.trim();
+        const estadoResena = estados[1].textContent.trim();
+        const estadoConstancia = estados[2].textContent.trim();
+
+        console.log(estadoConstancia);
+        console.log(constancia);
+
+        if (
+            (estadoReporte === "Pendiente" || estadoReporte === "Aceptado") &&
+            (estadoResena === "Pendiente" || estadoResena === "Aceptado") &&
+            (estadoConstancia === "Pendiente" || estadoConstancia === "Aceptado")
+        ) {
             event.preventDefault();
             const mensajeError = document.getElementById('mensaje-error');
-            mensajeError.textContent = 'Por favor, sube todos los archivos requeridos antes de enviar el formulario.';
+            mensajeError.textContent = 'Todos tus archivos han sido subidos correctamente';
             mensajeError.style.display = 'block';
+            mensajeError.classList.remove('alert-danger');
+            mensajeError.classList.add('alert-success');
+        }
+
+        if (reporte === 0 && (estadoReporte === "Rechazado" || estadoReporte === "No hay documentos subidos")) {
+            event.preventDefault();
+            const mensajeError = document.getElementById('mensaje-error');
+            mensajeError.textContent = 'No puedes enviar el formulario si el estado del reporte es Rechazado o No hay documentos subidos sin subir un archivo.';
+            mensajeError.style.display = 'block';
+            mensajeError.classList.remove('alert-success');
+            mensajeError.classList.add('alert-danger');
+            console.log(1);
+        }
+
+        if (resena === 0 && (estadoResena === "Rechazado" || estadoResena === "No hay documentos subidos")) {
+            event.preventDefault();
+            const mensajeError = document.getElementById('mensaje-error');
+            mensajeError.textContent = 'No puedes enviar el formulario si el estado del reporte es Rechazado o No hay documentos subidos sin subir un archivo.';
+            mensajeError.style.display = 'block';
+            mensajeError.classList.remove('alert-success');
+            mensajeError.classList.add('alert-danger');
+            console.log(2);
+        }
+
+        if (constancia === 0 && (estadoConstancia === "Rechazado" || estadoConstancia === "No hay documentos subidos")) {
+            event.preventDefault();
+            const mensajeError = document.getElementById('mensaje-error');
+            mensajeError.textContent = 'No puedes enviar el formulario si el estado del reporte es Rechazado o No hay documentos subidos sin subir un archivo.';
+            mensajeError.style.display = 'block';
+            mensajeError.classList.remove('alert-success');
+            mensajeError.classList.add('alert-danger');
+            console.log(3);
         }
     });
 
@@ -285,7 +423,7 @@ define('RUTA_INCLUDE', '../../../'); // ajustar a necesidad
     window.addEventListener('load', function() {
         const params = new URLSearchParams(window.location.search);
         if (params.get('upload') === 'success') {
-            alert('¡Todos los archivos se han subido con éxito!');
+            $('#modalExito').modal('show');
         }
     });
 

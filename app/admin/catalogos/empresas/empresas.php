@@ -2,7 +2,7 @@
 require_once '../../../../config/global.php';
 require_once '../../../../config/db.php';
 
-define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
+define('RUTA_INCLUDE', '../../../../'); // ajustar a necesidad
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -17,6 +17,21 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
     <title><?php echo PAGE_TITLE ?></title>
 
     <?php getTopIncludes(RUTA_INCLUDE ) ?>
+    <style>
+        th, td {
+            text-align: center;
+        }
+
+        th {
+            background-color: #016CA1;
+            color: white;
+        }
+
+        .btn-secondary {
+            margin: 0 auto;
+            display: block;
+        }
+    </style>
 </head>
 
 <body id="page-top">
@@ -38,14 +53,6 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
                 </ol>
             </nav>
 
-            <!-- <div class="alert alert-success" role="alert">
-                <i class="fas fa-check"></i> Mensaje de éxito
-            </div>
-
-            <div class="alert alert-danger" role="alert">
-                <i class="fas fa-exclamation-triangle"></i> Mensaje de error
-            </div>
-            -->
             <div class="row my-3">
                 <div class="col text-right">
                     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addCompanyModal"><i class="fas fa-plus"></i> Agregar Empresa</button>
@@ -67,42 +74,43 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
                     </thead>
                     <tfoot>
                     <tbody>
-                    <tr>
-                        <td><img src="/img/274460.svg" alt="Logo de Tamsa" class="logo" style="max-width: 100px;"></td>
-                        <td>TENARIS TAMSA</td>
-                        <td>Industrial</td>
-                        <td>229 989 1100</td>
-                        <td>Carretera México-Veracruz KM433.7 Industrial,Bruno Pagliai, 91697 Pagliai, Ver.</td>
-                        <td>No Disponible</td>
-                        <td><a href="#" class="btn btn-link btn-sm">Editar</a> <a href="#" class="btn btn-link btn-sm desactivar-empresa">Desactivar</a></td>
-                    </tr>
-                    <tr>
-                        <td><img src="/img/coca_cola_femsa.jpg" alt="Logo de Tamsa" class="logo" style="max-width: 100px;"></td>
-                        <td>Coca-cola FEMSA</td>
-                        <td>Consumo</td>
-                        <td>229 123 5400</td>
-                        <td>P.º Ejército Mexicano Pte., Boca del Río, 94297 Boca del Río,Ver.</td>
-                        <td>Disponible</td>
-                        <td><a href="#" class="btn btn-link btn-sm">Editar</a> <a href="#" class="btn btn-link btn-sm desactivar-empresa">Desactivar</a></td>
-                    </tr>
-                    <tr>
-                        <td><img src="/img/grupo_mas.png" alt="Logo de Tamsa" class="logo" style="max-width: 100px;"></td>
-                        <td>GRUPO MAS</td>
-                        <td>Agua y Saneamiento</td>
-                        <td>229 454 6550</td>
-                        <td>Santos Pérez Abascal 1170, Moderno, 91918 Veracruz, Ver.</td>
-                        <td>Disponible</td>
-                        <td><a href="#" class="btn btn-link btn-sm">Editar</a> <a href="#" class="btn btn-link btn-sm desactivar-empresa">Desactivar</a></td>
-                    </tr>
-                    <tr>
-                        <td><img src="/img/Logo_de_la_Universidad_Veracruzana.svg" alt="Logo de Tamsa" class="logo" style="max-width: 50px;"></td>
-                        <td>UV Microna</td>
-                        <td>Tecnología y la ciencia aplicada</td>
-                        <td>229 775 2000</td>
-                        <td>Bv. Adolfo Ruíz Cortines 455, Costa Verde, 94294 Boca del Río, Ver.</td>
-                        <td>Disponible</td>
-                        <td><a href="#" class="btn btn-link btn-sm">Editar</a> <a href="#" class="btn btn-link btn-sm desactivar-empresa">Desactivar</a></td>
-                    </tr>
+                    <?php
+                    $sql = "SELECT Catalogo_empresas.*, sectores.nombre AS sector_nombre 
+                            FROM Catalogo_empresas 
+                            JOIN sectores ON Catalogo_empresas.sector_id = sectores.id";
+                    $result = $conexion->query($sql);
+
+                    if ($result->num_rows > 0) {
+                        while($row = $result->fetch_assoc()) {
+                            echo "<tr>";
+                            echo "<td><img src='" . $row['logo'] . "' alt='Logo de " . $row['nombre'] . "' class='logo' style='max-width: 100px;'></td>";
+                            echo "<td>" . $row['nombre'] . "</td>";
+                            echo "<td>" . $row['sector_nombre'] . "</td>";
+                            echo "<td>" . $row['telefono'] . "</td>";
+                            echo "<td>" . $row['direccion'] . "</td>";
+                            echo "<td>" . $row['disponibilidad'] . "</td>";
+                            echo "<td><a href='#' class='btn btn-link btn-sm' data-toggle='modal' data-target='#editCompanyModal'data-id='" . $row['id'] . "'data-nombreempresa='" . $row['nombre'] . "'data-sector='" . $row['sector_id'] . "'data-telefono='" . $row['telefono'] . "'data-direccion='" . $row['direccion'] . "'data-disponibilidad='" . $row['disponibilidad'] . "'data-logo='" . $row['logo'] . "'>Editar</a>";
+                            if ($row['disponibilidad'] == 'Disponible') {
+                                // Si la empresa está disponible, mostrar botón de Desactivar
+                                echo "<form action='Desactivar_empresa.php' method='GET' style='display: inline;'>";
+                                echo "<input type='hidden' name='id' value='" . $row['id'] . "'>";
+                                echo "<button type='submit' class='btn btn-link btn-sm' name='desactivar' value='true'>Desactivar</button>";
+                                echo "</form>";
+                            } else {
+                                // Si la empresa no está disponible, mostrar botón de Activar
+                                echo "<form action='Activar_empresa.php' method='GET' style='display: inline;'>";
+                                echo "<input type='hidden' name='id' value='" . $row['id'] . "'>";
+                                echo "<button type='submit' class='btn btn-link btn-sm' name='activar' value='true'>Activar</button>";
+                                echo "</form>";
+                            }
+                            echo "</td>";
+                            echo "</tr>";
+                        }
+                    } else {
+                        echo "<tr><td colspan='7'>No hay empresas registradas</td></tr>";
+                    }
+                    $conexion->close();
+                    ?>
                     </tbody>
                 </table>
             </div>
@@ -138,14 +146,25 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
                 </button>
             </div>
             <div class="modal-body">
-                <form id="addCompanyForm">
+                <form id="addCompanyForm" action="Agregar_empresa.php" method="post" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="companyName">Nombre de la Empresa</label>
                         <input type="text" class="form-control" id="companyName" name="companyName" required>
                     </div>
                     <div class="form-group">
                         <label for="sector">Sector</label>
-                        <input type="text" class="form-control" id="sector" name="sector" required>
+                        <select class="form-control" id="sector" name="sector" required>
+                            <?php
+                            // Rellenar el select con los sectores disponibles en la base de datos
+                            $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+                            $sql = "SELECT id, nombre FROM sectores";
+                            $result = $conn->query($sql);
+                            while($row = $result->fetch_assoc()) {
+                                echo "<option value='" . $row['id'] . "'>" . $row['nombre'] . "</option>";
+                            }
+                            $conn->close();
+                            ?>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="phone">Número de Teléfono</label>
@@ -162,34 +181,111 @@ define('RUTA_INCLUDE', '../../../../'); //ajustar a necesidad
                             <option value="No Disponible">No Disponible</option>
                         </select>
                     </div>
+                    <div class="form-group">
+                        <label for="logo">Logo</label>
+                        <input type="file" class="form-control-file" id="logo" name="logo" accept="image/*" required>
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="submit" class="btn btn-primary" form="addCompanyForm">Guardar</button>
+                <button type="submit" form="addCompanyForm" class="btn btn-primary">Agregar Empresa</button>
             </div>
         </div>
     </div>
 </div>
-
+<!-- Modal Editar empresa -->
+<div class="modal fade" id="editCompanyModal" tabindex="-1" role="dialog" aria-labelledby="editCompanyModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editCompanyModalLabel">Editar Empresa</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="editCompanyForm" action="editar_empresa.php" method="post">
+                    <input type="hidden" id="editCompanyId" name="id">
+                    <div class="form-group">
+                        <label for="editCompanyName">Nombre</label>
+                        <input type="text" class="form-control" id="editCompanyName" name="nombre" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editSector">Sector</label>
+                        <select class="form-control" id="editSector" name="sector" required>
+                            <?php
+                            $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+                            $sql = "SELECT id, nombre FROM sectores";
+                            $result = $conn->query($sql);
+                            while($row = $result->fetch_assoc()) {
+                                echo "<option value='" . $row['id'] . "'>" . $row['nombre'] . "</option>";
+                            }
+                            $conn->close();
+                            ?>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="editPhone">Teléfono</label>
+                        <input type="text" class="form-control" id="editPhone" name="telefono" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editAddress">Dirección</label>
+                        <input type="text" class="form-control" id="editAddress" name="direccion" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editAvailability">Disponibilidad</label>
+                        <select class="form-control" id="editAvailability" name="disponibilidad" required>
+                            <option value="Disponible">Disponible</option>
+                            <option value="No Disponible">No Disponible</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="editLogo">Logo</label>
+                        <input type="text" class="form-control" id="editLogo" name="logo" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="submit" form="editCompanyForm" class="btn btn-primary">Guardar Cambios</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Función para manejar la desactivación de empresas
-        document.querySelectorAll('.desactivar-empresa').forEach(function (button) {
-            button.addEventListener('click', function () {
-                const row = button.closest('tr');
-                const companyName = row.querySelector('td:nth-child(2)').innerText;
-                if (confirm(`¿Está seguro que desea desactivar la empresa ${companyName}?`)) {
-                    // Lógica para desactivar la empresa (hacer una llamada AJAX, actualizar el estado en la base de datos, etc.)
-                    alert(`Empresa ${companyName} desactivada.`);
-                }
-            });
+    $(document).ready(function() {
+        $('#editCompanyModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var nombreEmpresa = button.data('nombreempresa');
+            var sector = button.data('sector');
+            var telefono = button.data('telefono');
+            var direccion = button.data('direccion');
+            var disponibilidad = button.data('disponibilidad');
+            var logo = button.data('logo');
+
+            var modal = $(this);
+            modal.find('.modal-body #editCompanyName').val(nombreEmpresa);
+            modal.find('.modal-body #editSector').val(sector);
+            modal.find('.modal-body #editPhone').val(telefono);
+            modal.find('.modal-body #editAddress').val(direccion);
+            modal.find('.modal-body #editAvailability').val(disponibilidad);
+            modal.find('.modal-body #editLogo').val(logo);
         });
     });
+
 </script>
-
-</body>
-
-</html>
+<?php
+// Agregar un mensaje de error si hay alguno
+if(isset($_SESSION['response'])) {
+    echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">';
+    echo $_SESSION['response']['message'];
+    echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close">';
+    echo '<span aria-hidden="true">&times;</span>';
+    echo '</button>';
+    echo '</div>';
+    unset($_SESSION['response']);
+}
+?>
 
 

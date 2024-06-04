@@ -1,6 +1,15 @@
 <?php
 require_once '../../../config/global.php';
+require_once '../../../config/db.php';
+
 define('RUTA_INCLUDE', '../../../'); //ajustar a necesidad
+
+if(!empty($_GET['id']) && !empty($_GET['tipo'])) {
+
+    $id = $_GET['id'];
+    $Tipo = $_GET['tipo'];
+    $nombre = $_GET['nombre'];
+}
 ?>
 
 <!DOCTYPE html>
@@ -34,8 +43,15 @@ define('RUTA_INCLUDE', '../../../'); //ajustar a necesidad
 
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-8">
-                    <h2 class="mb-4 pl-3 font-monospace">Revisión 2do Reporte Mensual</h2>
+                <div class="col-md-8 mb-2 d-flex align-items-center justify-content-start">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="javascript:history.back()" class="font-monospace"><?php echo $nombre ?></a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">Revisión <?php echo $Tipo ?></li>
+                        </ol>
+                    </nav>
                 </div>
                 <div class="col-md-4 d-flex justify-content-end align-items-center">
                     <!-- Previous and Next buttons -->
@@ -59,7 +75,7 @@ define('RUTA_INCLUDE', '../../../'); //ajustar a necesidad
                         <p class="mb-2 text-success">Enviado para revisión</p>
                         <div class="d-flex align-items-center">
                             <i class="far fa-file-pdf mr-2"></i>
-                            <p class="mb-0">Reporte_Mensual.pdf</p>
+                            <p class="mb-0"> <?php echo $Tipo ?>.pdf</p>
                         </div>
                         <div class="text-right">
                             <p class="mt-3 mb-0">15 de Febrero 2024, 1:20 PM</p>
@@ -69,7 +85,7 @@ define('RUTA_INCLUDE', '../../../'); //ajustar a necesidad
                             <div class="card-body">
                                 <h5 class="card-title">Información</h5>
 
-                                <p>Alumno: Bruno Rangel Zuñiga</p>
+                                <p>Alumno:  <?php echo $nombre ?></p>
                                 <p>Empresa: Grupo Mimpo</p>
                                 <p>Periodo: 29/01/2024-06/02/2024</p>
                                 <p>Horas reportadas: 30 horas</p>
