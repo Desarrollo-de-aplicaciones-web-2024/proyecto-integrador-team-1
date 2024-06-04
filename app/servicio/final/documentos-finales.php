@@ -15,7 +15,7 @@ $matricula = 202160177;
 $tipo_archivo = "final";
 
 // Consulta SQL para obtener los archivos subidos por la matrícula especificada
-$sql = "SELECT nombre_archivo, estado, clasificacion FROM Archivos WHERE matricula = ? && tipo_archivo = ?";
+$sql = "SELECT nombre_archivo, estado, clasificacion,Comentarios FROM Archivos WHERE matricula = ? && tipo_archivo = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("is", $matricula, $tipo_archivo);
 $stmt->execute();
@@ -29,7 +29,8 @@ while ($row = $result->fetch_assoc()) {
     $archivos[] = array(
         'nombre_archivo' => $row['nombre_archivo'],
         'estado' => $row['estado'],
-        'clasificacion' => isset($row['clasificacion']) ? $row['clasificacion'] : 'sin_clasificacion' // Manejar el caso en que 'clasificacion' sea NULL o no exista
+        'clasificacion' => isset($row['clasificacion']) ? $row['clasificacion'] : 'sin_clasificacion', // Manejar el caso en que 'clasificacion' sea NULL o no exista
+        'Comentarios' => $row['Comentarios']
     );
 }
 
@@ -44,7 +45,8 @@ $documentosPorClasificacion = array();
 foreach ($archivos as $archivo) {
     $documentosPorClasificacion[$archivo['clasificacion']][] = array(
         'nombre_archivo' => $archivo['nombre_archivo'],
-        'estado' => $archivo['estado']
+        'estado' => $archivo['estado'],
+        'Comentarios' => $archivo['Comentarios']
     );
 }
 
@@ -82,6 +84,20 @@ function procesarEstado ($documentosPorClasificacion,$nombre)
     // Si no se encontraron documentos para la clasificación 'reporte', muestra un mensaje
     if (!$encontrado) {
         echo '<td class="align-middle text-center" <p class="text-secondary" id="estado-documento">No hay documentos subidos</p></td>';
+    }
+}
+
+function comentarios($documentosPorClasificacion,$nombre)
+{
+    foreach ($documentosPorClasificacion as $clasificacion => $documentos) {
+        foreach ($documentos as $documento) {
+            if ($clasificacion == $nombre) {
+                if ($documento['estado'] == 'rechazado') {
+                    echo '<p class="text-danger" id="estado-documento">' . $documento['Comentarios'] . '</p>';
+
+                }
+            }
+        }
     }
 }
 
@@ -195,6 +211,7 @@ function procesarEstado ($documentosPorClasificacion,$nombre)
                     <tr>
                         <!--REPORTE GLOBAL-->
                         <td class="align-middle" >Reporte global
+
                             <a href="Ejemplo_reporte_GLOBAL_de_practicas.pdf" download="Ejemplo_reporte_GLOBAL_de_practicas.pdf" class="contenedor-icono" type="button" id="boton-descarga"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-arrow-down" viewBox="0 0 16 16">
                                     <path d="M8.5 6.5a.5.5 0 0 0-1 0v3.793L6.354 9.146a.5.5 0 1 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0-.708-.708L8.5 10.293z"/>
                                     <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
@@ -204,6 +221,9 @@ function procesarEstado ($documentosPorClasificacion,$nombre)
                                     <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
                                 </svg> </button>
                             <p class="archivo-reporte"> constancia.pdf</p>
+                            <?php
+                            comentarios($documentosPorClasificacion,'reporte');
+                            ?>
                         </td>
 
                         <?php
@@ -216,6 +236,7 @@ function procesarEstado ($documentosPorClasificacion,$nombre)
                     <tr>
                         <!--RESEÑA DE PRACTICAS-->
                         <td class="align-middle">Reseña de practicas
+
                             <a href="resena.php" download="Reseña_de_practicas.pdf" class="contenedor-icono" id> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-arrow-down" viewBox="0 0 16 16">
                                     <path d="M8.5 6.5a.5.5 0 0 0-1 0v3.793L6.354 9.146a.5.5 0 1 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0-.708-.708L8.5 10.293z"/>
                                     <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
@@ -225,6 +246,9 @@ function procesarEstado ($documentosPorClasificacion,$nombre)
                                     <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
                                 </svg></button>
                             <p class="archivo-resena"> constancia.pdf</p>
+                            <?php
+                            comentarios($documentosPorClasificacion,'resena');
+                            ?>
 
                         </td>
                         <?php
@@ -235,7 +259,9 @@ function procesarEstado ($documentosPorClasificacion,$nombre)
                     </tr>
                     <tr>
                         <!--CONSTANCIA-->
-                        <td class="align-middle">Constancia <a href="constancia.php" download="Constancia.pdf" class="contenedor-icono"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-arrow-down" viewBox="0 0 16 16">
+                        <td class="align-middle">Constancia
+
+                            <a href="constancia.php" download="Constancia.pdf" class="contenedor-icono"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-arrow-down" viewBox="0 0 16 16">
                                     <path d="M8.5 6.5a.5.5 0 0 0-1 0v3.793L6.354 9.146a.5.5 0 1 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0-.708-.708L8.5 10.293z"/>
                                     <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
                                 </svg></a>
@@ -244,6 +270,9 @@ function procesarEstado ($documentosPorClasificacion,$nombre)
                                     <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
                                 </svg></button>
                             <p class="archivo-constancia"> constancia.pdf</p>
+                            <?php
+                            comentarios($documentosPorClasificacion,'constancia');
+                            ?>
                         </td>
                         <?php
                         procesarEstado($documentosPorClasificacion, 'constancia');
@@ -291,6 +320,10 @@ function procesarEstado ($documentosPorClasificacion,$nombre)
                     </div>
                 </div>
             </div>
+
+            <input type="hidden" id="estado-reporte" name="estado_reporte">
+            <input type="hidden" id="estado-resena" name="estado_resena">
+            <input type="hidden" id="estado-constancia" name="estado_constancia">
 
 
         </div>
@@ -370,6 +403,14 @@ function procesarEstado ($documentosPorClasificacion,$nombre)
         const estadoReporte = estados[0].textContent.trim();
         const estadoResena = estados[1].textContent.trim();
         const estadoConstancia = estados[2].textContent.trim();
+        const estadoReporteInput = document.getElementById('estado-reporte');
+        const estadoResenaInput = document.getElementById('estado-resena');
+        const estadoConstanciaInput = document.getElementById('estado-constancia');
+
+        estadoReporteInput.value = estadoReporte;
+        estadoResenaInput.value = estadoResena;
+        estadoConstanciaInput.value = estadoConstancia;
+
 
         console.log(estadoConstancia);
         console.log(constancia);
@@ -390,7 +431,7 @@ function procesarEstado ($documentosPorClasificacion,$nombre)
         if (reporte === 0 && (estadoReporte === "Rechazado" || estadoReporte === "No hay documentos subidos")) {
             event.preventDefault();
             const mensajeError = document.getElementById('mensaje-error');
-            mensajeError.textContent = 'No puedes enviar el formulario si el estado del reporte es Rechazado o No hay documentos subidos sin subir un archivo.';
+            mensajeError.textContent = 'No puedes enviar el formulario si el estado del reporte es "Rechazado" o "No hay documentos subidos" sin subir un archivo.';
             mensajeError.style.display = 'block';
             mensajeError.classList.remove('alert-success');
             mensajeError.classList.add('alert-danger');
@@ -400,7 +441,7 @@ function procesarEstado ($documentosPorClasificacion,$nombre)
         if (resena === 0 && (estadoResena === "Rechazado" || estadoResena === "No hay documentos subidos")) {
             event.preventDefault();
             const mensajeError = document.getElementById('mensaje-error');
-            mensajeError.textContent = 'No puedes enviar el formulario si el estado del reporte es Rechazado o No hay documentos subidos sin subir un archivo.';
+            mensajeError.textContent = 'No puedes enviar el formulario si el estado del reporte es "Rechazado" o "No hay documentos subidos" sin subir un archivo.';
             mensajeError.style.display = 'block';
             mensajeError.classList.remove('alert-success');
             mensajeError.classList.add('alert-danger');
@@ -410,7 +451,7 @@ function procesarEstado ($documentosPorClasificacion,$nombre)
         if (constancia === 0 && (estadoConstancia === "Rechazado" || estadoConstancia === "No hay documentos subidos")) {
             event.preventDefault();
             const mensajeError = document.getElementById('mensaje-error');
-            mensajeError.textContent = 'No puedes enviar el formulario si el estado del reporte es Rechazado o No hay documentos subidos sin subir un archivo.';
+            mensajeError.textContent = 'No puedes enviar el formulario si el estado del reporte es "Rechazado" o "No hay documentos subidos" sin subir un archivo.';
             mensajeError.style.display = 'block';
             mensajeError.classList.remove('alert-success');
             mensajeError.classList.add('alert-danger');
