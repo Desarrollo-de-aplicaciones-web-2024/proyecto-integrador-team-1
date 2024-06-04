@@ -4,7 +4,7 @@ require_once '../../../config/db.php';
 
 define('RUTA_INCLUDE', '../../../'); //ajustar a necesidad
 
-$sqlx = "SELECT * FROM usuarios_alumno";
+$sqly = "SELECT * FROM usuarios_alumno";
 
 $sql2 = "SELECT a.*, ua.nombre
 FROM Archivos a
@@ -117,10 +117,10 @@ WHERE a.estado = 'pendiente'";
                                         <tbody>
 
                                             <?php
-                                                $resultadox = mysqli_query($conexion, $sqlx);
-                                                $encontradosx = mysqli_num_rows($resultadox);
+                                                $resultadoy = mysqli_query($conexion, $sqly);
+                                                $encontradosy = mysqli_num_rows($resultadoy);
 
-                                                if($encontradosx > 0){
+                                                if($encontradosy > 0){
 
                                                     $sqlx = "
                                                     SELECT 
@@ -213,7 +213,7 @@ WHERE a.estado = 'pendiente'";
                                                             echo '3er Reporte Mensual';
                                                             break;
                                                         case 5:
-                                                            echo 'Documento Finales';
+                                                            echo 'Documentos Finales';
                                                             break;
                                                         case 6:
                                                             echo 'Proceso finalizado';
@@ -278,7 +278,27 @@ WHERE a.estado = 'pendiente'";
                                             ?>
                                                 <tr onclick="window.location.href='revision_documento2.php?id=<?php echo $fila2['id']; ?>'">
                                                 <td><?php echo $fila2['nombre']?></td>
-                                                <td><?php echo $fila2['clasificacion']?></td>
+                                                <td>
+                                                    <?php
+                                                    switch ($fila2['clasificacion']) {
+                                                        case "resena":
+                                                            echo 'Reseña Practicantes';
+                                                            break;
+                                                        case "reporte":
+                                                            echo 'Reporte Global';
+                                                            break;
+                                                        case "constancia":
+                                                            echo 'Constancia de finalización';
+                                                            break;
+                                                        case "solicitud":
+                                                            echo 'Solicitud de Prácticas';
+                                                            break;
+                                                        case "carta_presentacion":
+                                                            echo 'Carta de presentación';
+                                                            break;
+                                                    }
+                                                    ?>
+                                                </td>
                                                 <td>
                                                     <?php
                                                     date_default_timezone_set('America/New_York');

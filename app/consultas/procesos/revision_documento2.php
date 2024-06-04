@@ -25,6 +25,7 @@ if (!empty($_GET['id'])) {
             $estado = $fila['estado'];
             $ruta = $fila['ruta_archivo'];
             $comentario = $fila['Comentarios'];
+            $clasificacion = $fila['clasificacion'];
         }
     }
 
@@ -86,9 +87,10 @@ if (!empty($_GET['id'])) {
                     </nav>
                 </div>
                 <div class="col-md-4 d-flex justify-content-end align-items-center">
-                    <!-- Previous and Next buttons -->
+                    <!-- Previous and Next buttons
                     <button type="button" class="btn btn-primary mr-2">Anterior</button>
                     <button type="button" class="btn btn-primary">Siguiente</button>
+                    -->
                 </div>
             </div>
         </div>
@@ -139,6 +141,27 @@ if (!empty($_GET['id'])) {
                         <div class="card mt-3 align-content-center">
                             <div class="card-body">
                                 <h5 class="card-title">Información</h5>
+                                <p>Documento:
+                                    <?php
+                                    switch ($clasificacion) {
+                                        case "resena":
+                                            echo 'Reseña Practicantes';
+                                            break;
+                                        case "reporte":
+                                            echo 'Reporte Global';
+                                            break;
+                                        case "constancia":
+                                            echo 'Constancia de finalización';
+                                            break;
+                                        case "solicitud":
+                                            echo 'Solicitud de Prácticas';
+                                            break;
+                                        case "carta_presentacion":
+                                            echo 'Carta de presentación';
+                                            break;
+                                    }
+                                    ?>
+                                </p>
                                 <p>Alumno: <?php echo $nombre ?></p>
                                 <p>Empresa: <?php echo $empresa ?></p>
                             </div>
