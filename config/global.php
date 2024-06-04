@@ -1,20 +1,34 @@
 <?php
 define('PAGE_TITLE', 'Universidad Cristóbal Colón');
 
-function getSidebar($ruta = ''){
+// Define las rutas específicas para cada enlace
+$rutas = [
+    'documentos-iniciales' => '/proyecto-integrador-team-1/app/admin/catalogos/alumnos/paginainicio.php',
+    'index' => '/proyecto-integrador-team-1/app/admin/catalogos/vacantes/listavacantes.php',
+    'charts' => '/proyecto-integrador-team-1/proyecto-integrador-team-1/app/consultas/procesos/situacion_practicas_alumno.php',
+    'tables' => '/proyecto-integrador-team-1/tables.php'
+];
+
+// Función para generar el sidebar
+function getSidebar($rutas) {
+    $rutaDocumentosIniciales = isset($rutas['documentos-iniciales']) ? $rutas['documentos-iniciales'] : '';
+    $rutaIndex = isset($rutas['index']) ? $rutas['index'] : '';
+    $rutaCharts = isset($rutas['charts']) ? $rutas['charts'] : '';
+    $rutaTables = isset($rutas['tables']) ? $rutas['tables'] : '';
+
     $html = <<<EOD
 <!-- Sidebar -->
 <ul class="sidebar navbar-nav">
     <li class="nav-item">
-        <a class="nav-link" href="{$ruta}documentos-iniciales.php">
+        <a class="nav-link" href="{$rutaDocumentosIniciales}">
             <i class="fa fa-archive"></i>
-            <span> Documentos Inciales</span>
+            <span>Pagina de Inicio</span>
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="{$ruta}app/admin/catalogos/alumnos/paginainicio.php">
+        <a class="nav-link" href="{$rutaIndex}">
             <i class="fas fa-truck"></i>
-            <span>Progreso de prácticas</span>
+            <span>Lista de vacantes</span>
         </a>
     </li>
     <li class="nav-item dropdown">
@@ -22,24 +36,23 @@ function getSidebar($ruta = ''){
            aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-book-open"></i>
             <span>Catálogos</span>
-
         </a>
         <div class="dropdown-menu" aria-labelledby="pagesDropdown">                        
             <a class="dropdown-item" href="#">Usuarios Academia</a>
             <a class="dropdown-item" href="#">Usuarios Alumnos</a>            
             <div class="dropdown-divider"></div>        
             <a class="dropdown-item" href="#">Empresas</a>            
-            <a class="dropdown-item" href="{$ruta}app/admin/catalogos/vacantes/listavacantes.php">Vacantes</a>         
+            <a class="dropdown-item" href="#">Vacantes</a>         
         </div>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="{$ruta}charts.php">
+        <a class="nav-link" href="{$rutaCharts}">
             <i class="fas fa-fw fa-chart-area"></i>
-            <span>Gráficos</span>
+            <span>Documentos Iniciales</span>
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="{$ruta}tables.php">
+        <a class="nav-link" href="{$rutaTables}">
             <i class="fas fa-fw fa-table"></i>
             <span>Tablas</span>
         </a>

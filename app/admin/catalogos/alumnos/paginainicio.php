@@ -83,7 +83,7 @@ define('RUTA_INCLUDE', '../../../../');
 <div id="wrapper">
 
     <!-- Incluir barra lateral -->
-    <?php getSidebar(); ?>
+    <?php getSidebar($rutas)?>
 
     <div id="content-wrapper">
         <div class="container-fluid">
